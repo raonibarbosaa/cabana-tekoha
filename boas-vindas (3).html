@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content="Guia de boas-vindas da Cabana Tekoha — informações da estadia." />
+  <title>Bem-vindo à Cabana Tekoha · Guia da estadia</title>
+
+  <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+  <meta property="og:title" content="Bem-vindo à Cabana Tekoha" />
+  <meta property="og:description" content="Seu guia da estadia — check-in, Wi-Fi, dicas da região e contato." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cabanatekoha.com.br/boas-vindas.html" />
+  <meta property="og:image" content="https://cabanatekoha.com.br/og-boas-vindas.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Bem-vindo à Cabana Tekoha — seu guia da estadia" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Cabana Tekoha" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Bem-vindo à Cabana Tekoha" />
+  <meta name="twitter:description" content="Seu guia da estadia." />
+  <meta name="twitter:image" content="https://cabanatekoha.com.br/og-boas-vindas.png" />
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate icon" type="image/png" href="logo-tekoha.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bone: #f2ede2; --bone-soft: #f7f3ea; --bone-deep: #e4dccb; --cream: #fbf7ed;
+      --ink: #0a0e08; --ink-soft: #1a2015; --ink-mid: #2e3a27;
+      --moss: #3c4d32; --sage: #7a8a6a;
+      --emerald: #1db584; --emerald-bright: #10b981; --emerald-deep: #0e7c5a;
+      --whatsapp: #25D366;
+      --font-display: "Fraunces", "Times New Roman", serif;
+      --font-body: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, monospace;
+      --max: 1100px;
+      --pad-x: clamp(1.25rem, 4vw, 3rem);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bone); color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 17px; line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0;
+      pointer-events: none; z-index: 1; opacity: 0.25; mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.12 0 0 0 0 0.08 0 0 0 0.14 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding-inline: var(--pad-x); position: relative; z-index: 2; }
+
+    .leaf-mini { width: 14px; height: 14px; display: inline-block; flex-shrink: 0; color: currentColor; }
+
+    /* ========== TOPO ========== */
+    .top {
+      background: var(--ink); color: var(--cream);
+      padding-block: 1.2rem;
+      border-bottom: 1px solid var(--emerald-deep);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .top-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; flex-wrap: wrap;
+    }
+    .top-logo { height: 38px; width: auto; }
+    .top-link {
+      font-family: var(--font-mono);
+      font-size: 0.72rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--emerald);
+      transition: color 200ms;
+    }
+    .top-link:hover { color: var(--emerald-bright); }
+
+    /* ========== HERO ========== */
+    .welcome-hero {
+      padding-block: clamp(3rem, 8vw, 5rem) clamp(2.5rem, 6vw, 4rem);
+      text-align: center;
+      position: relative;
+    }
+    .welcome-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--emerald-deep);
+      margin-bottom: 1.5rem;
+      display: inline-flex; align-items: center; gap: 0.6rem;
+    }
+    .welcome-tag::before, .welcome-tag::after {
+      content: ""; width: 24px; height: 1px;
+      background: var(--emerald-deep);
+    }
+    .welcome-title {
+      font-family: var(--font-display);
+      font-weight: 300; font-style: italic;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      line-height: 1; letter-spacing: -0.02em;
+      color: var(--ink); margin-bottom: 1.2rem;
+    }
+    .welcome-title em { color: var(--emerald-deep); font-style: italic; }
+    .welcome-guest {
+      font-family: var(--font-display);
+      font-style: italic; font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+      color: var(--moss); margin-bottom: 1.5rem;
+    }
+    .welcome-intro {
+      max-width: 56ch; margin: 0 auto;
+      font-size: 1.05rem; line-height: 1.65;
+      color: var(--ink-soft);
+    }
+    .welcome-intro em { color: var(--emerald-deep); font-style: italic; }
+    .welcome-sig {
+      margin-top: 2rem;
+      font-family: var(--font-display); font-style: italic;
+      color: var(--moss); font-size: 1rem;
+    }
+
+    /* ========== CARD GENÉRICO ========== */
+    .card {
+      background: var(--cream);
+      border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+      border-radius: 6px;
+      padding: clamp(1.5rem, 3vw, 2.2rem);
+      margin-bottom: 1.5rem;
+    }
+    .card-header {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+    }
+    .card-num {
+      font-family: var(--font-mono);
+      font-size: 0.78rem; letter-spacing: 0.12em;
+      color: var(--emerald);
+      padding: 0.3rem 0.6rem;
+      background: color-mix(in srgb, var(--emerald) 12%, transparent);
+      border-radius: 4px;
+    }
+    .card-title {
+      font-family: var(--font-display);
+      font-weight: 400; font-style: italic;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      line-height: 1.05; letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .card-title em { color: var(--emerald-deep); font-style: italic; }
+
+    /* ========== GRID DE INFOS (CHECK-IN / OUT) ========== */
+    .info-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .info-block {
+      padding: 1.5rem;
+      background: var(--bone);
+      border-radius: 4px;
+      border-left: 3px solid var(--emerald);
+    }
+    .info-block h4 {
+      font-family: var(--font-display); font-style: italic; font-weight: 500;
+      font-size: 1.2rem; margin-bottom: 0.5rem;
+    }
+    .info-block .time {
+      font-family: var(--font-mono); font-size: 1.4rem;
+      color: var(--emerald-deep); margin-bottom: 0.8rem;
+      font-weight: 500;
+    }
+    .info-block p { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.5; }
+    @media (max-width: 640px) { .info-grid { grid-template-columns: 1fr; } }
+
+    /* ========== WI-FI ========== */
+    .wifi-card {
+      background: var(--ink); color: var(--cream);
+      border: none;
+      position: relative; overflow: hidden;
+    }
+    .wifi-card::before {
+      content: ""; position: absolute;
+      top: -50px; right: -50px;
+      width: 200px; height: 200px;
+      border: 2px solid color-mix(in srgb, var(--emerald) 20%, transparent);
+      border-radius: 50%;
+    }
+    .wifi-card::after {
+      content: ""; position: absolute;
+      top: -100px; right: -100px;
+      width: 300px; height: 300px;
+      border: 2px solid color-mix(in srgb, var(--emerald) 12%, transparent);
+      border-radius: 50%;
+    }
+    .wifi-card .card-header { border-bottom-color: color-mix(in srgb, var(--cream) 15%, transparent); }
+    .wifi-card .card-title { color: var(--cream); }
+    .wifi-block { display: flex; flex-direction: column; gap: 1.2rem; position: relative; z-index: 2; }
+    .wifi-row {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 1rem; padding: 1rem 1.2rem;
+      background: color-mix(in srgb, var(--cream) 8%, transparent);
+      border-radius: 6px;
+    }
+    .wifi-label {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--emerald);
+    }
+    .wifi-value {
+      font-family: var(--font-mono); font-size: 1.1rem;
+      color: var(--cream); font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+    .copy-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 0.9rem;
+      background: var(--emerald); color: var(--ink);
+      border: none; border-radius: 999px;
+      font-family: var(--font-body); font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: all 200ms;
+    }
+    .copy-btn:hover { background: var(--emerald-bright); }
+    .copy-btn.copied { background: var(--cream); color: var(--ink); }
+
+    /* ========== LISTA DE REGRAS ========== */
+    .rules-list { list-style: none; }
+    .rule-item {
+      display: grid; grid-template-columns: 36px 1fr;
+      gap: 1rem; padding: 1.2rem 0;
+      border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+    }
+    .rule-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .rule-num {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--emerald); color: var(--ink);
+      border-radius: 50%; font-family: var(--font-mono);
+      font-size: 0.8rem; font-weight: 600;
+    }
+    .rule-content h5 {
+      font-family: var(--font-display); font-style: italic; font-weight: 500;
+      font-size: 1.1rem; margin-bottom: 0.3rem; color: var(--ink);
+    }
+    .rule-content p { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.5; }
+
+    /* ========== FAQ (Accordion) ========== */
+    .faq-item {
+      border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-question {
+      width: 100%; padding: 1.2rem 0;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 1rem; background: none; border: none;
+      cursor: pointer; text-align: left;
+      font-family: var(--font-display); font-style: italic; font-weight: 500;
+      font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+      color: var(--ink); transition: color 200ms;
+    }
+    .faq-question:hover { color: var(--emerald-deep); }
+    .faq-toggle {
+      width: 24px; height: 24px; flex-shrink: 0;
+      transition: transform 300ms;
+      color: var(--emerald);
+    }
+    .faq-item.open .faq-toggle { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 300ms ease, padding 300ms ease;
+    }
+    .faq-item.open .faq-answer { max-height: 500px; padding-bottom: 1.2rem; }
+    .faq-answer p { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.6; }
+
+    /* ========== LOCAIS (supermercados, restaurantes, etc) ========== */
+    .places-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    .place {
+      padding: 1.2rem;
+      background: var(--bone);
+      border: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+      border-radius: 6px;
+      transition: all 200ms;
+    }
+    .place:hover {
+      border-color: var(--emerald);
+      transform: translateY(-2px);
+    }
+    .place-name {
+      font-family: var(--font-display); font-style: italic; font-weight: 500;
+      font-size: 1.05rem; margin-bottom: 0.4rem; color: var(--ink);
+    }
+    .place-distance {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      letter-spacing: 0.1em; color: var(--emerald-deep);
+      text-transform: uppercase; margin-bottom: 0.6rem;
+    }
+    .place-desc {
+      font-size: 0.88rem; color: var(--ink-soft); line-height: 1.5;
+      margin-bottom: 0.8rem;
+    }
+    .place-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--font-mono); font-size: 0.72rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--emerald); font-weight: 500;
+      transition: gap 200ms;
+    }
+    .place-link:hover { gap: 0.7rem; }
+    @media (max-width: 640px) { .places-grid { grid-template-columns: 1fr; } }
+
+    .place-category {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--moss); margin: 1.5rem 0 1rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+    }
+    .place-category:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+
+    /* ========== MAPA ========== */
+    .map-frame {
+      aspect-ratio: 2/1; min-height: 280px;
+      border: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+      border-radius: 6px; overflow: hidden;
+      margin-top: 1.2rem;
+    }
+    .map-frame iframe {
+      width: 100%; height: 100%; border: 0; display: block;
+      filter: saturate(0.85) contrast(1.02);
+    }
+    .map-cta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      margin-top: 1rem;
+      padding: 0.85rem 1.4rem;
+      background: var(--emerald); color: var(--ink);
+      border-radius: 999px;
+      font-weight: 600; font-size: 0.92rem;
+      transition: background 200ms;
+    }
+    .map-cta:hover { background: var(--emerald-bright); }
+
+    /* ========== CONTATO ========== */
+    .contact-card {
+      background: var(--emerald-deep); color: var(--cream);
+      border: none;
+    }
+    .contact-card .card-title { color: var(--cream); }
+    .contact-card .card-num { color: var(--cream); background: color-mix(in srgb, var(--cream) 15%, transparent); }
+    .contact-card .card-header { border-bottom-color: color-mix(in srgb, var(--cream) 20%, transparent); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .contact-person {
+      padding: 1.2rem 1.5rem;
+      background: color-mix(in srgb, var(--cream) 10%, transparent);
+      border-radius: 6px;
+      display: flex; flex-direction: column; gap: 0.4rem;
+      transition: background 200ms;
+    }
+    .contact-person:hover { background: color-mix(in srgb, var(--cream) 18%, transparent); }
+    .contact-name { font-family: var(--font-display); font-style: italic; font-size: 1.3rem; font-weight: 500; }
+    .contact-phone { font-family: var(--font-mono); font-size: 1rem; }
+    .contact-action {
+      margin-top: 0.5rem; display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.8rem; opacity: 0.85;
+    }
+    @media (max-width: 640px) { .contact-grid { grid-template-columns: 1fr; } }
+
+    /* ========== AVALIAÇÃO ========== */
+    .review-card {
+      text-align: center;
+      background: var(--bone-deep);
+      padding: clamp(2rem, 5vw, 3rem);
+    }
+    .review-stars {
+      font-size: 2rem; letter-spacing: 0.2em;
+      color: var(--emerald); margin-bottom: 1rem;
+    }
+    .review-card h3 {
+      font-family: var(--font-display); font-style: italic; font-weight: 400;
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      line-height: 1.1; margin-bottom: 1rem;
+    }
+    .review-card p { max-width: 50ch; margin: 0 auto 1.8rem; color: var(--ink-soft); }
+    .review-cta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.95rem 1.6rem;
+      background: var(--ink); color: var(--cream);
+      border-radius: 999px;
+      font-weight: 600; font-size: 0.95rem;
+      transition: background 200ms;
+    }
+    .review-cta:hover { background: var(--emerald-deep); }
+
+    /* ========== FOOTER ========== */
+    .welcome-footer {
+      text-align: center;
+      padding-block: 3rem 2rem;
+      color: var(--moss);
+      font-family: var(--font-display); font-style: italic;
+      font-size: 1.1rem;
+    }
+    .welcome-footer .small {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--sage); margin-top: 1rem; font-style: normal;
+    }
+
+    /* ========== BOTÃO FLUTUANTE WHATSAPP ========== */
+    .whatsapp-float {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      width: 60px; height: 60px;
+      background: var(--whatsapp); color: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      z-index: 50;
+      transition: transform 240ms, box-shadow 240ms;
+      animation: pulse-wa 2.5s infinite;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 28px rgba(37, 211, 102, 0.6);
+    }
+    .whatsapp-float svg { width: 32px; height: 32px; }
+    @keyframes pulse-wa {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4), 0 0 0 0 rgba(37, 211, 102, 0.5); }
+      50% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4), 0 0 0 14px rgba(37, 211, 102, 0); }
+    }
+
+    /* ========== SECTIONS ========== */
+    main { padding-block: 1rem 2rem; }
+
+    /* ========== MOBILE OTIMIZADO ========== */
+    @media (max-width: 640px) {
+      body { font-size: 16px; }
+      .top-inner { padding-block: 0.2rem; }
+      .top-logo { height: 32px; }
+      .top-link { font-size: 0.65rem; }
+      .welcome-hero { padding-block: 2rem 1.5rem; }
+      .welcome-title { font-size: 2.5rem; }
+      .welcome-guest { font-size: 1.15rem; }
+      .welcome-intro { font-size: 0.95rem; }
+      .card { padding: 1.3rem; margin-bottom: 1rem; }
+      .card-header { gap: 0.7rem; margin-bottom: 1rem; padding-bottom: 0.8rem; }
+      .card-num { font-size: 0.7rem; padding: 0.25rem 0.5rem; }
+      .card-title { font-size: 1.4rem; }
+      .info-block { padding: 1.1rem; }
+      .info-block .time { font-size: 1.2rem; }
+      .wifi-row { padding: 0.85rem 1rem; flex-wrap: wrap; gap: 0.7rem; }
+      .wifi-value { font-size: 1rem; }
+      .copy-btn { font-size: 0.75rem; padding: 0.45rem 0.8rem; }
+      .place { padding: 1rem; }
+      .place-name { font-size: 1rem; }
+      .map-frame { aspect-ratio: 4/3; min-height: 240px; }
+      .map-cta { width: 100%; justify-content: center; padding: 1rem; }
+      .contact-person { padding: 1rem 1.2rem; }
+      .contact-name { font-size: 1.15rem; }
+      .review-card { padding: 1.8rem 1.2rem; }
+      .review-stars { font-size: 1.5rem; }
+      .review-cta { width: 100%; justify-content: center; }
+      .whatsapp-float { width: 54px; height: 54px; bottom: 1rem; right: 1rem; }
+      .whatsapp-float svg { width: 28px; height: 28px; }
+      .faq-question { font-size: 1rem; padding: 1rem 0; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute; width:0; height:0; overflow:hidden" aria-hidden="true">
+    <symbol id="taioba" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M 50 80 L 44 88 C 28 88, 10 76, 8 56 C 6 30, 26 10, 50 8 C 74 10, 94 30, 92 56 C 90 76, 72 88, 56 88 L 50 80 Z" />
+        <path d="M 50 80 L 50 94" /><path d="M 50 80 L 50 12" />
+        <path d="M 50 72 Q 36 64, 20 52" /><path d="M 50 58 Q 32 48, 14 38" />
+        <path d="M 50 44 Q 34 34, 22 22" /><path d="M 50 30 Q 40 22, 32 14" />
+        <path d="M 50 72 Q 64 64, 80 52" /><path d="M 50 58 Q 68 48, 86 38" />
+        <path d="M 50 44 Q 66 34, 78 22" /><path d="M 50 30 Q 60 22, 68 14" />
+      </g>
+    </symbol>
+    <symbol id="whatsapp" viewBox="0 0 32 32">
+      <path fill="currentColor" d="M16 0C7.2 0 0 7.2 0 16c0 2.8.7 5.4 2 7.7L0 32l8.5-2.2c2.2 1.2 4.8 1.9 7.5 1.9 8.8 0 16-7.2 16-16S24.8 0 16 0zm0 29.3c-2.5 0-4.9-.7-7-1.9l-.5-.3-5.2 1.4 1.4-5.1-.3-.5C3.1 20.8 2.7 18.4 2.7 16 2.7 8.7 8.7 2.7 16 2.7S29.3 8.7 29.3 16 23.3 29.3 16 29.3zm7.4-9.9c-.4-.2-2.4-1.2-2.7-1.3-.4-.1-.6-.2-.9.2-.3.4-1 1.3-1.3 1.5-.2.3-.5.3-.9.1-.4-.2-1.7-.6-3.3-2-1.2-1.1-2-2.4-2.3-2.8-.2-.4 0-.6.2-.8.2-.2.4-.5.6-.7.2-.2.3-.4.4-.7.1-.3.1-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.8-.6-.7-.9-.7H10c-.3 0-.7.1-1 .5-.4.4-1.4 1.4-1.4 3.3s1.4 3.8 1.6 4.1c.2.3 2.8 4.3 6.8 6 .9.4 1.7.6 2.3.8.9.3 1.8.3 2.5.2.8-.1 2.4-1 2.7-1.9.3-.9.3-1.8.2-1.9-.1-.2-.4-.3-.8-.5z"/>
+    </symbol>
+    <symbol id="plus" viewBox="0 0 24 24">
+      <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 5v14M5 12h14"/>
+    </symbol>
+  </svg>
+
+  <!-- Topo -->
+  <div class="top">
+    <div class="wrap top-inner">
+      <a href="https://cabanatekoha.com.br" aria-label="Voltar ao site">
+        <img src="logo-tekoha.png" alt="Cabana Tekoha" class="top-logo" />
+      </a>
+      <a href="https://cabanatekoha.com.br" class="top-link">← Voltar ao site</a>
+    </div>
+  </div>
+
+  <main>
+    <!-- ========================================== -->
+    <!-- HERO PERSONALIZÁVEL -->
+    <!-- 👇 EDITE AQUI: nome do hóspede e datas -->
+    <!-- ========================================== -->
+    <section class="welcome-hero">
+      <div class="wrap">
+        <span class="welcome-tag">Prezado hóspede</span>
+        <h1 class="welcome-title">Bem-vindo<br />à <em>Tekoha</em>.</h1>
+
+        <p class="welcome-guest" id="welcome-guest">Olá! 🌿</p>
+
+        <p class="welcome-intro">
+          Seja bem-vindo à <em>Cabana Tekoha</em>, um refúgio criado para proporcionar conforto, tranquilidade e uma verdadeira conexão com a natureza em meio a um exuberante jardim-floresta. Esperamos que sua estadia seja especial e estamos sempre à disposição para o que precisar — aproveite cada momento.
+        </p>
+
+        <p class="welcome-sig">— Raoni, Ingride, Laura e Beatriz</p>
+      </div>
+    </section>
+
+    <div class="wrap">
+
+      <!-- ========================================== -->
+      <!-- CHECK-IN / CHECK-OUT -->
+      <!-- ========================================== -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-num">01</span>
+          <h2 class="card-title">Check-in & Check-out</h2>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-block">
+            <h4>Check-in</h4>
+            <div class="time">a partir das 14:00</div>
+            <p>Caso não haja hóspedes com reserva antes da sua chegada, podemos flexibilizar o horário — consulte conosco.</p>
+          </div>
+          <div class="info-block">
+            <h4>Check-out</h4>
+            <div class="time">até as 12:00</div>
+            <p>Caso não haja hóspedes depois, podemos flexibilizar a saída. Ao sair, deixe a chave no cofre da varanda do fundo (a senha será enviada).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- COMO CHEGAR -->
+      <!-- ========================================== -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-num">02</span>
+          <h2 class="card-title">Como <em>chegar</em></h2>
+        </div>
+        <p style="margin-bottom: 1rem;">
+          <strong>Endereço:</strong> Povoado Serra, Itabaiana — SE, com frente ao sítio de Raimundo do INSS.
+        </p>
+        <p style="color: var(--ink-soft); font-size: 0.95rem;">
+          Acesso por estrada de terra tranquila — qualquer carro chega.
+        </p>
+
+        <div class="map-frame">
+          <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=10%C2%B043%2729.29%22S+37%C2%B023%2703.37%22W&hl=pt-BR&z=15&output=embed"
+            title="Localização da Cabana Tekoha"></iframe>
+        </div>
+
+        <a href="https://share.google/jhssDKCOlY1ETdYbb" target="_blank" rel="noopener" class="map-cta">
+          📍 Me guie até aqui
+        </a>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- WI-FI -->
+      <!-- ========================================== -->
+      <div class="card wifi-card">
+        <div class="card-header">
+          <span class="card-num">03</span>
+          <h2 class="card-title">Conexão Wi-Fi</h2>
+        </div>
+
+        <div class="wifi-block">
+          <div class="wifi-row">
+            <div>
+              <div class="wifi-label">Rede</div>
+              <div class="wifi-value" id="wifi-name">Cabana Tekoha</div>
+            </div>
+            <button class="copy-btn" onclick="copyText('Cabana Tekoha', this)">📋 Copiar</button>
+          </div>
+          <div class="wifi-row">
+            <div>
+              <div class="wifi-label">Senha</div>
+              <div class="wifi-value" id="wifi-pass">165689as</div>
+            </div>
+            <button class="copy-btn" onclick="copyText('165689as', this)">📋 Copiar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- REGRAS DA CASA -->
+      <!-- ========================================== -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-num">04</span>
+          <h2 class="card-title">Regras da casa</h2>
+        </div>
+
+        <ul class="rules-list">
+          <li class="rule-item">
+            <span class="rule-num">1</span>
+            <div class="rule-content">
+              <h5>Não jogar lixo no chão</h5>
+              <p>Para preservar a natureza ao redor, utilize sempre os recipientes adequados.</p>
+            </div>
+          </li>
+          <li class="rule-item">
+            <span class="rule-num">2</span>
+            <div class="rule-content">
+              <h5>Cuidado com as chaves</h5>
+              <p>Antes de sair, verifique se nenhuma chave ficou na fechadura por dentro da cabana.</p>
+            </div>
+          </li>
+          <li class="rule-item">
+            <span class="rule-num">3</span>
+            <div class="rule-content">
+              <h5>Luzes</h5>
+              <p>Evite deixar as luzes acesas sem necessidade. Apague as do jardim e da varanda durante o dia.</p>
+            </div>
+          </li>
+          <li class="rule-item">
+            <span class="rule-num">4</span>
+            <div class="rule-content">
+              <h5>Portas e janelas</h5>
+              <p>Certifique-se sempre de fechar portas e janelas antes de sair.</p>
+            </div>
+          </li>
+          <li class="rule-item">
+            <span class="rule-num">5</span>
+            <div class="rule-content">
+              <h5>Limpeza</h5>
+              <p>Mantenha a cabana e o exterior limpos. Limpezas adicionais podem ser cobradas.</p>
+            </div>
+          </li>
+          <li class="rule-item">
+            <span class="rule-num">6</span>
+            <div class="rule-content">
+              <h5>Ar-condicionado</h5>
+              <p>Mantenha portas e janelas fechadas com o ar ligado. Desligue os ar-condicionados dos quartos vazios.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- FAQ -->
+      <!-- ========================================== -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-num">05</span>
+          <h2 class="card-title">Perguntas frequentes</h2>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Qual é o horário de check-in e check-out?</span>
+            <svg class="faq-toggle"><use href="#plus"/></svg>
+          </button>
+          <div class="faq-answer"><p>Check-in a partir das 14:00 e check-out até as 12:00, podendo haver flexibilidade conforme disponibilidade.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>É possível antecipar o check-in ou estender o check-out?</span>
+            <svg class="faq-toggle"><use href="#plus"/></svg>
+          </button>
+          <div class="faq-answer"><p>Sim, caso não haja hóspedes com reserva antes ou depois, podemos avaliar a flexibilidade.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>Como faço para acessar a cabana ao chegar?</span>
+            <svg class="faq-toggle"><use href="#plus"/></svg>
+          </button>
+          <div class="faq-answer"><p>As orientações de acesso e retirada da chave são enviadas antes da chegada.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>A cabana possui estacionamento?</span>
+            <svg class="faq-toggle"><use href="#plus"/></svg>
+          </button>
+          <div class="faq-answer"><p>Sim, há estacionamento no local.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>A cabana tem Wi-Fi?</span>
+            <svg class="faq-toggle"><use href="#plus"/></svg>
+          </button>
+          <div class="faq-answer"><p>Sim, disponibilizamos Wi-Fi para uso dos hóspedes. A rede e senha estão na seção 03 acima.</p></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            <span>A cozinha é equipada?</span>
+            <svg class="faq-toggle"><use href="#plus"/></svg>
+          </button>
+          <div class="faq-answer"><p>Sim, a cabana possui cozinha equipada com utensílios básicos para preparo de refeições.</p></div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SUPERMERCADOS -->
+      <!-- ========================================== -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-num">06</span>
+          <h2 class="card-title">Supermercados</h2>
+        </div>
+        <p style="margin-bottom: 1.5rem; color: var(--ink-soft);">Alguns dos supermercados da região:</p>
+
+        <div class="places-grid">
+          <div class="place">
+            <div class="place-name">Supermercado Nunes Peixoto</div>
+            <div class="place-distance">📍 20 minutos de carro</div>
+            <a href="https://www.google.com/maps/search/Supermercado+Nunes+Peixoto+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+          <div class="place">
+            <div class="place-name">Supermercado Messias Peixoto</div>
+            <div class="place-distance">📍 14 minutos de carro</div>
+            <a href="https://www.google.com/maps/search/Supermercado+Messias+Peixoto+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+          <div class="place">
+            <div class="place-name">Mercearia Santa Clara</div>
+            <div class="place-distance">📍 16 minutos de carro</div>
+            <a href="https://www.google.com/maps/search/Mercearia+Santa+Clara+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+          <div class="place">
+            <div class="place-name">Qualitt Fruit</div>
+            <div class="place-distance">📍 16 minutos de carro</div>
+            <a href="https://www.google.com/maps/search/Qualitt+Fruit+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- ONDE COMPRAR -->
+      <!-- ========================================== -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-num">07</span>
+          <h2 class="card-title">Onde comprar</h2>
+        </div>
+        <p style="margin-bottom: 1.5rem; color: var(--ink-soft);">Joias, ouro, castanhas, roupas, calçados — Itabaiana é conhecida como a terra do ouro.</p>
+
+        <div class="places-grid">
+          <div class="place">
+            <div class="place-name">Joalheria a Novidade</div>
+            <div class="place-distance">📍 20 minutos de carro</div>
+            <p class="place-desc">Melhores preços da região. No centro da cidade tem várias outras joalherias.</p>
+            <a href="https://www.google.com/maps/search/Joalheria+a+Novidade+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+          <div class="place">
+            <div class="place-name">Shopping Peixoto</div>
+            <div class="place-distance">📍 14 minutos de carro</div>
+            <p class="place-desc">Um moderno shopping a sua disposição, com um grande diferencial: o Itabaianense.</p>
+            <a href="https://www.google.com/maps/search/Shopping+Peixoto+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+          <div class="place">
+            <div class="place-name">Casa de Farinha</div>
+            <div class="place-distance">📍 20 minutos de carro</div>
+            <p class="place-desc">Vendem comidas regionais como pé de moleque, mungunzá, beiju, bolo de mandioca etc.</p>
+            <a href="https://www.google.com/maps/search/Casa+de+Farinha+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- ONDE COMER - CHURRASCO -->
+      <!-- ========================================== -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-num">08</span>
+          <h2 class="card-title">Onde comer</h2>
+        </div>
+
+        <div class="place-category">🥩 Churrasco</div>
+        <div class="places-grid">
+          <div class="place">
+            <div class="place-name">Restaurante O Terraço</div>
+            <div class="place-distance">📍 20 minutos de carro</div>
+            <p class="place-desc">Aberto de segunda a sábado, almoço com bufê variado e delicioso.</p>
+            <a href="https://www.google.com/maps/search/Restaurante+O+Terraço+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+          <div class="place">
+            <div class="place-name">Churrascaria O Pirata</div>
+            <div class="place-distance">📍 14 minutos de carro</div>
+            <p class="place-desc">Excelente churrascaria com cortes nobres e bufê variado. Servem à la carte também.</p>
+            <a href="https://www.google.com/maps/search/Churrascaria+O+Pirata+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+          <div class="place">
+            <div class="place-name">Churrascaria Riacho Doce</div>
+            <div class="place-distance">📍 25 minutos de carro</div>
+            <p class="place-desc">Cortes nobres, comidas nordestinas e atendimento típico da cidade. Muito bom.</p>
+            <a href="https://www.google.com/maps/search/Churrascaria+Riacho+Doce+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+        </div>
+
+        <div class="place-category">🍽️ Alta gastronomia</div>
+        <div class="places-grid">
+          <div class="place">
+            <div class="place-name">Tempero do Sertão</div>
+            <div class="place-distance">📍 14 minutos de carro</div>
+            <p class="place-desc">Comandado pela Chef Patricia Gois — pratos incríveis que harmonizam com finos vinhos. Vale a visita.</p>
+            <a href="https://www.google.com/maps/search/Tempero+do+Sertão+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+          <div class="place">
+            <div class="place-name">Restaurante Garfil</div>
+            <div class="place-distance">📍 20 minutos de carro</div>
+            <p class="place-desc">Cardápio variado com excelentes opções. Destaque para o salmão servido no bufê dos almoços.</p>
+            <a href="https://www.google.com/maps/search/Restaurante+Garfil+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+          <div class="place">
+            <div class="place-name">Filha de Maria</div>
+            <div class="place-distance">📍 20 minutos de carro</div>
+            <p class="place-desc">Fantástico bufê, ambiente acolhedor. Destaque para os camarões servidos de diversas formas.</p>
+            <a href="https://www.google.com/maps/search/Restaurante+Filha+de+Maria+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+        </div>
+
+        <div class="place-category">🍔 Lanches</div>
+        <div class="places-grid">
+          <div class="place">
+            <div class="place-name">Bragas Burguer</div>
+            <div class="place-distance">📍 15 minutos de carro</div>
+            <p class="place-desc">A melhor hamburgueria da cidade, ambiente acolhedor e atendimento diferenciado.</p>
+            <a href="https://www.google.com/maps/search/Bragas+Burguer+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+          <div class="place">
+            <div class="place-name">Pizzaria Terraço</div>
+            <div class="place-distance">📍 14 minutos de carro</div>
+            <p class="place-desc">No Shopping Peixoto, na praça de alimentação — atendimento e qualidade da Família O Terraço.</p>
+            <a href="https://www.google.com/maps/search/Pizzaria+Terraço+Shopping+Peixoto+Itabaiana" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- LUGARES PARA VISITAR -->
+      <!-- ========================================== -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-num">09</span>
+          <h2 class="card-title">Lugares para visitar</h2>
+        </div>
+        <p style="margin-bottom: 1.5rem; color: var(--ink-soft); line-height: 1.65;">
+          Itabaiana tem uma variedade enorme de cultura e arte. Temos a escola de música mais antiga do Brasil em atividade, fundada em 1745, diversas belezas naturais e — o principal — o povo desta terra.
+        </p>
+
+        <div class="places-grid">
+          <div class="place">
+            <div class="place-name">Museu da Filarmônica Nossa Senhora da Conceição</div>
+            <div class="place-distance">📍 20 minutos de carro</div>
+            <p class="place-desc">A escola de música mais antiga do Brasil em atividade, fundada em 1745.</p>
+            <a href="https://www.google.com/maps/search/Filarmônica+Nossa+Senhora+da+Conceição+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+          <div class="place">
+            <div class="place-name">Parque dos Falcões</div>
+            <div class="place-distance">📍 20 minutos de carro</div>
+            <p class="place-desc">Conheça as aves de rapina em seu habitat natural — experiência única.</p>
+            <a href="https://www.google.com/maps/search/Parque+dos+Falcões+Itabaiana+SE" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+          <div class="place">
+            <div class="place-name">Poço das Moças</div>
+            <div class="place-distance">📍 25 min de carro + 20 min caminhada</div>
+            <p class="place-desc">Belo poço natural escondido na trilha — refrescante e cinematográfico.</p>
+            <a href="https://www.google.com/maps/search/Poço+das+Moças+Serra+Itabaiana" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+          <div class="place">
+            <div class="place-name">Cachoeiras Trilha Caldeirão</div>
+            <div class="place-distance">📍 20 min de carro + 20 min caminhada</div>
+            <p class="place-desc">Cachoeiras lindas — necessário guia local para acesso seguro.</p>
+            <a href="https://www.google.com/maps/search/Trilha+Caldeirão+Serra+Itabaiana" target="_blank" rel="noopener" class="place-link">Me guie aqui →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- CONTATO -->
+      <!-- ========================================== -->
+      <div class="card contact-card">
+        <div class="card-header">
+          <span class="card-num">10</span>
+          <h2 class="card-title">Estamos aqui</h2>
+        </div>
+        <p style="margin-bottom: 1.5rem;">
+          Qualquer dúvida ou necessidade durante sua estadia, é só chamar. Estamos sempre disponíveis para ajudar.
+        </p>
+
+        <div class="contact-grid">
+          <a href="https://wa.me/5579999036864?text=Ol%C3%A1%2C%20Raoni!%20Estou%20hospedado%20na%20Cabana%20Tekoha." target="_blank" rel="noopener" class="contact-person">
+            <span class="contact-name">Raoni</span>
+            <span class="contact-phone">(79) 99903-6864</span>
+            <span class="contact-action">💬 Falar no WhatsApp →</span>
+          </a>
+          <a href="https://wa.me/5579999586837?text=Ol%C3%A1%2C%20Ingride!%20Estou%20hospedado%20na%20Cabana%20Tekoha." target="_blank" rel="noopener" class="contact-person">
+            <span class="contact-name">Ingride</span>
+            <span class="contact-phone">(79) 99958-6837</span>
+            <span class="contact-action">💬 Falar no WhatsApp →</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- AVALIAÇÃO -->
+      <!-- ========================================== -->
+      <div class="card review-card">
+        <div class="review-stars">★ ★ ★ ★ ★</div>
+        <h3>Nos ajude com sua avaliação</h3>
+        <p>
+          Se sua experiência na Cabana Tekoha foi positiva, ficaremos muito felizes com sua avaliação no Airbnb. Seu feedback é muito importante para nós e ajuda a manter este espaço sempre bem cuidado e especial para os próximos hóspedes. 🌿
+        </p>
+        <a href="https://www.airbnb.com.br/rooms/1531260953390515595?guests=1&adults=1&s=67&unique_share_id=11f127fb-36a2-416b-8917-c74aebb04c8d" target="_blank" rel="noopener" class="review-cta">
+          Avaliar no Airbnb →
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========================================== -->
+  <!-- FOOTER -->
+  <!-- ========================================== -->
+  <footer class="welcome-footer">
+    <div class="wrap">
+      <p>Obrigado por escolher a Tekoha.<br />Esperamos vê-los novamente em breve.</p>
+      <p class="small">© 2026 Cabana Tekoha · Itabaiana, Sergipe</p>
+    </div>
+  </footer>
+
+  <!-- ========================================== -->
+  <!-- BOTÃO FLUTUANTE WHATSAPP -->
+  <!-- ========================================== -->
+  <a href="https://wa.me/5579999586837?text=Ol%C3%A1%21%20Estou%20hospedado%20na%20Cabana%20Tekoha%20e%20preciso%20de%20uma%20ajudinha." target="_blank" rel="noopener" class="whatsapp-float" aria-label="Falar no WhatsApp">
+    <svg><use href="#whatsapp"/></svg>
+  </a>
+
+  <script>
+    // ============================================
+    // PERSONALIZAÇÃO VIA URL: ?nome=Barbara
+    // Exemplo: cabanatekoha.com.br/boas-vindas.html?nome=Barbara
+    // ============================================
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const nome = params.get('nome');
+      const guestEl = document.getElementById('welcome-guest');
+      if (nome && nome.trim() && guestEl) {
+        // Sanitizar: remover caracteres perigosos, limitar tamanho
+        const nomeLimpo = nome.trim().replace(/[<>{}]/g, '').substring(0, 60);
+        // Capitalizar primeira letra de cada palavra
+        const nomeFormatado = nomeLimpo.split(' ')
+          .map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase())
+          .join(' ');
+        guestEl.innerHTML = 'Olá, <strong>' + nomeFormatado + '</strong>! 🌿';
+        // Atualizar título da aba também
+        document.title = 'Bem-vindo, ' + nomeFormatado + ' · Cabana Tekoha';
+      }
+    })();
+
+    // Copiar texto (Wi-Fi)
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const original = btn.innerHTML;
+        btn.innerHTML = '✓ Copiado!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerHTML = original;
+          btn.classList.remove('copied');
+        }, 1800);
+      }).catch(() => {
+        alert('Senha: ' + text);
+      });
+    }
+
+    // FAQ Accordion
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      item.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
