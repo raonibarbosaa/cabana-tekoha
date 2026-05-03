@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quatro séculos · Cabana Tekoha · Itabaiana</title>
+<meta name="description" content="A história de Itabaiana em verbetes — quatro séculos do livro de José de Almeida Bispo (2013), com 38 marcos, lendas, personagens e ciclos econômicos.">
+<meta property="og:title" content="Quatro séculos de Itabaiana">
+<meta property="og:description" content="A história deste lugar em 38 verbetes — do nascimento de Sergipe ao fim do século XX. Acervo do livro de José de Almeida Bispo.">
+<meta property="og:image" content="https://cabanatekoha.com.br/og-historia.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cabanatekoha.com.br/quatro-seculos.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bone:#f5f1ea;
+  --cream:#faf6ee;
+  --paper:#fffdf7;
+  --emerald:#1db584;
+  --emerald-dark:#0f8d63;
+  --ocean:#0d2a3d;
+  --ocean-light:#1a3d54;
+  --ink:#1a1a1a;
+  --ink-soft:#3a3a38;
+  --ink-faint:#6b6b66;
+  --line:#d8d2c4;
+  --line-soft:#e8e2d4;
+  --gold:#c8a04d;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Instrument Sans',system-ui,-apple-system,sans-serif;
+  background:var(--bone);
+  color:var(--ink);
+  line-height:1.55;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* ========== NAV ========== */
+nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(245,241,234,0.92);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line-soft);
+  padding:18px 32px;
+}
+.nav-inner{
+  max-width:1200px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+}
+.logo{
+  font-family:'Fraunces',serif;
+  font-style:italic;font-weight:500;
+  font-size:22px;color:var(--ocean);
+  text-decoration:none;letter-spacing:-0.01em;
+}
+.nav-links{display:flex;gap:28px;align-items:center;font-size:15px}
+.nav-links a{
+  color:var(--ink-soft);text-decoration:none;
+  transition:color 0.2s;
+  font-weight:500;
+}
+.nav-links a:hover{color:var(--emerald-dark)}
+.nav-links a.current{color:var(--ocean);font-weight:600}
+
+/* ========== HERO ========== */
+.hero{
+  background:var(--ocean);
+  color:var(--cream);
+  padding:96px 32px 80px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute;
+  top:-80px;right:-100px;
+  width:520px;height:520px;
+  background:radial-gradient(circle, rgba(29,181,132,0.15) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{
+  max-width:1100px;margin:0 auto;
+  position:relative;z-index:1;
+}
+.hero-eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;
+  letter-spacing:0.1em;
+  color:var(--emerald);
+  margin-bottom:24px;
+  text-transform:uppercase;
+}
+h1{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(40px, 6vw, 72px);
+  line-height:1.05;
+  letter-spacing:-0.02em;
+  margin-bottom:28px;
+  max-width:880px;
+}
+.hero-lead{
+  font-size:19px;
+  line-height:1.55;
+  color:rgba(250,246,238,0.78);
+  max-width:680px;
+  margin-bottom:56px;
+  font-weight:400;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+  gap:32px;
+  max-width:780px;
+  padding-top:36px;
+  border-top:1px solid rgba(250,246,238,0.15);
+}
+.stat-num{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-size:48px;
+  color:var(--emerald);
+  line-height:1;
+  margin-bottom:10px;
+  font-weight:400;
+}
+.stat-label{
+  font-size:14px;
+  color:rgba(250,246,238,0.72);
+  line-height:1.4;
+}
+
+/* ========== SOBRE O LIVRO ========== */
+.about-book{
+  background:var(--cream);
+  padding:64px 32px;
+  border-bottom:1px solid var(--line-soft);
+}
+.book-card{
+  max-width:1000px;margin:0 auto;
+  display:grid;
+  grid-template-columns: 1fr auto;
+  gap:48px;align-items:center;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:40px;
+}
+.book-content h2{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-size:32px;
+  font-weight:500;
+  color:var(--ocean);
+  margin-bottom:14px;
+  letter-spacing:-0.01em;
+}
+.book-content p{
+  color:var(--ink-soft);
+  line-height:1.65;
+  margin-bottom:14px;
+  font-size:16px;
+}
+.book-content p:last-of-type{margin-bottom:24px}
+.book-meta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  color:var(--ink-faint);
+  letter-spacing:0.04em;
+  margin-bottom:8px !important;
+}
+.book-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--ocean);color:var(--cream);
+  padding:13px 22px;border-radius:5px;
+  text-decoration:none;font-weight:500;font-size:15px;
+  transition:all 0.2s;
+  border:none;cursor:pointer;
+}
+.book-btn:hover{background:var(--ocean-light);transform:translateY(-1px)}
+.book-btn svg{width:16px;height:16px}
+.book-graphic{
+  width:200px;height:260px;
+  background:linear-gradient(135deg, var(--ocean) 0%, var(--ocean-light) 100%);
+  border-radius:4px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:24px 20px;
+  color:var(--cream);
+  position:relative;
+  box-shadow: 0 12px 32px rgba(13,42,61,0.18), 0 4px 8px rgba(13,42,61,0.1);
+}
+.book-graphic::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;
+  width:6px;
+  background:rgba(0,0,0,0.18);
+  border-radius:4px 0 0 4px;
+}
+.book-graphic-title{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-size:18px;
+  line-height:1.2;
+  font-weight:500;
+}
+.book-graphic-meta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.08em;
+  opacity:0.65;
+  text-transform:uppercase;
+}
+.book-graphic-author{
+  font-size:13px;
+  color:var(--emerald);
+  margin-top:4px;
+}
+
+@media (max-width:720px){
+  .book-card{grid-template-columns:1fr;gap:32px;padding:28px;text-align:left}
+  .book-graphic{margin:0 auto}
+}
+
+/* ========== FILTROS ========== */
+.filters-section{
+  background:var(--bone);
+  padding:48px 32px 24px;
+  border-bottom:1px solid var(--line-soft);
+  position:sticky;top:69px;z-index:40;
+  backdrop-filter:blur(10px);
+}
+.filters-inner{
+  max-width:1200px;margin:0 auto;
+  display:flex;flex-wrap:wrap;gap:10px;
+  align-items:center;
+}
+.filter-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:var(--ink-faint);
+  letter-spacing:0.08em;text-transform:uppercase;
+  margin-right:8px;
+}
+.filter-btn{
+  background:transparent;
+  border:1px solid var(--line);
+  color:var(--ink-soft);
+  padding:9px 16px;border-radius:30px;
+  font-size:14px;font-weight:500;
+  cursor:pointer;
+  transition:all 0.2s;
+  font-family:inherit;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.filter-btn:hover{
+  border-color:var(--emerald);
+  color:var(--emerald-dark);
+}
+.filter-btn.active{
+  background:var(--ocean);
+  color:var(--cream);
+  border-color:var(--ocean);
+}
+.filter-count{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  opacity:0.6;
+}
+.filter-btn.active .filter-count{opacity:0.9}
+
+/* ========== GALERIA ========== */
+.gallery{
+  max-width:1200px;
+  margin:0 auto;
+  padding:48px 32px 96px;
+}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+  gap:24px;
+}
+.card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:28px 24px;
+  cursor:pointer;
+  transition:all 0.25s;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+  min-height:260px;
+}
+.card:hover{
+  border-color:var(--ink-soft);
+  transform:translateY(-3px);
+  box-shadow:0 12px 32px rgba(13,42,61,0.08), 0 2px 4px rgba(0,0,0,0.04);
+}
+.card-era{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  margin-bottom:14px;
+  color:var(--ink-faint);
+  display:inline-flex;align-items:center;gap:8px;
+}
+.card-era::before{
+  content:'';display:inline-block;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--era-color, var(--emerald));
+}
+.card-title{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-size:24px;
+  font-weight:500;
+  color:var(--ocean);
+  line-height:1.2;
+  letter-spacing:-0.01em;
+  margin-bottom:10px;
+}
+.card-date{
+  font-size:13px;
+  color:var(--ink-faint);
+  margin-bottom:16px;
+  font-weight:500;
+}
+.card-resumo{
+  font-size:15px;
+  color:var(--ink-soft);
+  line-height:1.55;
+  flex:1;
+}
+.card-arrow{
+  margin-top:18px;
+  font-size:14px;
+  color:var(--emerald-dark);
+  font-weight:500;
+  display:inline-flex;align-items:center;gap:8px;
+  opacity:0;
+  transform:translateX(-4px);
+  transition:all 0.2s;
+}
+.card:hover .card-arrow{opacity:1;transform:translateX(0)}
+.badge-destaque{
+  position:absolute;
+  top:18px;right:18px;
+  background:var(--gold);
+  color:var(--paper);
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  letter-spacing:0.1em;
+  padding:4px 8px;
+  border-radius:3px;
+  font-weight:500;
+  text-transform:uppercase;
+}
+
+.empty-state{
+  text-align:center;
+  padding:80px 20px;
+  color:var(--ink-faint);
+  font-style:italic;
+  font-family:'Fraunces',serif;
+  font-size:20px;
+}
+
+/* ========== MODAL ========== */
+.modal-backdrop{
+  position:fixed;inset:0;
+  background:rgba(13,42,61,0.6);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  z-index:100;
+  display:none;
+  align-items:flex-start;justify-content:center;
+  padding:60px 20px;
+  overflow-y:auto;
+  opacity:0;
+  transition:opacity 0.25s;
+}
+.modal-backdrop.open{display:flex;opacity:1}
+.modal{
+  background:var(--paper);
+  max-width:720px;width:100%;
+  border-radius:8px;
+  padding:48px 48px 40px;
+  position:relative;
+  box-shadow:0 30px 80px rgba(0,0,0,0.3);
+  transform:translateY(20px);
+  transition:transform 0.3s;
+}
+.modal-backdrop.open .modal{transform:translateY(0)}
+.modal-close{
+  position:absolute;
+  top:18px;right:18px;
+  background:transparent;
+  border:none;
+  width:36px;height:36px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:22px;color:var(--ink-faint);
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+  font-family:inherit;
+  line-height:1;
+}
+.modal-close:hover{
+  background:var(--bone);
+  color:var(--ink);
+}
+.modal-era{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin-bottom:14px;
+  color:var(--ink-faint);
+  display:inline-flex;align-items:center;gap:8px;
+}
+.modal-era::before{
+  content:'';display:inline-block;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--era-color, var(--emerald));
+}
+.modal h3{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-size:36px;
+  font-weight:500;
+  color:var(--ocean);
+  line-height:1.15;
+  letter-spacing:-0.01em;
+  margin-bottom:8px;
+  padding-right:40px;
+}
+.modal-date{
+  font-size:14px;
+  color:var(--ink-faint);
+  margin-bottom:28px;
+  padding-bottom:24px;
+  border-bottom:1px solid var(--line-soft);
+  font-weight:500;
+}
+.modal-body p{
+  font-size:16px;
+  line-height:1.7;
+  color:var(--ink-soft);
+  margin-bottom:18px;
+}
+.modal-body p:last-child{margin-bottom:0}
+.modal-source{
+  margin-top:32px;
+  padding:18px 20px;
+  background:var(--bone);
+  border-left:3px solid var(--emerald);
+  border-radius:3px;
+  font-size:14px;
+  color:var(--ink-faint);
+  line-height:1.55;
+}
+.modal-source strong{
+  color:var(--ink);
+  font-weight:600;
+}
+.modal-source a{
+  color:var(--emerald-dark);
+  text-decoration:none;
+  font-weight:500;
+}
+.modal-source a:hover{text-decoration:underline}
+
+@media (max-width:720px){
+  .modal{padding:36px 24px 28px}
+  .modal h3{font-size:28px}
+}
+
+/* ========== CTA FINAL ========== */
+.final-cta{
+  background:var(--ocean);
+  color:var(--cream);
+  padding:96px 32px;
+  text-align:center;
+}
+.final-cta-inner{max-width:680px;margin:0 auto}
+.final-cta-eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;
+  color:var(--emerald);
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+.final-cta h2{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(32px, 4vw, 48px);
+  line-height:1.15;
+  letter-spacing:-0.01em;
+  margin-bottom:24px;
+}
+.final-cta p{
+  font-size:18px;
+  color:rgba(250,246,238,0.78);
+  margin-bottom:36px;
+  line-height:1.6;
+}
+.final-cta a{
+  display:inline-block;
+  background:var(--emerald);color:var(--ocean);
+  padding:16px 32px;border-radius:5px;
+  text-decoration:none;font-weight:600;font-size:15px;
+  transition:all 0.2s;
+}
+.final-cta a:hover{background:#2dd99c;transform:translateY(-1px)}
+
+/* ========== FOOTER ========== */
+footer{
+  background:var(--ocean);
+  color:rgba(250,246,238,0.6);
+  padding:32px;
+  text-align:center;
+  font-size:13px;
+  border-top:1px solid rgba(250,246,238,0.08);
+}
+footer a{color:var(--emerald);text-decoration:none}
+
+/* ========== MOBILE ========== */
+@media (max-width:640px){
+  body{font-size:16px}
+  nav{padding:14px 20px}
+  .nav-links{gap:18px;font-size:14px}
+  .hero{padding:64px 20px 56px}
+  .hero-lead{font-size:17px;margin-bottom:40px}
+  .stat-num{font-size:36px}
+  .about-book,.filters-section,.final-cta{padding-left:20px;padding-right:20px}
+  .gallery{padding:32px 20px 64px}
+  .gallery-grid{grid-template-columns:1fr;gap:18px}
+  .card{padding:24px 20px;min-height:auto}
+  .card-title{font-size:22px}
+  .filters-section{top:60px;padding:32px 20px 18px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">Cabana Tekoha</a>
+    <div class="nav-links">
+      <a href="/">Início</a>
+      <a href="/aves.html">Aves</a>
+      <a href="/quatro-seculos.html" class="current">História</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">A história de Itabaiana</div>
+    <h1>Quatro séculos depois — uma maternidade chamada Itabaiana.</h1>
+    <p class="hero-lead">
+      Foi aqui que Sergipe começou, em 1º de janeiro de 1590. Foi aqui que se fundou o primeiro grande centro de currais do Brasil colonial. Aqui se procurou a prata que nunca foi achada, se ouviu Antônio Conselheiro, se disse não à Bahia. Quarenta e sete momentos extraídos do livro de José de Almeida Bispo (2013) — para conhecer um lugar que tem o que contar.
+    </p>
+    <div class="stats">
+      <div>
+        <div class="stat-num">1590</div>
+        <div class="stat-label">O ano em que Sergipe nasceu, em Itabaiana</div>
+      </div>
+      <div>
+        <div class="stat-num">4 séculos</div>
+        <div class="stat-label">De história documentada por J. de Almeida Bispo</div>
+      </div>
+      <div>
+        <div class="stat-num">282</div>
+        <div class="stat-label">Páginas de pesquisa, fontes primárias e iconografia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-book">
+  <div class="book-card">
+    <div class="book-content">
+      <p class="book-meta">Sobre o livro · 2013</p>
+      <h2>Itabaiana, nosso lugar — quatro séculos depois</h2>
+      <p>Obra fundamental de José de Almeida Bispo, publicada em 2013 pelo próprio autor após anos de pesquisa em fontes primárias dos arquivos públicos. Reúne em três partes o panorama geográfico, humano e econômico do município, dezessete capítulos cobrindo desde a conquista de 1590 até o fim do século XX, e seis anexos com curiosidades históricas, biografias, cultura popular, lendas, mapas e índice remissivo.</p>
+      <p>Os verbetes desta página são adaptados do livro. Para a história completa — com todas as fontes, fotografias e mapas — baixe o PDF abaixo.</p>
+      <a href="/quatro-seculos-livro.pdf" class="book-btn" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Baixar livro completo (PDF · 15 MB)
+      </a>
+    </div>
+    <div class="book-graphic">
+      <div>
+        <div class="book-graphic-meta">Edição do autor · 2013</div>
+        <div class="book-graphic-author">282 páginas</div>
+      </div>
+      <div class="book-graphic-title">Itabaiana,<br>nosso lugar:<br><em>quatro séculos depois</em></div>
+      <div class="book-graphic-meta">José de Almeida Bispo</div>
+    </div>
+  </div>
+</section>
+
+<section class="filters-section">
+  <div class="filters-inner">
+    <span class="filter-label">Filtrar</span>
+    <button class="filter-btn" data-filter="destaques">Destaques <span class="filter-count">15</span></button><button class="filter-btn" data-filter="todos">Todos <span class="filter-count">47</span></button><button class="filter-btn" data-filter="origens">Origens <span class="filter-count">10</span></button><button class="filter-btn" data-filter="colonia">Vila & Colônia <span class="filter-count">5</span></button><button class="filter-btn" data-filter="imperio">Império <span class="filter-count">10</span></button><button class="filter-btn" data-filter="republica">República <span class="filter-count">3</span></button><button class="filter-btn" data-filter="seculo20">Século XX <span class="filter-count">6</span></button><button class="filter-btn" data-filter="lenda">Lendas <span class="filter-count">7</span></button><button class="filter-btn" data-filter="cultura">Cultura popular <span class="filter-count">6</span></button><button class="filter-btn" data-filter="personagem">Personagens <span class="filter-count">11</span></button>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="gallery-grid" id="grid"></div>
+  <div class="empty-state" id="empty" style="display:none">Nenhum verbete nesse filtro.</div>
+</section>
+
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modalClose" aria-label="Fechar">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<section class="final-cta">
+  <div class="final-cta-inner">
+    <div class="final-cta-eyebrow">Onde tudo isso acontece</div>
+    <h2>A serra de Itabaiana é o pano de fundo da Cabana Tekoha.</h2>
+    <p>É da nascente das águas dessa serra que vem o nome do município — e é à sua sombra que descansa o nosso refúgio. Venha conhecer o lugar onde a história ainda respira.</p>
+    <a href="/">Voltar à Cabana</a>
+  </div>
+</section>
+
+<footer>
+  <p>Cabana Tekoha · refúgio familiar em Itabaiana, Sergipe · acervo histórico adaptado de <a href="/quatro-seculos-livro.pdf">Almeida Bispo (2013)</a></p>
+</footer>
+
+<script>
+const VERBETES = [{"id": "batalha-pico", "titulo": "A batalha da Serra do Pico", "ano": "1º de janeiro de 1590", "era": "origens", "tags": ["origens", "destaques"], "resumo": "O dia em que Sergipe nasceu — em Itabaiana, com a morte do cacique Baepeba e o fim da resistência indígena.", "texto": ["A campanha de Cristóvão de Barros começou em 23 de dezembro de 1589, atravessando o rio Real à frente do exército enviado em nome de Felipe II de Espanha — então também rei de Portugal. Uma semana depois, ao alvorecer de 1º de janeiro de 1590, a luta terminou na Serra do Pico, último reduto da resistência indígena sergipana, com a morte do cacique Baepeba.", "O saldo da semana foi pesadíssimo: mil e seiscentos índios mortos, e cerca de quatro mil sobreviventes levados cativos para o Recôncavo Baiano, onde teriam o mesmo destino dos que os antecederam — desaparecer em poucos anos nos canaviais e nas fazendas dos colonos. Ainda no mesmo dia, Cristóvão de Barros desceu até a beira-mar e fundou a cidade de Sergipe d'El-Rei, hoje São Cristóvão.", "Por isso o autor chama Itabaiana de \"a maternidade de Sergipe\": foi nestes campos, ao pé das serras, que se encerrou a antiga ordem indígena e começou a história colonial do estado. A data integra o calendário cívico de Itabaiana até hoje."], "pagina": "59–60"}, {"id": "origem-nome", "titulo": "O lugar das águas", "ano": "Origem indígena", "era": "origens", "tags": ["origens"], "resumo": "\"Itabaiana\" vem da expressão tupinambá It'aba'ü'one — serra morada dos homens de onde vem as águas.", "texto": ["A palavra Itabaiana vem do tronco linguístico tupinambá. A composição mais aceita — pesquisada por Sebrão Sobrinho e cotejada com a Arte da Grammatica de Anchieta (1595) — desmembra o vocábulo em it'a (serra), aba (morada), abaé (homem) e ü'one (de onde vem a água, fonte).", "Para os índios, o nome se aplicava a todo o conjunto de serras baixas — da Serra do Quizongo à Itabaiana-açu, passando pela Comprida, Bauzinho e Boqueirão. Era de dentro deste cordão que nasciam os principais rios que abastecem Sergipe até hoje: Jacaracica, Cotinguiba, Poxim e o Rio das Pedras (originalmente Potypeba — \"rio do camarão pequeno\").", "Nos mapas mais antigos do Brasil, a Serra de Itabaiana já aparece em 1507 no Universalis Cosmographia de Martin Waldseemüller, com o nome de Santa Maria da Graça, batismo dado por Américo Vespúcio na sua passagem pela costa em 1501–1502."], "pagina": "57"}, {"id": "primeiras-sesmarias", "titulo": "As primeiras sesmarias", "ano": "1599–1623", "era": "origens", "tags": ["origens"], "resumo": "Dezoito sesmarias foram doadas em vinte e quatro anos. Apenas sete sobreviveram até a invasão holandesa.", "texto": ["Logo após a conquista, Cristóvão de Barros dividiu Sergipe em três porções. A área central — entre os rios Japaratuba e Vaza-Barris, onde está Itabaiana — coube a Ayres da Rocha Peixoto, que não conseguiu levar adiante a colonização.", "A primeira sesmaria efetiva foi doada em 1599 a Simão Dias Fontes, na região hoje conhecida como Cova da Onça (povoado no município de Moita Bonita). A segunda, em março de 1600, foi para Manoel da Fonseca, no território das atuais fazendas Santo Antônio e Tijuca, entre as serras da Ribeira e da Cajaíba.", "Das dezoito sesmarias doadas entre 1599 e 1623, apenas sete sobreviveram até a invasão holandesa de 1637. As demais sucumbiram à falta de capital dos sesmeiros e à dificuldade de uma terra ainda inóspita, com estradas que mal passavam de trilhas."], "pagina": "61–62"}, {"id": "lenda-prata", "titulo": "A lenda da prata e Melchior Dias Moréia", "ano": "1619–1622", "era": "origens", "tags": ["origens", "destaques", "personagem"], "resumo": "O neto do Caramuru achou prata em Itabaiana. Pediu compensação ao Rei. Foi torturado, preso e morreu sem revelar o lugar.", "texto": ["Por quarenta anos a notícia de uma serra de prata cruzou o Brasil, alimentada pela descoberta espanhola em Potosí (1534). Melchior Dias Moréia — neto de Diogo Álvares Correia, o Caramuru — fez expedições em 1580, 1592 e 1594 e encontrou prata. Como era costume, ofereceu o achado ao Rei pedindo compensações; durante quinze anos seguiu cobrando o pagamento sem sucesso.", "Em 1619, o recém-nomeado governador-geral D. Luiz de Souza acompanhou Melchior pessoalmente até Itabaiana. Ao chegarem a um outeiro junto à grande serra, Melchior teria dito: \"Suas Senhorias estão com os pés sobre as minas\". Mas exigiu primeiro o cumprimento das promessas. D. Luiz não tinha promessa nenhuma para cumprir — eram falsas. Melchior, ao perceber, calou-se. Foi preso, torturado, e sob a tortura apontou para a colina onde hoje é o povoado Serra das Minas (Campo do Brito) — onde nada havia.", "Levado preso para Salvador, ali permaneceu três anos. Solto em 1622 sob fiança que arruinou sua família, morreu no mesmo ano em sua fazenda no Jabiberi (atual Tobias Barreto), sem nunca revelar onde era a mina. A lenda da prata sobreviveu por mais um século e atraiu aventureiros até Itabaiana — sem que ninguém jamais encontrasse o tal minério."], "pagina": "63–64"}, {"id": "holandeses", "titulo": "Os holandeses em Itabaiana", "ano": "1637–1645", "era": "origens", "tags": ["origens"], "resumo": "A tropa de Sigismundo van Schkoppe entrou em Itabaiana atrás do gado e da prata, guiada por Domingos Calabar.", "texto": ["Em 1636, os holandeses obtiveram o apoio de Domingos Fernandes Calabar, brasileiro exímio conhecedor do interior. Calabar já estivera em Itabaiana em 1628, como guia da expedição de Francisco Dias de Ávila atrás da prata de Melchior. Aqui vira o progresso da criação de gado — que abastecia Salvador e Olinda — e levou a notícia aos invasores.", "Em 1637, a tropa de Sigismundo van Schkoppe chegou. Foi bem recebida e a criação de gado prosperou ainda mais sob seu domínio. Procuraram a prata onde Melchior apontara e na outra margem do Rio das Traíras, na Serrinha (hoje pedreira), sem nada encontrar.", "Da passagem holandesa veio o tesouro mais valioso para a história de Itabaiana: o mapa de Georg Marcgraf e Conrad Goliath, publicado em Amsterdã em 1646. Por séculos foi a mais fiel descrição de Sergipe — registra os sete currais existentes, o sítio de Simão Dias na Cova da Onça, um engenho movido a roda d'água onde hoje é a Fazenda Volta, e a Igreja Velha, único monumento sobrevivente do Ciclo do Gado."], "pagina": "65–66"}, {"id": "ciclo-gado", "titulo": "O Ciclo do Gado", "ano": "1620–1665", "era": "origens", "tags": ["origens", "destaques"], "resumo": "Itabaiana foi o principal centro irradiador da pecuária no Brasil colonial — o primeiro ciclo econômico do país.", "texto": ["O Ciclo do Gado foi o primeiro ciclo econômico do Brasil colonial. Itabaiana foi escolhida por dois motivos: era circundada por serras (controle natural do rebanho) e ficava a meio caminho entre os canaviais pernambucanos e Salvador, então capital colonial e ponto de abastecimento das frotas portuguesas a caminho das Índias.", "A pecuária havia sido tentada antes em São Vicente, sem sucesso — não havia mercado consumidor no Sul. Foi no Nordeste, e particularmente em Itabaiana, que ela se firmou. Em 1650 já existiam currais ao longo da estrada do Sertão do Meio, desde Itabaiana até a atual Neópolis, e dali subindo o São Francisco até o Porto da Folha.", "O sistema produtivo era cruel: o curraleiro era um vaqueiro meeiro, sem remuneração fixa, obrigado a dar lucro ao senhor das terras — que muitas vezes nem sabia onde elas ficavam. Da divisão do gado nasceram as apartações, que viraram festa e depois vaquejada. Daí também vêm o aboio e o reisado. Itabaiana só deixou de ser o principal centro criador em 1665, quando seus curraleiros foram expulsos por ordem do governador Alexandre de Souza Freire."], "pagina": "67"}, {"id": "igreja-velha", "titulo": "A Igreja Velha", "ano": "construída entre 1619 e 1637", "era": "origens", "tags": ["origens", "destaques"], "resumo": "Único monumento sobrevivente do Ciclo do Gado. Quase quatro séculos. Testemunho dos primeiros aboios nos campos brasileiros.", "texto": ["Erguida pelos curraleiros entre 1619 e 1637 — antes mesmo de existir a vila — a Igreja Velha é o único monumento que resta do primeiro ciclo econômico do Brasil. Suas ruínas, ainda em pé, viram nascer e morrer impérios, ciclos e regimes.", "A capela aparece registrada no mapa holandês de 1646 como única ermida religiosa da região durante a invasão. Era ali que se faziam os ofícios para os vaqueiros que criavam gado para abastecer Salvador, Olinda e as frotas portuguesas.", "Há também a lenda associada: dizem que a imagem de Santo Antônio se recusava a ficar na Igreja Velha e fugia toda noite para uma quixabeira a seis quilômetros. De tanto fugir, os padres se deram por vencidos e construíram a nova matriz junto à árvore — daí a alcunha de \"Santo Antônio da pracatinha\" (alpercatinha)."], "pagina": "67"}, {"id": "rebeliao-curraleiros", "titulo": "A rebelião dos curraleiros", "ano": "5 de novembro de 1656", "era": "origens", "tags": ["origens"], "resumo": "Os vaqueiros se rebelaram contra os impostos abusivos cobrados de Salvador. Prenderam o vigário. Foram expulsos em 1665.", "texto": ["Com a expulsão dos holandeses em 1645, os baianos voltaram a interferir em Sergipe. Em 1651 a Câmara de Salvador resolveu cobrar imposto sobre o gado de Itabaiana — que era de outra capitania — alegando despesas da guerra de Independência de Portugal. As fintas, como eram chamadas, recaíam sempre sobre os mais fracos.", "Em novembro de 1656 a revolta explodiu. Os curraleiros se rebelaram e mantiveram preso o vigário Sebastião Pedroso de Gois durante três dias por insistir nas ordens baianas. O conflito se arrastou por anos com intervenções da Câmara de São Cristóvão.", "A solução veio violenta: em 1665 o governador-geral Alexandre de Souza Freire expulsou os curraleiros de Itabaiana. Foi o fim do ciclo do gado na região. O dia 5 de novembro entrou no calendário cívico de Itabaiana como marco da rebelião."], "pagina": "67–68"}, {"id": "rodrigo-castelo-branco", "titulo": "D. Rodrigo de Castelo Branco e a expedição da prata", "ano": "1674–1679", "era": "origens", "tags": ["origens", "personagem"], "resumo": "O fidalgo veio com poderes excepcionais para encontrar a prata. Passou quatro anos despistando espiões. Saiu sem nada — e morreu assassinado.", "texto": ["Em 1674 o Príncipe Regente D. Pedro II de Portugal contratou D. Rodrigo de Castelo Branco para uma expedição secreta a Itabaiana. As condições eram extraordinárias: alto soldo, grande verba, e até o rendimento da captura de baleias na costa do Brasil. A tarefa: encontrar de uma vez a prata de Melchior.", "Chegou em 11 de julho de 1674. Passou quatro anos mais ocupado em despistar espiões estrangeiros do que procurando o minério. Sem resultados, partiu para o sul em fins de 1679, onde morreria assassinado por Manuel Borba Gato em 1682.", "De concreto, sua estadia em Itabaiana deixou apenas a criação da Paróquia de Santo Antônio e Almas, em 30 de outubro de 1675 — data que viraria o marco oficial da fundação da vila. Por um capricho do destino, sua morte empurrou os paulistas para os sertões de Minas Gerais, onde finalmente foi descoberto o ouro que faria a glória de D. Pedro."], "pagina": "75"}, {"id": "criacao-distrito", "titulo": "A criação do distrito", "ano": "13 de outubro de 1663", "era": "colonia", "tags": ["colonia"], "resumo": "A nomeação de Simão Fernandes Madeira como capitão de campo marca a chegada formal do governo a Itabaiana.", "texto": ["As confusões administrativas da invasão holandesa foram aproveitadas por populações marginalizadas — escravos negros e índios que fugiam aos montes para o sertão. Em Sergipe formavam-se quilombos o tempo inteiro.", "Para combatê-los na área sergipana, em 13 de outubro de 1663 foi nomeado Simão Fernandes Madeira como capitão de campo, também conhecido como capitão-do-mato. Em 1668 o cargo passou a Fernão Carrilho, que se tornaria figura nacional ao combater (sem destruir) o Quilombo dos Palmares.", "A perseguição aos quilombolas em Sergipe se prolongaria até o início do século XIX. O dia 13 de outubro entrou no calendário cívico como marco da criação do distrito."], "pagina": "73–74"}, {"id": "fundacao-vila", "titulo": "A fundação da Vila", "ano": "30 de outubro de 1675", "era": "colonia", "tags": ["colonia", "destaques"], "resumo": "Da estadia de D. Rodrigo de Castelo Branco sobrou a criação da Paróquia de Santo Antônio e Almas — marco da Vila.", "texto": ["Apesar de a expedição da prata de D. Rodrigo de Castelo Branco ter fracassado em seu objetivo principal, o efeito colateral foi decisivo: a criação da Paróquia de Santo Antônio e Almas da Itabaiana, em 30 de outubro de 1675. É essa a data oficial da fundação da Vila.", "A instalação da Câmara Municipal só viria em data incerta de 1697. O primeiro administrador (alcaide) nomeado foi João da Costa Feyo, em 16 de junho de 1700 — mas ele desistiu sem assumir, deixando o cargo vago até 1702, quando Manoel da Costa Morgado foi efetivado.", "A igreja como hoje conhecemos só viria a ser construída quase um século depois, em 1764. As datas 30 de outubro e 16 de junho compõem juntas o calendário cívico itabaianense."], "pagina": "75–77"}, {"id": "ouro-itabaiana", "titulo": "O ouro de Itabaiana", "ano": "1695", "era": "colonia", "tags": ["colonia"], "resumo": "Buscando a prata de Melchior, encontraram ouro. A descoberta foi guardada em sigilo absoluto por mais de cinquenta anos.", "texto": ["Em 1695 mais uma tentativa foi feita para encontrar a mina de prata de Melchior. Em vez de prata, encontrou-se ouro. As amostras foram colhidas por um padre e repassadas ao governo colonial.", "O sigilo foi tão grande que somente em 1751 os vereadores de São Cristóvão puderam saber aproximadamente onde tinha sido a descoberta. Naquele momento já estavam quase confirmadas as minas dos sertões paulistas — o que viria a ser Minas Gerais — e Itabaiana era considerada vulnerável demais (próxima do mar e sujeita a ataques estrangeiros) para abrigar uma mina exposta.", "A passagem clandestina pela qual entravam todos os aventureiros do ouro ficou registrada como Boqueraon Gold em mapas coloniais até meados do século XIX — é a passagem do Rio das Pedras entre as serras logo abaixo da represa do Projeto Ribeira."], "pagina": "76"}, {"id": "matriz-1764", "titulo": "A construção da matriz", "ano": "1764", "era": "colonia", "tags": ["colonia"], "resumo": "Quase um século depois de criada a paróquia, Dom José I de Portugal sensibilizou-se com a falta de templo digno e mandou construir a matriz.", "texto": ["Embora a Paróquia de Santo Antônio e Almas tenha sido criada em 1675, a igreja matriz como hoje conhecemos — com modificações ao longo do tempo — só veio a ser construída em 1764, quase um século depois.", "Dom José I de Portugal sensibilizou-se com a falta de um templo digno do Império português em Itabaiana. Mas, ironicamente, não deu a mínima para os pedidos do padre Francisco da Silva Lobo (1757) por uma fonte de água — algo de que a vila precisaria desesperadamente nas décadas seguintes.", "A carta do padre Silva Lobo descreve uma vila praticamente inexistente naquele ano, dependente apenas das águas do Tanque da Pedreira e somente no inverno, com a população tendo que se deslocar até os pés da serra para conseguir água o resto do ano."], "pagina": "75, 86"}, {"id": "ciganos", "titulo": "Os ciganos e a segunda onda migratória", "ano": "Século XVIII", "era": "colonia", "tags": ["colonia"], "resumo": "Após o século de \"solidão\" colonial, novos grupos chegaram a Itabaiana — entre eles, ciganos vindos de Pernambuco.", "texto": ["O capítulo \"Cem anos de solidão\" descreve o esvaziamento de Itabaiana após a expulsão dos curraleiros em 1665. Por boa parte do século XVIII a vila foi pouco mais que uma ideia administrativa — três séculos de isolamento que só seriam quebrados com a primeira estrada de rodagem do governo Graccho Cardoso, no século XX.", "A retomada da colonização veio através de duas ondas: uma de ciganos vindos de Pernambuco, e outra de famílias migrantes da grande leva pós-1720, entre elas os Pimentel — que adquiririam terras em 1759 onde hoje é Santa Rosa de Lima, fundando engenho que dera origem ao povoado.", "É dessa segunda onda que vão emergir as primeiras fortunas locais e renascer a política — preparando o cenário para o protagonismo de Itabaiana no processo de Independência de Sergipe."], "pagina": "88–90"}, {"id": "tecelagem", "titulo": "Tempos da roca e do fuso", "ano": "A partir de 1785", "era": "imperio", "tags": ["imperio"], "resumo": "\"As mulheres da Itabaiana são industriosas\", anotou D. Marcos de Souza. Uma rústica indústria de tecelagem que tirava o sono da Coroa.", "texto": ["Em 1785, sob pressão inglesa, a política industrializante do Marquês de Pombal foi vencida — proibindo no Brasil qualquer tipo de fabricação. Vinte anos depois, em minucioso relatório sobre Sergipe, D. Marcos de Souza já registrava que \"as mulheres da Itabaiana são industriosas\". Tinha nascido aqui uma tosca indústria de tecelagem.", "Era uma indústria que tirava o sono das autoridades coloniais — a Inglaterra pressionava Lisboa o tempo todo. Em Sergipe foi em Itabaiana onde a atividade mais se desenvolveu, baseada na roca, no fuso e em teares rudimentares, usando algodão crioulo.", "A indústria nunca passou do estágio artesanal. Ficou sempre na ilegalidade — inclusive depois da Independência, quando os contratos abusivos celebrados com a Inglaterra foram mantidos. Mas é dessa habilidade têxtil acumulada por gerações que sairia, no século XIX, a mão de obra para o grande ciclo do algodão itabaianense."], "pagina": "98"}, {"id": "dia-do-nao", "titulo": "O \"Dia do Não\" e a Independência de Sergipe", "ano": "21 de dezembro de 1821", "era": "imperio", "tags": ["imperio", "destaques"], "resumo": "A Câmara de Itabaiana disse não à Bahia. Foi a primeira a se rebelar. Liderou o movimento pela independência de Sergipe.", "texto": ["Em 8 de julho de 1820, D. João VI finalmente atendeu aos apelos sergipanos e separou Sergipe da Bahia. Mas em fevereiro de 1821, menos de um mês após assumir, o primeiro governador foi deposto pelos baianos. A Bahia não reconheceu a Independência sergipana — e mandou ordens a todas as câmaras municipais de Sergipe para enviarem representantes para Salvador eleger o governador que eles indicassem.", "Em sessão de 21 de dezembro de 1821, a Câmara Municipal de Itabaiana disse não. E em 27 de fevereiro de 1822 oficiou a todas as demais câmaras de Sergipe para que fizessem o mesmo. Ninguém foi a Salvador.", "Sob a liderança de José Matheus da Graça Leite Sampaio, dono de engenho e criador de gado, Itabaiana montou e presidiu a primeira Junta de Governo de Sergipe a partir de 1º de outubro de 1822 — antes mesmo de a Independência ser oficialmente confirmada por D. Pedro em outubro de 1823. O dia 21 de dezembro entrou no calendário cívico como o \"Dia do Não\"."], "pagina": "99–100"}, {"id": "leite-sampaio", "titulo": "Leite Sampaio, o herói esquecido", "ano": "1750–1829", "era": "imperio", "tags": ["imperio", "personagem"], "resumo": "O dono de engenho que liderou a rebelião pela independência de Sergipe, presidiu a primeira Junta e morreu sem ver sua obra reconhecida.", "texto": ["José Matheus da Graça Leite Sampaio nasceu por volta de 1750. Senhor de engenho e político, comandou desde 1805 a luta da Câmara Municipal de Itabaiana pela separação de Sergipe da Bahia, em sucessivos ofícios à Rainha D. Maria I.", "Quando os baianos depuseram o primeiro governador da nova Capitania em 1821, foi Leite Sampaio quem articulou a rebelião itabaianense que culminou no \"Dia do Não\". Antecipando-se ao reconhecimento oficial, montou e presidiu a primeira Junta de Governo de Sergipe a partir de 1º de outubro de 1822.", "Foi deputado provincial na primeira legislatura e indicado por D. Pedro I para a Assembleia Geral na Corte. Muito adoentado, conseguiu indicar substituto e faleceu em 29 de janeiro de 1829. Está sepultado junto ao altar da capela do antigo Engenho da Penha, hoje sul de Malhador. \"É o herói esquecido da Independência de Sergipe\", diz Almeida Bispo."], "pagina": "253–254"}, {"id": "coroneis", "titulo": "Camundongos x Rapinas", "ano": "Primeira metade do séc. XIX", "era": "imperio", "tags": ["imperio"], "resumo": "O coronelismo nasceu logo após a Independência. A política violenta dividia a vila em dois grupos — e os mortos se contavam.", "texto": ["A primeira metade do século XIX foi marcada pelo nascimento do coronelismo em Itabaiana. A Revolução de Santo Amaro abriu caminho para a divisão da política local em dois grupos rivais que ficariam famosos pelos apelidos: Camundongos e Rapinas.", "O confronto não era apenas verbal. Em 1848, a Polícia Municipal — então sob influência dos Camundongos — entrou em choque armado com a Guarda Nacional, leal ao presidente da província (Rapina). Resultado: três mortos. As eleições eram um exercício de violência ritualizada.", "A divisão entre as duas facções alimentaria a política itabaianense por décadas, ressurgindo sob outras siglas e nomes — UDN x PSD na metade do século XX, e culminando, mais de um século depois, na tragédia de 8 de agosto de 1963."], "pagina": "106–108"}, {"id": "tobias-barreto", "titulo": "Tobias Barreto em Itabaiana", "ano": "1855–1861", "era": "imperio", "tags": ["imperio", "personagem"], "resumo": "O futuro fundador da Escola do Recife passou seis anos como professor de Latim em Itabaiana. Daqui partiu para Olinda.", "texto": ["Em 1855, um professor de Latim foi transferido da cadeira de Vila Nova para a vila de Itabaiana. A crônica oficial sequer registrou seu nome — era um desconhecido, sem importância. Seu nome: Tobias Barreto de Menezes.", "Ficou em Itabaiana até 1861, mesmo já com licença do cargo desde 1858. Daqui partiu para a Faculdade de Direito de Olinda, de onde sairia para influenciar gerações de brasileiros que pensaram e fizeram o Brasil — fundando a Escola do Recife, marco do pensamento jurídico e filosófico brasileiro.", "Sua passagem por Itabaiana, ainda hoje pouco lembrada, coincide com um dos momentos mais difíceis do município: as duas grandes pestes do cólera (1852 e 1855) que reduziram a população local quase pela metade."], "pagina": "112"}, {"id": "peste-colera", "titulo": "A grande peste do cólera", "ano": "1852 e 1855–1856", "era": "imperio", "tags": ["imperio", "destaques"], "resumo": "Duas ondas de cólera quase exterminaram Itabaiana. De 18.957 habitantes em 1852, sobraram 11.298 em 1857.", "texto": ["A cólera-morbus chegou em Itabaiana em julho de 1852, ainda sem ser identificada. Uma disenteria \"amorfa, desconhecida\" matou mais de setenta pessoas na vila. Era doença nova, vinda do sudeste asiático. A ignorância em relação a ela igualava a sua letalidade.", "Em setembro de 1855 voltou — desta vez muito mais virulenta. As autoridades fugiram da vila, exceto o padre e o delegado. O médico Dr. Manoel Simões de Mello, mandado para cuidar dos doentes, perdeu toda a família para a moléstia. Cadáveres ficavam insepultos por dias. Os habitantes pediram em 3 de outubro a transferência da vila para o pé da serra. Ao fim da calamidade, em fevereiro de 1856, contaram-se oficialmente 403 mortos só entre vila e Campo do Brito.", "O recenseamento de 1858 mostrou o desastre: dos 18.957 habitantes de 1852, sobraram 11.298 em 1857 — num município cuja projeção apontava para crescimento. A peste matou ou expulsou cerca de quarenta por cento da população em cinco anos."], "pagina": "113–114"}, {"id": "ciclo-algodao", "titulo": "Os campos do ouro branco", "ano": "1860–1875", "era": "imperio", "tags": ["imperio", "destaques"], "resumo": "O algodão fez avançar lavouras sobre as Matas. Em quinze anos, gerou riqueza, mudou a paisagem e empobreceu a todos.", "texto": ["O ciclo do algodão começou em 1860 e foi a era dourada de Itabaiana. O algodão, ao contrário da cana, só precisa de chuva até a floração — três meses depois do plantio. Era ideal para os sertões. As lavouras avançaram sobre as Matas de Itabaiana até onde hoje é Carira, transformando a paisagem.", "Em 1872 a produção atingiu seu apogeu. Mas em 1875 o preço já tinha caído a vinte por cento do valor verificado três anos antes. A cultura nasceu e morreu como garimpo — gerou muita riqueza e empobreceu a todos sem avisar. Não houve investimento em estradas, em melhoria genética, em estudos sobre seca ou pragas.", "Os desdobramentos foram imediatos: o município começou a se desmembrar. Riachuelo emancipou-se em 1874, Frei Paulo (com Carira) em 1890. A cultura do algodão ainda sobreviveria em Itabaiana até 1971, quando a Fábrica São Luiz — popularmente o \"Vapor de Joãozinho Tavares\" — registrou a última produção. Era o fim de mais de um século de ouro branco."], "pagina": "120–122, 167"}, {"id": "antonio-conselheiro", "titulo": "Antônio Conselheiro em Itabaiana", "ano": "1874", "era": "imperio", "tags": ["imperio"], "resumo": "O pregador passou pela vila em 1874. Anos depois, com a crise, muitos itabaianenses o seguiriam até Canudos.", "texto": ["Em plena seca, com agitações políticas pré-republicanas, inflação da Guerra do Paraguai e queda dos preços agrícolas, passou por Itabaiana em 1874 um pregador chamado Antônio Conselheiro. Teria sido apenas mais um — desses comuns naqueles tempos.", "Mas o agravamento da crise depois de 1878 transformou a passagem num episódio histórico. Muitos itabaianenses mais pobres, especialmente dos sertões, seguiram o curso do Vaza-Barris até a cidadela de Canudos — antiga missão jesuítica abandonada onde Conselheiro fundou seu arraial.", "Quando o Exército brasileiro destruiu Canudos em 1897, parte dos mortos era de Itabaiana. Um capítulo silencioso da história local, que liga este município sergipano a um dos episódios mais traumáticos da formação da República brasileira."], "pagina": "129"}, {"id": "elevacao-cidade", "titulo": "Santo Antônio da Itabaiana: uma cidade", "ano": "28 de agosto de 1888", "era": "imperio", "tags": ["imperio", "destaques"], "resumo": "A vila virou cidade quase por acidente — uma emenda ardilosa do deputado Bezerra para beneficiar dois irmãos professores.", "texto": ["A Resolução Provincial 1.331 tratava da elevação da vila de Capela ao status de cidade. Em 28 de agosto de 1888, o deputado Guilhermino Amâncio Bezerra apresentou uma emenda incluindo Itabaiana no decreto. Aceita. A vila virou cidade.", "O ato foi puramente ardiloso: Bezerra queria melhorar os salários de dois professores irmãos seus. Nada havia mudado em Itabaiana que justificasse o novo status. Tanto que até a terceira década do século seguinte ainda havia gente na zona rural que se referia a Itabaiana como \"vila\".", "Em agosto de 1888 a cidade tinha duas ruas completas (Marechal Floriano Peixoto e General Valadão), uma praça (Fausto Cardoso), e seis ruas em começo. Não havia um único prédio público do Estado. Galinhas pastavam em frente às residências e bodes descansavam à sombra das árvores. O dia 28 de agosto entrou no calendário cívico como aniversário da cidade."], "pagina": "131–132"}, {"id": "itajay", "titulo": "Manuel Batista Itajay", "ano": "1888–1918", "era": "republica", "tags": ["republica", "personagem"], "resumo": "Médico vindo de Lagarto em 1888 para tratar enfermidades, virou chefe político e chegou a vice-presidente do Estado.", "texto": ["Médico formado pela Faculdade da Bahia em 1886, Manuel Batista Itajay chegou em Itabaiana em junho de 1888 contratado pelo governo do Estado para tratar enfermidades — quando a vila ainda absorvia a Lei Áurea. Dois meses depois ela viraria cidade.", "Ingressou na política ocupando o espaço deixado pelas lideranças do período monárquico. Foi várias vezes deputado estadual, intendente municipal por dois períodos, e em 1908 foi eleito vice-presidente do Estado. Assumiu como titular em julho de 1909 — para ser deposto três meses depois, acusado de dar um golpe ao publicar uma falsa carta de renúncia do titular.", "Mandou em absoluto na política itabaianense por dez anos (1899–1914). Do seu tempo ficaram as primeiras tentativas de dotar a sede municipal de uma situação digna do nome de \"cidade\". Faleceu em 31 de janeiro de 1918, em Aracaju, na Rua Itabaiana."], "pagina": "255"}, {"id": "estrada-graccho", "titulo": "A primeira estrada de rodagem", "ano": "1928", "era": "republica", "tags": ["republica"], "resumo": "Maurício Graccho Cardoso abriu a estrada que acabou com três séculos de isolamento. Itabaiana saiu da era do carro de boi.", "texto": ["O governador Maurício Graccho Cardoso (1922–1926) é apontado por Almeida Bispo como o grande benfeitor de Itabaiana. Sua administração marca uma virada definitiva: foi sob ele que se abriu a primeira estrada de rodagem ligando Itabaiana ao restante do estado.", "Antes da estrada, a viagem entre Itabaiana e Aracaju era \"por demais penosa\". Mercadorias eram transportadas em tropas de mulas e carros de boi. Uma viagem a Salvador podia levar duas semanas. A estrada acabou com três séculos de isolamento — e consequente subdesenvolvimento — e lançou os itabaianenses comerciantes a fronteiras bem mais distantes.", "Graccho também reformou o prédio da Prefeitura, mantendo até fins dos anos 60 a águia em seu frontispício como símbolo do grande benfeitor. Esperidião Noronha, músico e político local, foi quem chegou primeiro com um caminhão à cidade tão logo a estrada permitiu — iniciando a saga dos pequenos agricultores que se tornaram feirantes e dos transportadores que ajudariam a enriquecer Itabaiana de forma mais igualitária."], "pagina": "256"}, {"id": "revolucao-1930", "titulo": "A Revolução de 1930 em Itabaiana", "ano": "1930–1945", "era": "republica", "tags": ["republica"], "resumo": "A Revolução cassou Antônio Dultra e iniciou a transição para a era do Estado Novo. Sebrão e Esperidião Noronha caíram com ela.", "texto": ["A Revolução de 1930 trouxe à Itabaiana uma reorganização política completa. Antônio Dultra de Almeida — o \"Sinhozinho Dultra\", eleito em 1928 para o triênio 1929–1931 — perdeu o mandato cassado pela Revolução. Voltaria à política em 1934, presidindo o Conselho Consultivo criado para substituir a Câmara Municipal.", "Em novembro de 1937, o golpe do Estado Novo implantou a ditadura getulista. Os efeitos chegaram rápido a Itabaiana: o coronel José Sebrão de Carvalho foi cassado, assim como Esperidião Noronha e todos os vereadores eleitos em 1934. Silvio Teixeira manteve-se no cargo de prefeito, com mandato prorrogado por tempo indeterminado.", "Em 1941, Manoel Francisco Teles assumiu — uma das lideranças que dominaria a cena por três décadas. Foi mantido como prefeito nomeado até 1945. Ao mesmo tempo, em 1936/1937, o Grupo Escolar Guilhermino Bezerra era construído — o primeiro grande sinal de civilidade na minúscula cidade, e o início real das chances de ascensão social para uma população empobrecida."], "pagina": "150–154"}, {"id": "grupo-escolar", "titulo": "O Grupo Escolar Guilhermino Bezerra", "ano": "1936–1937", "era": "seculo20", "tags": ["seculo20", "destaques"], "resumo": "A construção da primeira escola pública mudou a paisagem e iniciou a chance real de ascensão social em Itabaiana.", "texto": ["A construção do Grupo Escolar Guilhermino Bezerra em 1936/1937 foi, segundo Almeida Bispo, \"o primeiro grande sinal de civilidade na minúscula cidade de Itabaiana\". Sua imponência mudou a paisagem da bissecular vila.", "Junto com a inauguração da estrada de rodagem nove anos antes, foi o grande momento da virada. Desde então a cidade não parou de crescer. Sepultou a condenação secular ao analfabetismo num lugar de pequenos agricultores, pequenos comerciantes e quase nenhum prestador de serviços.", "O autor relata o testemunho de João Batista da Costa — o \"Joãozinho da Padaria\", futuro vereador — que decidiu morar em Itabaiana ao ver os estudantes saindo do Grupo Escolar ao fim de um turno matutino: \"Esse é um lugar que vai pra frente\", pensou. E ficou."], "pagina": "153"}, {"id": "maria-iselt", "titulo": "Maria Iselt da Fonseca, a primeira vereadora", "ano": "1947", "era": "seculo20", "tags": ["seculo20", "personagem"], "resumo": "A primeira mulher a exercer cargo público eletivo em Itabaiana — eleita vereadora e secretária da Câmara Municipal.", "texto": ["Maria Iselt da Fonseca nasceu em 6 de dezembro de 1907, filha do tabelião Rufino José da Fonseca. Aos 18 anos já era escrivã no Cartório do 2º Ofício, sob os cuidados do pai.", "Foi eleita vereadora nas eleições de 1947, para o quadriênio 1947–1950, tendo sido também eleita secretária da Câmara Municipal. Foi a primeira mulher a exercer um cargo público eletivo em Itabaiana — feito permitido pela Constituição de 1934, que acabou com o sistema de votação que excluía mulheres.", "Sua eleição marca, na cronologia local, o início da participação feminina na vida pública municipal — décadas depois da Independência, da abolição e da República."], "pagina": "255"}, {"id": "era-euclides", "titulo": "A era Euclides Paes Mendonça", "ano": "1950–1963", "era": "seculo20", "tags": ["seculo20", "destaques", "personagem"], "resumo": "Treze anos de domínio. \"A melhor fase da história efetiva do município\" — segundo o próprio autor — coincidindo com o Nacional-Desenvolvimentismo.", "texto": ["Euclides Paes Mendonça nasceu em 1916 no povoado Serra do Machado, hoje Ribeirópolis. Em 1950, ainda na largada da UDN em Sergipe, ganhou a eleição para prefeito de Itabaiana. Administraria o município (direta ou indiretamente) até sua morte em 1963.", "Os treze anos de Euclides são considerados pelo autor \"a melhor fase pela qual o município efetivamente passou durante toda a sua história\". O mérito, no entanto, não é creditado ao chefe político — e sim à conjuntura nacional do Nacional-Desenvolvimentismo varguista, que beneficiou Itabaiana com torrente de investimentos do Estado e da União.", "A década de 50 foi fantástica: pavimentação de vias, conservação de estradas vicinais, regulamentos modernos de administração. Mas o controle político de Euclides era violento. Ao remontar a Guarda Municipal em 1962 — depois da vitória de Seixas Dória ao governo do Estado — entrou em rota de colisão direta com a polícia estadual. O cenário esquentou até a tragédia."], "pagina": "172–183, 191–192"}, {"id": "8-agosto", "titulo": "8 de agosto de 1963: a tragédia", "ano": "8 de agosto de 1963", "era": "seculo20", "tags": ["seculo20", "destaques"], "resumo": "Uma passeata de estudantes pediu água. Em frente à Prefeitura, uma rajada de metralhadora matou Euclides Paes Mendonça e seu filho deputado.", "texto": ["Em 1963 vários fatores conspiraram. O coronelismo de Euclides incomodava até partidários. A Guarda Municipal, recém-armada, atritava com a polícia estadual. No plano nacional, a montagem do golpe de 1964 semeava desordem. Localmente, a falta de água era crônica — Itabaiana dependia havia mais de cem anos do Tanque do Povo e das chuvas.", "Em 8 de agosto, do nada, surgiu uma passeata de estudantes do Colégio Estadual Murilo Braga protestando contra a demora na instalação da rede de água encanada. Foi a primeira e única passeata desse tipo na história da cidade. O governo do Estado mandou uma força policial descomunal para protegê-la. Infiltrados do PSD local marchavam junto.", "Em frente à Prefeitura, o deputado federal Antônio de Oliveira Mendonça — filho de Euclides — saiu para tirar uma foto com a câmera em punho. Alguém deu um tiro da direção do Banco do Brasil em construção. Uma rajada de metralhadora arrancou o maxilar inferior do deputado. Da esquina mais próxima, em frente à sua casa, Euclides correu em direção ao filho — e foi alvejado por outra rajada. Pai e filho mortos. A cidade, perplexa.", "A morte de Euclides ganhou cobertura nacional em meio ao clima de radicalismo que precedeu o golpe de 1964. Sete meses depois, a mesma mídia que cobria a tragédia apoiaria integralmente a implantação da Ditadura Militar."], "pagina": "186–187"}, {"id": "chico-de-miguel", "titulo": "O domínio de Chico de Miguel", "ano": "1967–2007", "era": "seculo20", "tags": ["seculo20", "personagem"], "resumo": "Quarenta anos de poder. Eleito deputado em 1966. Cassado em 1967 por envolvimento na morte de Manoel Teles. Voltou e dominou.", "texto": ["Francisco Teles de Mendonça — Chico de Miguel — nasceu no povoado Várzea do Gama em 1926. Elegeu-se deputado estadual pela primeira vez em 1966, mas teve o mandato cassado ao fim de 1967 por envolvimento na morte do ex-deputado Manoel Francisco Teles, em 31 de agosto de 1967 — quatro anos e vinte e dois dias depois da tragédia de 8 de agosto.", "Proibido de lançar candidatos em 1970, apoiou José Filadelfo Araújo, que ganhou. A partir daí, Chico construiu uma máquina familiar formidável: elegeu seu candidato a prefeito em 1972, seu filho mais velho à Assembleia em 1974, outro filho à Prefeitura em 1976. Em 1986, mesmo rompido com o governo do Estado, reelegeu-se folgadamente.", "Em 2004, sua filha Maria Mendonça finalmente venceu a Prefeitura. Três anos depois, em 23 de dezembro de 2007, faleceu Chico de Miguel — depois de quarenta anos de poder. \"O segundo mais longevo líder na história política de Itabaiana\", registra Almeida Bispo."], "pagina": "253–254"}, {"id": "sabarabocu", "titulo": "A Sabaraboçu, a serra que explode em ouro", "ano": "Lenda colonial", "era": "lenda", "tags": ["lenda", "destaques"], "resumo": "Os brancos mexeram com o sossego dos espíritos da serra. Em troca, a serra negou o ouro e amaldiçoou os aventureiros com explosões fantasmas.", "texto": ["Diz a lenda que os brancos que queriam extrair o ouro da grande serra de Itabaiana mexeram com o sossego dos espíritos da natureza, e pagaram caro por isso. A serra lhes negou o ouro. E para desespero deles, quando já se achavam a algumas léguas de distância, foram surpreendidos por uma colossal explosão aurífera que mandava pepitas gigantescas pelos ares.", "Voltavam ao sopé da serra atrás das pedras — e não encontravam nada. Amaldiçoavam a serra. Várias vezes retornaram, atraídos por novas explosões — capricho dos espíritos da natureza castigando os aventureiros. Dizem que essas explosões continuaram por séculos.", "Almeida Bispo explica a origem: Sabaraboçu foi mito comum em todo o Brasil colonial. O nome quer dizer \"serra branca que resplandece\". A primeira serra a ser levada a sério como possível mina de prata foi a de Itabaiana — e aqui a lenda se fundiu com a história real de Melchior Dias Moréia, criando essa mitologia da serra que explode em ouro mas nunca o entrega."], "pagina": "263"}, {"id": "carneiro-ouro", "titulo": "O carneiro de ouro", "ano": "Lenda colonial", "era": "lenda", "tags": ["lenda", "destaques"], "resumo": "Em agosto, ao luzir das pedras das vertentes da serra, um carneiro de ouro encantado atrai os usurentos para a morte nos abismos.", "texto": ["Dizem alguns contadores de histórias que na serra de Itabaiana existe um carneiro de ouro encantado. Aparece principalmente em agosto — época de chuvas ligeiras seguidas de sol forte, quando as pedras das vertentes luzem ao refletir os raios solares. Os aventureiros, na ânsia de capturar o ouro que parece fluir da serra, sobem perturbando o meio.", "A usura desperta os espíritos das matas. Encantado, um deles se transforma num formoso carneiro de ouro. Atrai o usurento até as fendas abruptas da serra, fazendo-o precipitar-se no abismo. Os antigos afirmavam que muitos lá perderam a vida, e nunca mais foram achados — nem corpos, nem esqueletos.", "Como um arco-íris, o carneiro aparece e desaparece sem deixar vestígios. É outra das lendas que a serra produziu para conviver com a obsessão colonial pela prata e pelo ouro que ela nunca entregou."], "pagina": "263"}, {"id": "santo-antonio-fujao", "titulo": "Santo Antônio fujão", "ano": "Lenda colonial", "era": "lenda", "tags": ["lenda"], "resumo": "A imagem não se conformou em ficar na Igreja Velha. Toda noite fugia. Os padres cansaram e mudaram a igreja.", "texto": ["Conta a lenda que a imagem de Santo Antônio, esculpida em madeira, não se conformou em ficar na Igreja Velha — a primeira igreja construída em Itabaiana, antes mesmo que houvesse vila ou cidade. Teimosamente fugia em todas as noites em que era levada para lá.", "Era encontrada embaixo de uma quixabeira, ao lado da sede da fazenda denominada Caatinga de Ayres da Rocha Peixoto. Por mais que os religiosos a levassem de volta para o altar, a imagem aproveitava a calada da noite e caía na estrada, voltando para a quixabeira — distante seis quilômetros.", "Pessoas na época juravam ter visto suas pegadas nas areias da estrada. Daí o apelido de Santo Antônio da \"pracatinha\" (alpercatinha — o chinelo pequeno do santo). De tanto fugir, os padres se deram por vencidos e transferiram a igreja para junto da quixabeira, acabando de vez com as estripulias fugitivas do santo."], "pagina": "264"}, {"id": "india-ita", "titulo": "A índia Ita, a baiana", "ano": "Lenda popular", "era": "lenda", "tags": ["lenda"], "resumo": "Quando a origem do nome se perdeu no tempo, inventaram uma índia dançarina chamada Ita, vinda da Bahia.", "texto": ["A formação do nome Itabaiana vem diretamente do tronco linguístico tupinambá. Mas o significado se perdeu no tempo. Quando algum estranho — ou crianças, ou adultos curiosos — perguntava aos tidos como mais inteligentes sobre a origem do nome, vinha a história fantasiada.", "Diziam que era em homenagem a uma índia chamada Ita, vinda da Bahia de Todos os Santos. Ela costumava dançar junto ao arraial sob um coro de palmas dos presentes que exclamavam eufóricos: \"Ita, a baiana!\". E daí teria se originado o nome.", "É um exemplo perfeito de etimologia popular: quando o significado original some, a língua inventa uma história nova para preencher o vazio — e essa história ganha vida própria."], "pagina": "264"}, {"id": "mbucarae", "titulo": "Mbuçarãe, a lenda da lagoa do Forno", "ano": "Lenda indígena", "era": "lenda", "tags": ["lenda"], "resumo": "O grande Panema, tomado por ciúme doentio, matou a esposa amada. De suas lágrimas nasceu a lagoa que leva o nome dela.", "texto": ["Panema, grande índio guerreiro e senhor das selvas do vale do Rio das Pedras, vivia feliz com sua esposa, a bela Mbuçarãe. Corroído de inveja, o malévolo Abaçaí teceu intrigas contra a bela junto ao marido. Tomado de ciúme doentio, fora de si, Panema esperou a amada de seu retorno dos riachos do pé da grande serra — e a matou.", "Depois do louco acesso, caiu em si. Vagou pela terra em lamentos, infeliz e desventurado. Seu nome passou a ser sinônimo de infortúnio. De suas lágrimas copiosas nasceu a lagoa, que ganhou o nome da amada — conhecida nos tempos coloniais pelo nome de Mossaranha (corruptela de Mbuçarãe), e atualmente como lagoa do Forno.", "O local da trágica morte ficou conhecido como Mondé, hoje Mundés — que na língua tupinambá significa tocaia. O povoado Mundés perdeu a denominação original, hoje substituída pelo genérico Rio das Pedras (km 40 da BR-235), e o nome só sobrevive sobre o cemitério local. A lagoa do Forno jaz sob intenso capinzal alienígena que lhe invadiu o leito desde os anos 80."], "pagina": "264"}, {"id": "mae-dagua", "titulo": "A mãe d'água do poço dos carros", "ano": "Lenda colonial", "era": "lenda", "tags": ["lenda"], "resumo": "A iara do Rio das Pedras virou donzela, distraiu o carreiro, levou os bois para o fundo. E desapareceu, deixando um poço amaldiçoado.", "texto": ["Há um poço no Rio das Pedras onde dizem ter existido uma mãe d'água — como é chamada a Iara por ali. Quando foi aberta a Estrada Real, que vai de Itabaiana a São Cristóvão cruzando o rio entre os povoados Forno e Mangabeira, a região era dominada por matas densas e tabuleiros onde corriam veados, pacas, tatus e onças.", "A estrada tanto desassossegou o meio natural que essa mãe d'água — residente debaixo de uma pedra, hoje coberta de areia, dentro do poço — resolveu se vingar. Ao passar por ali um jovem carreiro levando mercadorias para o porto de São Cristóvão, ela se transformou numa belíssima donzela. Desviou a atenção do moço, que não cuidou de bem guiar os bois. Os carros e juntas caíram no profundo poço.", "Morreram todos. Por isso o poço ganhou o nome de Poço dos Carros. Os moradores que ali colocavam comida sobre uma pedra para agradar a mãe d'água perceberam sua ausência depois. Ela foi embora. Em vingança, requisitou a ira dos espíritos: chuvas copiosas desceram um enorme volume de areia, sepultando para sempre sua antiga morada e o resto dos carros nas profundezas arenosas."], "pagina": "265"}, {"id": "mathiapoans", "titulo": "A maldição dos mathiapoans", "ano": "Lenda indígena", "era": "lenda", "tags": ["lenda"], "resumo": "Uma tribo má caluniou Coaraci, a deusa-lua. Foi banida e amaldiçoada como gente redonda e má.", "texto": ["Antes dos brancos, os índios viviam segundo suas crenças, guardando zelo com os espíritos das matas, das serras, dos rios, com Jaci, a lua, e Tupã, o sol. Mas eis que na terra uma tribo de maus hábitos — os miriqui-nã, donde vem o nome dos periquitos maracanãs — resolveu interferir na vida dos deuses.", "Um principal da tribo criou uma calúnia contra Coaraci, a deusa-mãe-lua: dizia tê-la visto em ardente colóquio amoroso com um espírito da serra grande. Saiu contando em todas as tendas. Foi um escândalo. O grande chefe boimé convocou assembleia à margem do riacho da Canabrava — onde ainda hoje se chama Boi Mel.", "Por unanimidade, decidiram banir do convívio aquela tribo de gente má. Para que ninguém esquecesse, foram apelidados de mathiapoam — \"gente redonda e má\". O autor observa que a história, contada sempre pela ótica do vencedor, possivelmente inverteu os papéis: os mathiapoans podem ter sido os temidos guerreiros liderados por Mbaepeba, derrotados por Cristóvão de Barros na Serra do Pico em 1590."], "pagina": "266"}, {"id": "reisado", "titulo": "O Reisado", "ano": "Tradição vaqueira", "era": "cultura", "tags": ["cultura", "destaques"], "resumo": "O grande folguedo símbolo de Itabaiana — manifestação de reverência ao rei sob o ponto de vista da cultura vaqueira. Acabou nos anos 70.", "texto": ["O reisado pode ser considerado o grande folguedo símbolo de Itabaiana. É manifestação de reverência ao rei, mas sob o ponto de vista da cultura vaqueira — cultura que tem em Itabaiana, primeiro grande centro de currais do Brasil, seu núcleo de raiz.", "Por décadas, supõem-se séculos, foi a grande diversão mundana na zona rural. Começava ao fim do duro trabalho de plantio, cultivo e colheita — geralmente nos fins de agosto. O calendário de exibições começava na segunda quinzena de setembro e só terminava no domingo de Carnaval.", "Acabou na década de 70. As companhias eram compostas em sua maioria por mulheres rejeitadas pela sociedade — \"mulheres solteiras\", como eram chamadas as que perdiam a virgindade sem se casar. Quando chegaram novas modalidades de diversão em 1970, todos os pecados do reisado foram lembrados, seu estigma potencializado, e o folguedo foi extinto pelo \"primitivo capitalismo\", como diz Almeida Bispo."], "pagina": "261"}, {"id": "samba-roda", "titulo": "Os sambas de roda", "ano": "Tradição popular", "era": "cultura", "tags": ["cultura"], "resumo": "A modalidade de manifestação cultural mais comum. Origem de boa parte dos clássicos do forró. Sobreviveu nas escolas até os anos 70.", "texto": ["O samba de roda foi a modalidade de manifestação cultural popular mais comum em Itabaiana — dele derivando boa parte dos conhecidos clássicos do forró, especialmente nos refrões. Consistia em uma roda de pessoas a girar, fazendo evoluções enquanto cantavam e sincronizavam os passos ao canto, com ou sem sapateado.", "O canto era puxado pelo \"puxador de versos\", que podia ser fixo numa só pessoa ou girar por toda a roda, enquanto os demais respondiam com o refrão. O gênero sobreviveu nos cantos de recreio das escolas até meados dos anos 70 — e ainda se pratica muito raramente, mesmo sem o saber, no mesmo espaço.", "Antes mesmo do aparecimento da TV, o samba de roda costumava preencher as noites juninas. Era companheiro inseparável de qualquer ajuntamento, especialmente nos mutirões."], "pagina": "261"}, {"id": "vaquejada", "titulo": "A vaquejada e a cultura vaqueira", "ano": "Tradição vaqueira", "era": "cultura", "tags": ["cultura"], "resumo": "A festa de apartação dos primeiros currais brasileiros. Itabaiana foi um grande centro distribuidor — e a vaquejada quase desapareceu do cenário local.", "texto": ["A vaquejada nasceu da apartação — ato de separar o gado para repartir o lucro entre o senhor da terra e o curraleiro meeiro. Era atividade comercial necessária que virou festa concorrida. Junto com o aboio e o reisado, é parte da cultura vaqueira que tem em Itabaiana o seu núcleo de raiz.", "Como o reisado, a vaquejada é festa popular símbolo de Itabaiana — já que aqui foi um grande centro distribuidor da primeira grande atividade econômica do Brasil colonial. Mas, infelizmente, por se tratar de iniciativas pessoais sem estrutura adequada, sua execução desapareceu quase por completo do cenário itabaianense.", "Almeida Bispo lamenta: \"Em que pese a simbologia que Itabaiana representa para a pecuária brasileira, o desconhecimento dessa importância histórica, bem como a concorrência com novas modalidades de diversão, eliminou a vaquejada quase que por completo do nosso meio.\""], "pagina": "261"}, {"id": "mutiroes", "titulo": "Os mutirões — \"batalhões\"", "ano": "Tradição rural", "era": "cultura", "tags": ["cultura"], "resumo": "Sem recursos financeiros, os agricultores desenvolveram a ajuda mútua. Ajuntamento, bebida, cantoria — e o trabalho fluindo coletivo.", "texto": ["Com poucos recursos financeiros, os agricultores itabaianenses desenvolveram um estilo de ajuda mútua — os mutirões, também chamados \"batalhões\". Eram para preparar a terra, fazer a colheita, depois beneficiar a produção, e até para construir casas de taipa.", "Os mais comuns eram o batalhão agrícola — abertura de covas, plantio, colheita — e o batalhão de beneficiamento ou silagem, executado dentro de casa, à noite, em grupos numerosos. Para os noturnos eram exigidos certos aditivos: bebida (alcoólica ou não, em geral ambas), e a presença dos \"loroteiros\" — cantadores, contadores de anedotas e mentiras fantásticas que mantinham a meninada acordada.", "Na tapagem das casas de taipa, mulheres e crianças carregavam água em cabaças e potes, enquanto os homens faziam o barro, transportavam em banguês e tapavam. Não podia faltar o ritual: ajuntamento, bebida, cantoria. Se a casa era para futuros casais, ao fim vinha a festa com danças ao som de rabecas, pífanos e zabumba."], "pagina": "258–259"}, {"id": "festa-mastro", "titulo": "A Festa do Mastro", "ano": "Festa junina tradicional", "era": "cultura", "tags": ["cultura"], "resumo": "A única festa de cunho popular relatada na história da cidade — uma festa junina elitista, registrada em foto desde 1908.", "texto": ["Apenas uma festa de cunho popular é relatada na história da cidade urbana de Itabaiana: a Festa do Mastro, por ocasião dos festejos juninos. Tinha origem desconhecida e era a principal festa urbana de caráter popular na primeira metade do século XX.", "Apesar de \"popular\", era uma festa com toque elitista. Uma fotografia de 1908 mostra a celebração na Rua Barão do Rio Branco, com a presença das bandas marciais (Santo Antônio ou Nossa Senhora da Conceição). Por pura teimosia familiar, ainda existem alguns de seus traços.", "Na zona rural a coisa era diferente: vicejava a cultura popular nos festejos religiosos, procissões, noites de reza, reisados, sambas de roda, danças, paus-de-sorte, paus-de-sebo, quebra-potes e vaquejadas. A cidade, por sua vez, vivia \"a seriedade hipócrita de suas autoridades\", com o samba proibido formalmente — embora nunca tenha deixado de ser feito."], "pagina": "257, 260"}, {"id": "meladinhas", "titulo": "As meladinhas — ritual do nascimento", "ano": "Tradição rural", "era": "cultura", "tags": ["cultura"], "resumo": "Cachaça, mel de uruçu, alecrim, arruda, pimenta. Servida às visitantes da parida — e o foguete contava o sexo do recém-nascido.", "texto": ["Na chegada de uma criança, todo o ritual envolvia a meladinha. Era uma bebida formada a partir de cachaça limpa misturada ao mel de abelha uruçu, embebida em folhas de alecrim silvestre ou arruda, temperada com leve sabor de pimenta-do-reino — para servir às visitantes da parida.", "Havia também o sistema de foguetes para anunciar o nascimento. Ao notar a gravidez, o marido comprava três foguetes. No dia do nascimento: se menino, todos eram queimados, um a um. Se menina, apenas um foguete. Toda a vizinhança já sabia onde tinha nascido criança e qual o sexo.", "A alimentação da parida também tinha protocolo: farinha de araruta (nunca de mandioca, considerada \"quente\" para mulher de resguardo) e peito de frango, preferentemente assado na brasa. O banho da parida só ao terceiro dia, com água morna; com água fria, só aos quarenta dias."], "pagina": "262"}, {"id": "cristovao-barros", "titulo": "Cristóvão de Barros", "ano": "Conquistador (1590)", "era": "personagem", "tags": ["personagem", "origens"], "resumo": "O capitão que conquistou Sergipe na Serra do Pico em 1º de janeiro de 1590. Fundou no mesmo dia a cidade de Sergipe d'El-Rei.", "texto": ["Cristóvão de Barros liderou a expedição enviada de Salvador em nome de Felipe II de Espanha — então também rei de Portugal — para conquistar Sergipe. Atravessou o rio Real em 23 de dezembro de 1589 e travou batalha de uma semana contra o cacique Baepeba.", "Em 1º de janeiro de 1590, ao alvorecer, venceu na Serra do Pico. Ao terminar da batalha, dirigiu-se à beira-mar e fundou a cidade de Sergipe d'El-Rei (hoje São Cristóvão), ali dividindo a nova capitania em três porções para os principais comandantes da expedição. A área central — onde está Itabaiana — coube a Ayres da Rocha Peixoto.", "Não há registros confiáveis de Cristóvão de Barros depois de 1590, inclusive de sua morte. Ficou para a história como o conquistador — figura ambígua, fundadora e ao mesmo tempo executora do massacre indígena de 1.600 mortos e 4.000 escravizados."], "pagina": "252"}, {"id": "quintino", "titulo": "Quintino de Lacerda", "ano": "1839–1898", "era": "personagem", "tags": ["personagem", "imperio"], "resumo": "Nascido escravo em Itabaiana, vendido para Santos. Virou major, abolicionista, fundador do Quilombo do Jabaquara e presidente do Conselho de Santos.", "texto": ["Quintino nasceu em Itabaiana em 8 de junho de 1839, no povoado Flechas, escravo de Antônio dos Santos Leite. Foi vendido a peso de ouro para o comerciante Antônio Lacerda Franco, da firma Lacerda & Irmãos de Santos, no auge do declínio da cana e venda da escravaria local para as fazendas de café paulistas.", "Em Santos, conquistou a simpatia do dono — que lhe deu não só a alforria, mas também o sobrenome. Antes da abolição, fundou o Quilombo do Jabaquara, ao norte da cidade portuária, onde acolheu vários negros fugitivos.", "Tornou-se major da Guarda Nacional, vereador, presidente do Conselho Municipal de Santos (cargo que correspondia ao de prefeito). Foi o líder abolicionista de destaque em São Paulo, transformando-se numa das maiores personalidades da cidade. Faleceu em Santos em 10 de agosto de 1898 — exemplo único na história de Itabaiana de um escravo daqui que virou figura nacional."], "pagina": "254"}, {"id": "thetis-nunes", "titulo": "Maria Thétis Nunes", "ano": "1925–2009", "era": "personagem", "tags": ["personagem", "seculo20"], "resumo": "\"O nosso maior nome na cultura nacional.\" Historiadora, presidiu o Instituto Histórico e Geográfico de Sergipe por trinta anos.", "texto": ["Maria Thétis Nunes é, segundo Almeida Bispo, \"o nosso maior nome na cultura nacional\". Trabalhou no ISEB nos anos 50/60, foi assistente do Professor Cândido Mendes, dirigiu o Centro de Estudos Brasileiros em Rosário (Argentina) por indicação do Governador Luiz Garcia.", "Em 1965 voltou à atividade docente no embrião da Universidade Federal de Sergipe, onde foi Diretora do Centro de Ciências Humanas até a aposentadoria em 1993. Em 1971 foi empossada no Instituto Histórico e Geográfico de Sergipe, que presidiu até 2001 — tornando-se Presidente de Honra a partir de 2002.", "Em 1983 ocupou a cadeira 39 da Academia Sergipana de Letras. Premiada em 1984 pelo MEC com o \"Grandes Educadores Brasileiros\". Publicou 15 livros — entre eles Sergipe Colonial I e II, Sergipe Provincial I e II, e o trabalho exclusivo sobre Itabaiana: Ocupação Territorial da Vila de Itabaiana — a disputa entre lavradores e criadores. Faleceu em 25 de outubro de 2009."], "pagina": "255–256"}];
+const ERAS = {"origens": {"label": "Origens", "rotulo": "Séc. XVI–XVII", "cor": "#5b3a1d"}, "colonia": {"label": "Colônia", "rotulo": "Séc. XVII–XVIII", "cor": "#6b4a2a"}, "imperio": {"label": "Império", "rotulo": "Séc. XIX", "cor": "#7a3838"}, "republica": {"label": "República", "rotulo": "1889–1930", "cor": "#3a5a8a"}, "seculo20": {"label": "Séc. XX", "rotulo": "1930–2000", "cor": "#1db584"}, "lenda": {"label": "Lenda", "rotulo": "Tradição oral", "cor": "#7c5e2a"}, "cultura": {"label": "Cultura", "rotulo": "Tradição popular", "cor": "#a16a2c"}, "personagem": {"label": "Personagem", "rotulo": "Figura histórica", "cor": "#0d2a3d"}};
+
+const grid = document.getElementById('grid');
+const empty = document.getElementById('empty');
+const filterBtns = document.querySelectorAll('.filter-btn');
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalContent = document.getElementById('modalContent');
+const modalClose = document.getElementById('modalClose');
+
+let currentFilter = 'destaques';
+
+function eraFor(v) {
+  // Era para badge: a primeira tag que existe em ERAS
+  for (const t of v.tags) {
+    if (ERAS[t]) return { key: t, ...ERAS[t] };
+  }
+  if (ERAS[v.era]) return { key: v.era, ...ERAS[v.era] };
+  return { key: v.era, label: v.era, rotulo: '', cor: '#1db584' };
+}
+
+function render(filter) {
+  let lista;
+  if (filter === 'todos') {
+    lista = VERBETES;
+  } else {
+    lista = VERBETES.filter(v => v.tags.includes(filter));
+  }
+  
+  grid.innerHTML = '';
+  if (lista.length === 0) {
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  
+  lista.forEach(v => {
+    const era = eraFor(v);
+    const isDestaque = v.tags.includes('destaques');
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.style.setProperty('--era-color', era.cor);
+    card.innerHTML = `
+      ${isDestaque ? '<span class="badge-destaque">★ Destaque</span>' : ''}
+      <div class="card-era">${era.label}</div>
+      <h3 class="card-title">${v.titulo}</h3>
+      <div class="card-date">${v.ano}</div>
+      <p class="card-resumo">${v.resumo}</p>
+      <span class="card-arrow">Ler mais →</span>
+    `;
+    card.addEventListener('click', () => openModal(v));
+    grid.appendChild(card);
+  });
+}
+
+function openModal(v) {
+  const era = eraFor(v);
+  const paragrafos = v.texto.map(p => `<p>${p}</p>`).join('');
+  modalContent.innerHTML = `
+    <div class="modal-era" style="--era-color:${era.cor}">${era.label} · ${era.rotulo}</div>
+    <h3>${v.titulo}</h3>
+    <div class="modal-date">${v.ano}</div>
+    <div class="modal-body">${paragrafos}</div>
+    <div class="modal-source">
+      <strong>Fonte:</strong> Almeida Bispo, J. de. <em>Itabaiana, nosso lugar: quatro séculos depois</em>. 2013.
+      Páginas ${v.pagina}. Para a história completa, com fontes primárias e iconografia, <a href="/quatro-seculos-livro.pdf" download>baixe o PDF do livro</a>.
+    </div>
+  `;
+  // aplicar cor do badge no modal-era
+  const ne = modalContent.querySelector('.modal-era');
+  if (ne) ne.style.setProperty('--era-color', era.cor);
+  modalBackdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  modalBackdrop.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+modalClose.addEventListener('click', closeModal);
+modalBackdrop.addEventListener('click', e => {
+  if (e.target === modalBackdrop) closeModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    render(currentFilter);
+    // scroll suave
+    setTimeout(() => {
+      const galeria = document.querySelector('.gallery');
+      const navH = document.querySelector('nav').offsetHeight;
+      const filtersH = document.querySelector('.filters-section').offsetHeight;
+      const offset = navH + filtersH + 24;
+      const galeriaTop = galeria.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({top: galeriaTop - offset, behavior: 'smooth'});
+    }, 50);
+  });
+});
+
+// inicia no Destaques
+document.querySelector('[data-filter="destaques"]').classList.add('active');
+render('destaques');
+</script>
+
+</body>
+</html>
