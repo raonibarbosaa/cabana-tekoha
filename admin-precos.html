@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Tarifas · Cabana Tekoha</title>
+
+<!-- ===================================================================
+     CONFIGURAÇÃO — só a URL do seu Worker
+     =================================================================== -->
+<script>
+  // URL pública do seu Worker (sem barra no fim).
+  // Ex.: "https://cabana-reservas.seu-subdominio.workers.dev"
+  const WORKER_URL = "COLE_AQUI_A_URL_DO_WORKER";
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #f6f1e7;
+    --card: #fffdf8;
+    --ink: #2c2a24;
+    --ink-soft: #5b564c;
+    --line: #e4dcce;
+    --accent: #6b7a4f;
+    --accent-deep: #4f5c3a;
+    --gold: #c08a3e;
+    --erro: #a5432f;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Instrument Sans", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    min-height: 100vh;
+    padding: 32px 18px 72px;
+  }
+  .wrap { width: 100%; max-width: 620px; margin: 0 auto; }
+
+  .topo { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+  .topo img { height: 44px; width: auto; }
+  .tag-privado {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--ink-soft); border: 1px solid var(--line);
+    border-radius: 999px; padding: 3px 10px; margin-left: auto;
+  }
+
+  h1 {
+    font-family: "Fraunces", Georgia, serif; font-weight: 500;
+    font-size: clamp(28px, 6vw, 38px); line-height: 1.1;
+    letter-spacing: -.01em; margin-bottom: 8px;
+  }
+  h1 em { font-style: italic; color: var(--accent-deep); }
+  .sub { color: var(--ink-soft); font-size: 15px; margin-bottom: 26px; max-width: 52ch; }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 24px; margin-bottom: 18px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.03), 0 8px 24px rgba(70,60,40,.04);
+  }
+  .card h2 {
+    font-family: "Fraunces", serif; font-weight: 500; font-size: 20px;
+    margin-bottom: 4px;
+  }
+  .card .dica { font-size: 13px; color: var(--ink-soft); margin-bottom: 18px; }
+
+  label { display: block; font-size: 13px; font-weight: 600; color: var(--ink-soft); margin-bottom: 7px; }
+  input[type="text"], input[type="password"], input[type="number"], input[type="date"] {
+    width: 100%; font-family: inherit; font-size: 16px; color: var(--ink);
+    background: #fff; border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px 14px; transition: border-color .15s, box-shadow .15s;
+  }
+  input:focus {
+    outline: none; border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(107,122,79,.15);
+  }
+  .grade { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .campo { margin-bottom: 14px; }
+  .prefixo { position: relative; }
+  .prefixo span {
+    position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+    color: var(--ink-soft); font-size: 15px; pointer-events: none;
+  }
+  .prefixo input { padding-left: 34px; }
+
+  button, .botao {
+    font-family: inherit; font-size: 15px; font-weight: 600; border: none;
+    border-radius: 10px; padding: 13px 18px; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    transition: transform .08s, opacity .15s, background .15s;
+  }
+  button:active { transform: translateY(1px); }
+  .btn-primario { background: var(--accent); color: #fff; width: 100%; }
+  .btn-primario:hover { background: var(--accent-deep); }
+  .btn-primario:disabled { opacity: .5; cursor: default; }
+  .btn-secundario { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+  .btn-secundario:hover { background: #faf7f0; }
+  .btn-remover {
+    background: none; color: var(--erro); padding: 6px 10px; font-size: 13px;
+    border: 1px solid transparent;
+  }
+  .btn-remover:hover { border-color: #e8cabf; }
+
+  /* Tela de senha (bloqueia o resto até logar) */
+  #telaLogin .card { max-width: 420px; margin: 40px auto 0; }
+  #painel { display: none; }
+
+  /* Períodos de temporada */
+  .periodo {
+    display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px;
+    align-items: end; padding: 14px; background: #f0ece1;
+    border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px;
+  }
+  .periodo label { font-size: 12px; }
+  @media (max-width: 520px) {
+    .grade { grid-template-columns: 1fr; }
+    .periodo { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Simulador */
+  .simulador { border-color: #d8e0c8; background: #f3f6ec; }
+  .resultado {
+    margin-top: 16px; padding: 16px; background: #fff;
+    border: 1px solid var(--line); border-radius: 12px; font-size: 14.5px;
+    display: none;
+  }
+  .resultado.mostrar { display: block; }
+  .resultado .linha { display: flex; justify-content: space-between; padding: 3px 0; }
+  .resultado .total {
+    border-top: 1px solid var(--line); margin-top: 8px; padding-top: 10px;
+    font-weight: 600; font-size: 17px; color: var(--accent-deep);
+  }
+  .resultado.erro-box { border-color: #e8cabf; background: #fbf0ec; color: var(--erro); }
+  .noite-badge {
+    font-family: "JetBrains Mono", monospace; font-size: 11px;
+    padding: 1px 6px; border-radius: 5px; margin-left: 6px;
+  }
+  .b-base { background: #eef0e8; color: var(--accent-deep); }
+  .b-fds { background: #f5ead6; color: var(--gold); }
+  .b-alta { background: #f3ddd4; color: var(--erro); }
+
+  .aviso {
+    font-size: 13px; padding: 11px 14px; border-radius: 10px; margin-top: 14px;
+    display: none;
+  }
+  .aviso.ok { background: #eef3e6; color: var(--accent-deep); border: 1px solid #d8e0c8; display: block; }
+  .aviso.ruim { background: #fbf0ec; color: var(--erro); border: 1px solid #e8cabf; display: block; }
+
+  .rodape {
+    margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line);
+    font-size: 14px;
+  }
+  .rodape a { color: var(--accent-deep); text-decoration: none; font-weight: 600; }
+  .rodape a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topo">
+    <img src="https://cabanatekoha.com.br/logo-tekoha.png" alt="Cabana Tekoha" />
+    <span class="tag-privado">Privado</span>
+  </div>
+
+  <h1>Tarifas da <em>cabana</em></h1>
+  <p class="sub">Defina os preços por diária, temporada e hóspede extra. O motor de reservas passa a cobrar com esses valores assim que você salvar.</p>
+
+  <!-- ===== TELA DE LOGIN ===== -->
+  <div id="telaLogin">
+    <div class="card">
+      <h2>Entrar</h2>
+      <p class="dica">Digite a senha do painel para carregar e editar as tarifas.</p>
+      <div class="campo">
+        <label for="senha">Senha do painel</label>
+        <input type="password" id="senha" placeholder="••••••••" autocomplete="current-password" />
+      </div>
+      <button class="btn-primario" id="btnEntrar">Entrar</button>
+      <div class="aviso" id="avisoLogin"></div>
+    </div>
+  </div>
+
+  <!-- ===== PAINEL (aparece após login) ===== -->
+  <div id="painel">
+
+    <!-- Diárias -->
+    <div class="card">
+      <h2>Diárias</h2>
+      <p class="dica">Preço por noite, para até 2 pessoas.</p>
+      <div class="grade">
+        <div class="campo">
+          <label for="diariaBase">Base (dom a qui)</label>
+          <div class="prefixo"><span>R$</span><input type="number" id="diariaBase" min="0" step="10" /></div>
+        </div>
+        <div class="campo">
+          <label for="diariaFimDeSemana">Fim de semana (sex/sáb)</label>
+          <div class="prefixo"><span>R$</span><input type="number" id="diariaFimDeSemana" min="0" step="10" /></div>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="diariaTemporadaAlta">Temporada alta</label>
+        <div class="prefixo"><span>R$</span><input type="number" id="diariaTemporadaAlta" min="0" step="10" /></div>
+      </div>
+    </div>
+
+    <!-- Temporada alta -->
+    <div class="card">
+      <h2>Períodos de temporada alta</h2>
+      <p class="dica">Datas que usam o preço de temporada alta. Vale todo ano — use dia/mês. Períodos que viram o ano (ex.: 20/12 a 05/01) são aceitos.</p>
+      <div id="listaPeriodos"></div>
+      <button class="btn-secundario" id="btnAddPeriodo" style="margin-top:6px;">+ Adicionar período</button>
+    </div>
+
+    <!-- Hóspedes e taxas -->
+    <div class="card">
+      <h2>Hóspedes e taxas</h2>
+      <div class="grade">
+        <div class="campo">
+          <label for="pessoasInclusas">Pessoas inclusas no preço base</label>
+          <input type="number" id="pessoasInclusas" min="1" step="1" />
+        </div>
+        <div class="campo">
+          <label for="capacidadeMaxima">Capacidade máxima</label>
+          <input type="number" id="capacidadeMaxima" min="1" step="1" />
+        </div>
+        <div class="campo">
+          <label for="hospedeExtra">Hóspede extra (por pessoa/noite)</label>
+          <div class="prefixo"><span>R$</span><input type="number" id="hospedeExtra" min="0" step="10" /></div>
+        </div>
+        <div class="campo">
+          <label for="taxaLimpeza">Taxa de limpeza (única)</label>
+          <div class="prefixo"><span>R$</span><input type="number" id="taxaLimpeza" min="0" step="10" /></div>
+        </div>
+        <div class="campo">
+          <label for="minNoitesSemana">Mínimo de noites (semana)</label>
+          <input type="number" id="minNoitesSemana" min="1" step="1" />
+        </div>
+        <div class="campo">
+          <label for="minNoitesFimDeSemana">Mínimo de noites (fim de semana)</label>
+          <input type="number" id="minNoitesFimDeSemana" min="1" step="1" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Salvar -->
+    <div class="card">
+      <button class="btn-primario" id="btnSalvar">Salvar tarifas</button>
+      <div class="aviso" id="avisoSalvar"></div>
+    </div>
+
+    <!-- Simulador -->
+    <div class="card simulador">
+      <h2>Simular uma reserva</h2>
+      <p class="dica">Testa o total com os valores acima (mesmo sem salvar).</p>
+      <div class="grade">
+        <div class="campo">
+          <label for="simCheckin">Check-in</label>
+          <input type="date" id="simCheckin" />
+        </div>
+        <div class="campo">
+          <label for="simCheckout">Check-out</label>
+          <input type="date" id="simCheckout" />
+        </div>
+      </div>
+      <div class="campo">
+        <label for="simHospedes">Hóspedes</label>
+        <input type="number" id="simHospedes" min="1" value="2" />
+      </div>
+      <button class="btn-secundario" id="btnSimular" style="width:100%;">Calcular total</button>
+      <div class="resultado" id="simResultado"></div>
+    </div>
+
+    <div class="rodape">
+      <a href="https://cabanatekoha.com.br" target="_blank" rel="noopener">← Voltar ao site</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ==========================================================================
+//  MOTOR DE PREÇOS (mesma lógica do Worker — usada aqui só pro simulador)
+// ==========================================================================
+function ehFimDeSemana(iso) {
+  const dia = new Date(iso + "T12:00:00Z").getUTCDay();
+  return dia === 5 || dia === 6;
+}
+function ehTemporadaAlta(iso, periodos) {
+  const mmdd = iso.slice(5);
+  for (const p of periodos || []) {
+    if (!p.inicio || !p.fim) continue;
+    if (p.inicio <= p.fim) { if (mmdd >= p.inicio && mmdd <= p.fim) return true; }
+    else { if (mmdd >= p.inicio || mmdd <= p.fim) return true; }
+  }
+  return false;
+}
+function precoDaNoite(iso, t) {
+  if (ehTemporadaAlta(iso, t.temporadaAlta)) return t.diariaTemporadaAlta;
+  if (ehFimDeSemana(iso)) return t.diariaFimDeSemana;
+  return t.diariaBase;
+}
+function calcularPreco(checkin, checkout, hospedes, t) {
+  if (checkout <= checkin) return { ok:false, erro:"O check-out precisa ser depois do check-in." };
+  const pessoas = Number(hospedes) || 1;
+  if (pessoas > t.capacidadeMaxima) return { ok:false, erro:`Acima da capacidade (máx. ${t.capacidadeMaxima} pessoas).` };
+  const detalhe = [];
+  let d = new Date(checkin + "T00:00:00Z");
+  const fim = new Date(checkout + "T00:00:00Z");
+  let temFds = false;
+  while (d < fim) {
+    const iso = d.toISOString().slice(0,10);
+    const preco = precoDaNoite(iso, t);
+    const fds = ehFimDeSemana(iso);
+    const alta = ehTemporadaAlta(iso, t.temporadaAlta);
+    if (fds) temFds = true;
+    detalhe.push({ data: iso, preco, tipo: alta ? "alta" : (fds ? "fds" : "base") });
+    d.setUTCDate(d.getUTCDate()+1);
+  }
+  const noites = detalhe.length;
+  const minEx = temFds ? t.minNoitesFimDeSemana : t.minNoitesSemana;
+  if (noites < minEx) return { ok:false, erro:`Mínimo de ${minEx} noite(s) para essas datas.` };
+  const subtotalDiarias = detalhe.reduce((s,n)=>s+n.preco,0);
+  const extras = Math.max(0, pessoas - t.pessoasInclusas);
+  const subtotalExtras = extras * t.hospedeExtra * noites;
+  const total = subtotalDiarias + subtotalExtras + t.taxaLimpeza;
+  return { ok:true, total, noites, detalhe, extras, subtotalDiarias, subtotalExtras, taxaLimpeza: t.taxaLimpeza };
+}
+
+// ==========================================================================
+//  ESTADO E DOM
+// ==========================================================================
+let senhaAtual = "";
+const $ = (id) => document.getElementById(id);
+const api = (p) => `${WORKER_URL}${p}`;
+
+function avisar(el, msg, ok) {
+  el.textContent = msg;
+  el.className = "aviso " + (ok ? "ok" : "ruim");
+}
+
+// ---- Login: tenta ler as tarifas com a senha ----
+$("btnEntrar").addEventListener("click", entrar);
+$("senha").addEventListener("keydown", (e) => { if (e.key === "Enter") entrar(); });
+
+async function entrar() {
+  const senha = $("senha").value.trim();
+  if (!senha) { avisar($("avisoLogin"), "Digite a senha.", false); return; }
+  $("btnEntrar").disabled = true;
+  $("btnEntrar").textContent = "Entrando...";
+  try {
+    const r = await fetch(api("/admin/precos"), {
+      headers: { "x-admin-senha": senha },
+    });
+    if (r.status === 401) { avisar($("avisoLogin"), "Senha incorreta.", false); return; }
+    if (!r.ok) { avisar($("avisoLogin"), "Erro ao carregar. Confira a URL do Worker.", false); return; }
+    const tarifas = await r.json();
+    senhaAtual = senha;
+    preencher(tarifas);
+    $("telaLogin").style.display = "none";
+    $("painel").style.display = "block";
+  } catch (e) {
+    avisar($("avisoLogin"), "Não consegui falar com o Worker. Confira a URL.", false);
+  } finally {
+    $("btnEntrar").disabled = false;
+    $("btnEntrar").textContent = "Entrar";
+  }
+}
+
+// ---- Preencher o formulário com as tarifas vindas do Worker ----
+function preencher(t) {
+  $("diariaBase").value = t.diariaBase ?? 300;
+  $("diariaFimDeSemana").value = t.diariaFimDeSemana ?? 400;
+  $("diariaTemporadaAlta").value = t.diariaTemporadaAlta ?? 500;
+  $("pessoasInclusas").value = t.pessoasInclusas ?? 2;
+  $("capacidadeMaxima").value = t.capacidadeMaxima ?? 6;
+  $("hospedeExtra").value = t.hospedeExtra ?? 100;
+  $("taxaLimpeza").value = t.taxaLimpeza ?? 140;
+  $("minNoitesSemana").value = t.minNoitesSemana ?? 1;
+  $("minNoitesFimDeSemana").value = t.minNoitesFimDeSemana ?? 2;
+  $("listaPeriodos").innerHTML = "";
+  (t.temporadaAlta && t.temporadaAlta.length ? t.temporadaAlta : []).forEach(addPeriodo);
+}
+
+// ---- Períodos de temporada (MM-DD <-> campo date do ano corrente só pra UI) ----
+function addPeriodo(p = {}) {
+  const div = document.createElement("div");
+  div.className = "periodo";
+  div.innerHTML = `
+    <div>
+      <label>Nome</label>
+      <input type="text" class="p-nome" placeholder="Ex.: Réveillon" value="${p.nome || ""}" />
+    </div>
+    <div>
+      <label>Início (dia/mês)</label>
+      <input type="text" class="p-inicio" placeholder="20/12" value="${mmddParaBR(p.inicio)}" />
+    </div>
+    <div>
+      <label>Fim (dia/mês)</label>
+      <input type="text" class="p-fim" placeholder="05/01" value="${mmddParaBR(p.fim)}" />
+    </div>
+    <button class="btn-remover" title="Remover">remover</button>
+  `;
+  div.querySelector(".btn-remover").addEventListener("click", () => div.remove());
+  $("listaPeriodos").appendChild(div);
+}
+$("btnAddPeriodo").addEventListener("click", () => addPeriodo());
+
+function mmddParaBR(mmdd) {
+  if (!mmdd || !/^\d{2}-\d{2}$/.test(mmdd)) return "";
+  const [m, d] = mmdd.split("-");
+  return `${d}/${m}`;
+}
+function brParaMMDD(br) {
+  const m = String(br).trim().match(/^(\d{1,2})\/(\d{1,2})$/);
+  if (!m) return null;
+  const dia = m[1].padStart(2, "0");
+  const mes = m[2].padStart(2, "0");
+  return `${mes}-${dia}`;
+}
+
+// ---- Montar objeto de tarifas a partir do formulário ----
+function lerTarifasDoForm() {
+  const periodos = [];
+  document.querySelectorAll(".periodo").forEach((div) => {
+    const nome = div.querySelector(".p-nome").value.trim();
+    const inicio = brParaMMDD(div.querySelector(".p-inicio").value);
+    const fim = brParaMMDD(div.querySelector(".p-fim").value);
+    if (inicio && fim) periodos.push({ nome, inicio, fim });
+  });
+  return {
+    diariaBase: Number($("diariaBase").value),
+    diariaFimDeSemana: Number($("diariaFimDeSemana").value),
+    diariaTemporadaAlta: Number($("diariaTemporadaAlta").value),
+    pessoasInclusas: Number($("pessoasInclusas").value),
+    capacidadeMaxima: Number($("capacidadeMaxima").value),
+    hospedeExtra: Number($("hospedeExtra").value),
+    taxaLimpeza: Number($("taxaLimpeza").value),
+    minNoitesSemana: Number($("minNoitesSemana").value),
+    minNoitesFimDeSemana: Number($("minNoitesFimDeSemana").value),
+    temporadaAlta: periodos,
+  };
+}
+
+// ---- Salvar ----
+$("btnSalvar").addEventListener("click", async () => {
+  const tarifas = lerTarifasDoForm();
+  $("btnSalvar").disabled = true;
+  $("btnSalvar").textContent = "Salvando...";
+  try {
+    const r = await fetch(api("/admin/precos"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-admin-senha": senhaAtual },
+      body: JSON.stringify(tarifas),
+    });
+    if (r.status === 401) { avisar($("avisoSalvar"), "Sessão expirou. Recarregue e entre de novo.", false); return; }
+    if (!r.ok) { avisar($("avisoSalvar"), "Não consegui salvar. Tente de novo.", false); return; }
+    avisar($("avisoSalvar"), "Tarifas salvas. O site já cobra com esses valores.", true);
+  } catch (e) {
+    avisar($("avisoSalvar"), "Falha de conexão ao salvar.", false);
+  } finally {
+    $("btnSalvar").disabled = false;
+    $("btnSalvar").textContent = "Salvar tarifas";
+  }
+});
+
+// ---- Simular ----
+$("btnSimular").addEventListener("click", () => {
+  const t = lerTarifasDoForm();
+  const ci = $("simCheckin").value;
+  const co = $("simCheckout").value;
+  const h = $("simHospedes").value;
+  const box = $("simResultado");
+  if (!ci || !co) {
+    box.className = "resultado erro-box mostrar";
+    box.textContent = "Escolha check-in e check-out.";
+    return;
+  }
+  const r = calcularPreco(ci, co, h, t);
+  if (!r.ok) {
+    box.className = "resultado erro-box mostrar";
+    box.textContent = r.erro;
+    return;
+  }
+  const badge = (tipo) => tipo === "alta"
+    ? '<span class="noite-badge b-alta">alta</span>'
+    : tipo === "fds" ? '<span class="noite-badge b-fds">fds</span>'
+    : '<span class="noite-badge b-base">base</span>';
+  const linhasNoites = r.detalhe.map(n =>
+    `<div class="linha"><span>${n.data.split("-").reverse().join("/")} ${badge(n.tipo)}</span><span>R$ ${n.preco}</span></div>`
+  ).join("");
+  box.className = "resultado mostrar";
+  box.innerHTML = `
+    ${linhasNoites}
+    <div class="linha"><span>Diárias (${r.noites} noite${r.noites>1?"s":""})</span><span>R$ ${r.subtotalDiarias}</span></div>
+    ${r.extras>0 ? `<div class="linha"><span>Hóspede extra (${r.extras} × ${r.noites} noite${r.noites>1?"s":""})</span><span>R$ ${r.subtotalExtras}</span></div>` : ""}
+    <div class="linha"><span>Taxa de limpeza</span><span>R$ ${r.taxaLimpeza}</span></div>
+    <div class="linha total"><span>Total</span><span>R$ ${r.total}</span></div>
+  `;
+});
+</script>
+</body>
+</html>

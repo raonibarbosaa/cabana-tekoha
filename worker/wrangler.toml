@@ -1,0 +1,13 @@
+name = "cabana-reservas"
+main = "worker-asaas.js"
+compatibility_date = "2025-01-01"
+
+# O Worker guarda as reservas neste KV.
+# O id você gera com: wrangler kv namespace create RESERVAS
+[[kv_namespaces]]
+binding = "RESERVAS"
+id = "COLE_AQUI_O_ID_DO_KV"
+
+# Os SEGREDOS (ASAAS_API_KEY e ASAAS_WEBHOOK_TOKEN) NAO vao aqui.
+# Voce define com: wrangler secret put ASAAS_API_KEY
+#                  wrangler secret put ASAAS_WEBHOOK_TOKEN
