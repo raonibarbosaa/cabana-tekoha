@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="App de coleta de campo do Instituto Tekoha — registro de árvores melíferas e enxames de abelhas nativas." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#2a1d10" />
+  <title>Coleta de Campo · Instituto Tekoha</title>
+  <link rel="icon" type="image/png" href="favicon-instituto.png" />
+  <link rel="apple-touch-icon" href="favicon-instituto.png" />
+  <link rel="manifest" href="manifest-instituto.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --cream:#fdfaf1; --cream-soft:#f8f1e0; --bone:#f2e8d2; --bone-deep:#e9dcbf;
+      --brown:#2a1d10; --brown-soft:#4a361f; --brown-mid:#6b5334; --brown-faint:#8a7455;
+      --gold:#d49641; --gold-bright:#ecb84a; --gold-deep:#a56d18; --amber:#b8791f;
+      --honey-bg:#fbf3df;
+      --restrito:#a53a1f; --ofuscado:#b8791f; --publico:#6f8a3f;
+      --ok:#3f7d52;
+      --fd:"Fraunces",serif; --fb:"Instrument Sans",system-ui,sans-serif; --fm:"JetBrains Mono",monospace;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+    html,body{height:100%}
+    body{background:var(--cream);color:var(--brown);font-family:var(--fb);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
+    img{display:block;max-width:100%}
+    button{font-family:inherit;cursor:pointer}
+    input,select,textarea{font-family:inherit;font-size:16px}
+
+    /* SHELL */
+    .app{max-width:520px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;background:var(--cream);position:relative;padding-bottom:76px}
+    .appbar{position:sticky;top:0;z-index:30;background:var(--brown);color:var(--cream);display:flex;align-items:center;gap:.7rem;padding:.7rem 1rem;padding-top:calc(.7rem + env(safe-area-inset-top))}
+    .appbar .mark{width:30px;height:30px;flex-shrink:0}
+    .appbar .t{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1.05rem;line-height:1}
+    .appbar .t small{display:block;font-family:var(--fm);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-bright);font-style:normal;margin-top:2px}
+    .demo-badge{margin-left:auto;font-family:var(--fm);font-size:.58rem;letter-spacing:.12em;background:var(--gold);color:var(--brown);font-weight:600;padding:.3rem .55rem;border-radius:999px}
+
+    .screen{display:none;padding:1.1rem 1rem 1.5rem;animation:fade .25s ease}
+    .screen.active{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+    .h1{font-family:var(--fd);font-style:italic;font-weight:400;font-size:1.9rem;line-height:1.05;letter-spacing:-.01em;margin-bottom:.3rem}
+    .sub{color:var(--brown-mid);font-size:.95rem;margin-bottom:1.3rem}
+    .label{font-family:var(--fm);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep)}
+
+    /* PORTAS */
+    .door{display:flex;align-items:center;gap:1rem;width:100%;text-align:left;background:#fff;border:1px solid var(--bone-deep);border-radius:16px;padding:1.15rem 1.15rem;margin-bottom:.8rem;transition:transform .12s,box-shadow .2s}
+    .door:active{transform:scale(.985)}
+    .door .ic{width:52px;height:52px;flex-shrink:0;border-radius:13px;display:grid;place-items:center;background:var(--honey-bg);color:var(--gold-deep)}
+    .door .ic svg{width:28px;height:28px}
+    .door h3{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1.2rem}
+    .door p{font-size:.85rem;color:var(--brown-mid);margin-top:.1rem}
+    .door .arw{margin-left:auto;color:var(--gold);font-size:1.3rem}
+
+    .stat-row{display:flex;gap:.6rem;margin-top:1.4rem}
+    .stat{flex:1;background:var(--honey-bg);border:1px solid var(--bone-deep);border-radius:13px;padding:.85rem;text-align:center}
+    .stat b{font-family:var(--fm);font-size:1.5rem;color:var(--gold-deep);display:block;line-height:1}
+    .stat span{font-size:.72rem;color:var(--brown-mid);letter-spacing:.02em}
+
+    /* CARDS DE ESCOLHA DE TIPO */
+    .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+    .type-card{background:#fff;border:1px solid var(--bone-deep);border-radius:16px;padding:1.3rem 1rem;text-align:center;transition:transform .12s}
+    .type-card:active{transform:scale(.97)}
+    .type-card .ic{width:56px;height:56px;margin:0 auto .7rem;border-radius:14px;display:grid;place-items:center}
+    .type-card .ic svg{width:30px;height:30px}
+    .type-card.flora .ic{background:#eef3e0;color:#5f7a34}
+    .type-card.abelha .ic{background:var(--honey-bg);color:var(--gold-deep)}
+    .type-card h3{font-family:var(--fd);font-style:italic;font-size:1.15rem}
+    .type-card p{font-size:.78rem;color:var(--brown-mid);margin-top:.2rem}
+
+    /* FORM */
+    .field{margin-bottom:1.15rem}
+    .field>label{display:block;font-weight:600;font-size:.9rem;margin-bottom:.4rem;color:var(--brown)}
+    .field .req{color:var(--restrito)}
+    .field .hint{font-weight:400;color:var(--brown-faint);font-size:.78rem;display:block;margin-top:-.2rem;margin-bottom:.4rem}
+    .field input[type=text],.field input[type=number],.field input[type=date],.field select,.field textarea{
+      width:100%;padding:.75rem .85rem;border:1px solid var(--bone-deep);border-radius:11px;background:#fff;color:var(--brown)}
+    .field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+    .field textarea{min-height:70px;resize:vertical}
+
+    /* chips (multi/single select) */
+    .chips{display:flex;flex-wrap:wrap;gap:.45rem}
+    .chip{border:1px solid var(--bone-deep);background:#fff;border-radius:999px;padding:.5rem .8rem;font-size:.85rem;color:var(--brown-soft);transition:all .15s}
+    .chip.on{background:var(--gold);border-color:var(--gold-deep);color:var(--brown);font-weight:600}
+
+    /* fournier */
+    .fournier{display:flex;gap:.4rem;justify-content:space-between}
+    .fbtn{flex:1;background:#fff;border:1px solid var(--bone-deep);border-radius:12px;padding:.5rem .2rem .55rem;text-align:center;transition:all .12s}
+    .fbtn.on{border-color:var(--gold-deep);background:var(--honey-bg);box-shadow:0 0 0 2px var(--gold) inset}
+    .fbtn svg{width:34px;height:38px;display:block;margin:0 auto .15rem}
+    .fbtn .n{font-family:var(--fm);font-size:.95rem;color:var(--gold-deep);font-weight:500}
+    .fbtn .p{font-family:var(--fm);font-size:.52rem;color:var(--brown-faint)}
+
+    /* foto */
+    .photo{border:1.5px dashed var(--bone-deep);border-radius:14px;background:var(--cream-soft);padding:1rem;text-align:center;color:var(--brown-mid);position:relative;overflow:hidden}
+    .photo.filled{border-style:solid;padding:0;color:#fff}
+    .photo svg{width:26px;height:26px;color:var(--gold-deep);margin:0 auto .35rem}
+    .photo .cap{font-size:.82rem}
+    .photo img{width:100%;height:150px;object-fit:cover}
+    .photo .redo{position:absolute;right:.5rem;bottom:.5rem;background:rgba(0,0,0,.55);color:#fff;font-size:.7rem;padding:.3rem .6rem;border-radius:999px}
+    .photo input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+
+    /* GPS */
+    .gps{display:flex;align-items:center;gap:.6rem;background:var(--honey-bg);border:1px solid var(--bone-deep);border-radius:12px;padding:.7rem .85rem;font-family:var(--fm);font-size:.78rem;color:var(--brown-soft)}
+    .gps svg{width:20px;height:20px;color:var(--gold-deep);flex-shrink:0}
+    .gps.wait{color:var(--brown-faint)}
+
+    /* sensibilidade */
+    .sens-opt{display:flex;align-items:center;gap:.65rem;border:1px solid var(--bone-deep);border-radius:11px;padding:.7rem .8rem;margin-bottom:.5rem;background:#fff}
+    .sens-opt .dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+    .sens-opt.on{box-shadow:0 0 0 2px var(--gold) inset;border-color:var(--gold-deep)}
+    .sens-opt b{font-size:.88rem}
+    .sens-opt span{display:block;font-size:.76rem;color:var(--brown-mid)}
+    .sens-opt.disabled{opacity:.4}
+    .locknote{font-size:.78rem;color:var(--restrito);background:color-mix(in srgb,var(--restrito) 8%,transparent);border-radius:9px;padding:.5rem .7rem;margin-bottom:.7rem;display:flex;gap:.5rem;align-items:center}
+    .locknote svg{width:16px;height:16px;flex-shrink:0}
+
+    /* buttons */
+    .btn{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:1rem;border:none;border-radius:13px;font-weight:600;font-size:1rem;transition:filter .15s}
+    .btn-primary{background:var(--gold);color:var(--brown)}
+    .btn-primary:active{filter:brightness(.95)}
+    .btn-ghost{background:transparent;border:1px solid var(--bone-deep);color:var(--brown-soft)}
+    .backlink{display:inline-flex;align-items:center;gap:.4rem;color:var(--brown-mid);font-size:.85rem;margin-bottom:.9rem;background:none;border:none;padding:.2rem 0}
+
+    /* registros / ficha */
+    .rec{display:flex;gap:.8rem;align-items:flex-start;background:#fff;border:1px solid var(--bone-deep);border-radius:14px;padding:.85rem;margin-bottom:.7rem}
+    .rec .ic{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;flex-shrink:0}
+    .rec .ic.flora{background:#eef3e0;color:#5f7a34}.rec .ic.abelha{background:var(--honey-bg);color:var(--gold-deep)}
+    .rec .ic svg{width:22px;height:22px}
+    .rec h4{font-size:.95rem;font-style:italic;font-family:var(--fd)}
+    .rec .meta{font-family:var(--fm);font-size:.68rem;color:var(--brown-faint);margin-top:.15rem}
+    .badge{display:inline-block;font-family:var(--fm);font-size:.58rem;letter-spacing:.06em;padding:.18rem .45rem;border-radius:6px;text-transform:uppercase;margin-top:.35rem;margin-right:.3rem}
+    .b-pend{background:color-mix(in srgb,var(--amber) 15%,transparent);color:var(--amber)}
+    .b-pub{background:color-mix(in srgb,var(--publico) 18%,transparent);color:#4f6a24}
+    .b-ofu{background:color-mix(in srgb,var(--ofuscado) 15%,transparent);color:var(--ofuscado)}
+    .b-res{background:color-mix(in srgb,var(--restrito) 12%,transparent);color:var(--restrito)}
+
+    .empty{text-align:center;color:var(--brown-faint);padding:3rem 1rem}
+    .empty svg{width:44px;height:44px;color:var(--bone-deep);margin:0 auto 1rem}
+
+    /* mapa demo */
+    .map{position:relative;border:1px solid var(--bone-deep);border-radius:16px;overflow:hidden;background:linear-gradient(160deg,#eef3e0,#e3eccf)}
+    .map svg{display:block;width:100%;height:auto}
+    .legend{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:.9rem;font-size:.78rem;color:var(--brown-mid)}
+    .legend i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:.35rem;vertical-align:middle}
+
+    /* toast */
+    .toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%) translateY(20px);background:var(--brown);color:var(--cream);padding:.8rem 1.1rem;border-radius:12px;font-size:.9rem;opacity:0;pointer-events:none;transition:all .3s;z-index:60;display:flex;gap:.5rem;align-items:center;max-width:90%}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .toast svg{width:18px;height:18px;color:var(--gold-bright)}
+
+    /* bottom nav */
+    .tabbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:#fff;border-top:1px solid var(--bone-deep);display:flex;z-index:40;padding-bottom:env(safe-area-inset-bottom)}
+    .tabbar button{flex:1;background:none;border:none;padding:.6rem 0 .7rem;color:var(--brown-faint);display:flex;flex-direction:column;align-items:center;gap:.2rem;font-size:.66rem}
+    .tabbar button svg{width:23px;height:23px}
+    .tabbar button.on{color:var(--gold-deep)}
+    .sr{position:absolute;width:1px;height:1px;overflow:hidden}
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="appbar">
+    <img class="mark" src="favicon-instituto.png" alt="" />
+    <div class="t">Coleta de Campo<small>Instituto Tekoha</small></div>
+    <span class="demo-badge">MODO DEMO</span>
+  </div>
+
+  <!-- ============ INÍCIO ============ -->
+  <section id="s-home" class="screen active">
+    <div class="h1">Olá, pesquisador</div>
+    <div class="sub">O que você vai registrar agora?</div>
+
+    <button class="door" onclick="goScan()">
+      <span class="ic"><svg><use href="#i-qr"/></svg></span>
+      <span><h3>Escanear QR</h3><p>Abre a ficha da árvore pela plaquinha</p></span>
+      <span class="arw">→</span>
+    </button>
+    <button class="door" onclick="goNear()">
+      <span class="ic"><svg><use href="#i-gps"/></svg></span>
+      <span><h3>Buscar por proximidade</h3><p>Lista o que está perto de você agora</p></span>
+      <span class="arw">→</span>
+    </button>
+    <button class="door" onclick="show('s-newtype')">
+      <span class="ic"><svg><use href="#i-plus"/></svg></span>
+      <span><h3>Cadastrar novo</h3><p>Nova árvore melífera ou enxame</p></span>
+      <span class="arw">→</span>
+    </button>
+
+    <div class="stat-row">
+      <div class="stat"><b id="st-total">0</b><span>registros na sessão</span></div>
+      <div class="stat"><b id="st-pend">0</b><span>aguardando sync</span></div>
+    </div>
+  </section>
+
+  <!-- ============ ESCOLHER TIPO ============ -->
+  <section id="s-newtype" class="screen">
+    <button class="backlink" onclick="show('s-home')">← Início</button>
+    <div class="h1">Novo registro</div>
+    <div class="sub">Escolha o que encontrou.</div>
+    <div class="type-grid">
+      <button class="type-card flora" onclick="openFlora()">
+        <span class="ic"><svg><use href="#i-tree"/></svg></span>
+        <h3>Árvore melífera</h3><p>Cadastro do indivíduo</p>
+      </button>
+      <button class="type-card abelha" onclick="openEnxame()">
+        <span class="ic"><svg><use href="#i-bee"/></svg></span>
+        <h3>Enxame silvestre</h3><p>Ninho na natureza · restrito</p>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ FORM (dinâmico) ============ -->
+  <section id="s-form" class="screen">
+    <button class="backlink" onclick="show(formBack)">← Voltar</button>
+    <div class="label" id="f-kicker">FICHA</div>
+    <div class="h1" id="f-title">Ficha</div>
+    <div class="sub" id="f-sub"></div>
+    <form id="theform" onsubmit="return saveForm(event)">
+      <div id="f-fields"></div>
+
+      <div class="field">
+        <label>Foto principal <span class="req">*</span></label>
+        <div class="photo" id="ph-main"><svg><use href="#i-cam"/></svg><div class="cap">Tocar para fotografar o alvo</div><input type="file" accept="image/*" capture="environment" onchange="setPhoto(this,'main')"></div>
+      </div>
+      <div class="field">
+        <label>Foto do entorno <span class="req">*</span></label>
+        <span class="hint">O alvo no contexto (vizinhas, trilha, terreno) — é o que permite reencontrar depois.</span>
+        <div class="photo" id="ph-env"><svg><use href="#i-cam"/></svg><div class="cap">Tocar para fotografar o entorno</div><input type="file" accept="image/*" capture="environment" onchange="setPhoto(this,'env')"></div>
+      </div>
+
+      <div class="field">
+        <label>Localização (GPS)</label>
+        <div class="gps wait" id="gpsbox"><svg><use href="#i-gps"/></svg><span id="gpstxt">obtendo posição…</span></div>
+      </div>
+
+      <div class="field">
+        <label>Notas</label>
+        <textarea id="f-notas" placeholder="Observações livres…"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary"><svg style="width:20px;height:20px" ><use href="#i-check"/></svg> Salvar registro</button>
+    </form>
+  </section>
+
+  <!-- ============ FICHA DO INDIVÍDUO ============ -->
+  <section id="s-ficha" class="screen">
+    <button class="backlink" id="fichaback" onclick="show('s-home')">← Voltar</button>
+    <div id="ficha-body"></div>
+  </section>
+
+  <!-- ============ PROXIMIDADE ============ -->
+  <section id="s-near" class="screen">
+    <button class="backlink" onclick="show('s-home')">← Início</button>
+    <div class="h1">Perto de você</div>
+    <div class="sub" id="near-sub">Ordenado por distância.</div>
+    <div id="near-list"></div>
+  </section>
+
+  <!-- ============ REGISTROS ============ -->
+  <section id="s-recs" class="screen">
+    <div class="h1">Meus registros</div>
+    <div class="sub">Coletados nesta sessão (memória).</div>
+    <div id="rec-list"></div>
+  </section>
+
+  <!-- ============ MAPA ============ -->
+  <section id="s-map" class="screen">
+    <div class="h1">Mapa do santuário</div>
+    <div class="sub">Prévia — só pontos públicos aparecem com precisão.</div>
+    <div class="map">
+      <svg viewBox="0 0 300 210" id="mapsvg">
+        <path d="M20 150 Q60 120 100 140 T200 130 T285 150" fill="none" stroke="#b9cb93" stroke-width="2" opacity=".6"/>
+        <path d="M10 90 Q80 60 150 85 T290 70" fill="none" stroke="#b9cb93" stroke-width="2" opacity=".5"/>
+        <g id="map-pins"></g>
+      </svg>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--publico)"></i>Público (preciso)</span>
+      <span><i style="background:var(--ofuscado)"></i>Ofuscado (raio 1–5 km)</span>
+      <span><i style="background:var(--restrito)"></i>Restrito (oculto)</span>
+    </div>
+    <div class="rec" style="margin-top:1rem"><span class="ic abelha"><svg><use href="#i-lock"/></svg></span><div><h4 id="map-hidden">0 ninhos protegidos</h4><div class="meta">coordenada exata só para pesquisador logado</div></div></div>
+  </section>
+
+  <div class="toast" id="toast"><svg><use href="#i-check"/></svg><span id="toasttxt"></span></div>
+
+  <nav class="tabbar">
+    <button class="on" data-tab="s-home" onclick="show('s-home')"><svg><use href="#i-home"/></svg>Início</button>
+    <button data-tab="s-recs" onclick="show('s-recs')"><svg><use href="#i-list"/></svg>Registros</button>
+    <button data-tab="s-map" onclick="show('s-map')"><svg><use href="#i-map"/></svg>Mapa</button>
+  </nav>
+</div>
+
+<!-- ícones -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-qr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M20 14v.01M14 20h.01M20 17v4M17 20h4" stroke-linecap="round"/></symbol>
+  <symbol id="i-gps" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3c3 2 4 5 4 7a4 4 0 1 1-8 0c0-2 1-5 4-7Z"/><path d="M12 14v7"/></symbol>
+  <symbol id="i-bee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><ellipse cx="12" cy="14" rx="5" ry="6.3"/><path d="M7.5 12h9M7.5 16h9"/><path d="M12 7.6c-2-2.8-6-3.3-7-1.9.7 1.9 3 2.9 5 2.6M12 7.6c2-2.8 6-3.3 7-1.9-.7 1.9-3 2.9-5 2.6"/></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 8h3l1.5-2h9L18 8h3v11H3z"/><circle cx="12" cy="13" r="3.4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></symbol>
+</svg>
+
+<script>
+/* ================= ESTADO ================= */
+const MODO_DEMO = true;
+const USUARIO = "Raoni B.";
+const CENTRO = {lat:-10.7519, lng:-37.3378}; // aprox. Serra de Itabaiana/SE
+let registros = [];        // ocorrências + indivíduos criados na sessão
+let indForm = null;        // config do form atual
+let formBack = 's-newtype';
+let curPhotos = {main:null, env:null};
+let curGPS = null;
+
+/* espécies para autocomplete */
+const ABELHAS = ["Cephalotrigona capitata","Duckeola ghilianii","Friesella schrottkyi","Frieseomelitta doederleini","Frieseomelitta flavicornis","Frieseomelitta languida","Frieseomelitta longipes","Frieseomelitta varia","Geotrigona mombuca","Lestrimelitta limao","Leurotrigona muelleri","Melipona asilvai","Melipona bicolor","Melipona capixaba","Melipona crinita","Melipona eburnea","Melipona fasciculata","Melipona flavolineata","Melipona fuliginosa","Melipona fulva","Melipona interrupta","Melipona lateralis","Melipona mandacaia","Melipona marginata","Melipona melanoventer","Melipona mondury","Melipona orbignyi","Melipona paraensis","Melipona quadrifasciata","Melipona quinquefasciata","Melipona rufiventris","Melipona scutellaris (uruçu)","Melipona seminigra","Melipona subnitida (jandaíra)","Melipona torrida","Nannotrigona punctata","Nannotrigona testaceicornis","Oxytrigona tataira","Paratrigona lineata","Partamona helleri","Plebeia droryana","Plebeia emerina","Plebeia flavocincta","Plebeia julianii","Plebeia lucii","Plebeia minima","Plebeia remota","Plebeia saiqui","Scaptotrigona bipunctata","Scaptotrigona depilis","Scaptotrigona polysticta","Scaptotrigona postica (mandaguari)","Scaptotrigona tubiba","Scaptotrigona xanthotricha","Schwarziana quadripunctata","Tetragona clavipes","Tetragonisca angustula (jataí)","Tetragonisca weyrauchi","Trigona pallens","Trigona spinipes (irapuá)"];
+const FLORA = ["Mimosa tenuiflora (Jurema-preta)","Mimosa caesalpiniifolia (Sabiá)","Anadenanthera colubrina (Angico)","Schinus terebinthifolia (Aroeira)","Handroanthus impetiginosus (Ipê-roxo)","Libidibia ferrea (Pau-ferro / Jucá)","Anacardium occidentale (Cajueiro)","Ziziphus joazeiro (Juazeiro)","Sideroxylon obtusifolium (Quixabeira)","Prosopis juliflora (Algaroba)","Croton (Marmeleiro)","Eucalyptus sp.","Amburana cearensis (Umburana)","Bowdichia virgilioides (Sucupira)"];
+
+/* indivíduos demo (árvores já plaqueadas) para QR/proximidade */
+const DEMO_IND = [
+  {id:"TEK-0001", especie:"Mimosa caesalpiniifolia (Sabiá)", nome:"Sabiá da trilha", lat:-10.7521, lng:-37.3375, obs:[]},
+  {id:"TEK-0002", especie:"Handroanthus impetiginosus (Ipê-roxo)", nome:"Ipê do mirante", lat:-10.7517, lng:-37.3382, obs:[]},
+  {id:"TEK-0003", especie:"Anacardium occidentale (Cajueiro)", nome:"Cajueiro da entrada", lat:-10.7525, lng:-37.3371, obs:[]},
+];
+
+/* ================= NAVEGAÇÃO ================= */
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active', s.id===id));
+  document.querySelectorAll('.tabbar button').forEach(b=>b.classList.toggle('on', b.dataset.tab===id));
+  window.scrollTo(0,0);
+  if(id==='s-recs') renderRecs();
+  if(id==='s-map') renderMap();
+}
+
+/* ================= GPS ================= */
+function grabGPS(){
+  curGPS=null;
+  const box=document.getElementById('gpsbox'), txt=document.getElementById('gpstxt');
+  box.classList.add('wait'); txt.textContent='obtendo posição…';
+  const done=(lat,lng,acc,demo)=>{curGPS={lat,lng,acc};box.classList.remove('wait');
+    txt.textContent=`${lat.toFixed(5)}, ${lng.toFixed(5)}  ·  ±${Math.round(acc)}m${demo?' (demo)':''}`;};
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(
+      p=>done(p.coords.latitude,p.coords.longitude,p.coords.accuracy||8,false),
+      ()=>{const j=()=>(Math.random()-.5)*.004; done(CENTRO.lat+j(),CENTRO.lng+j(),12,true);},
+      {enableHighAccuracy:true,timeout:8000});
+  } else {const j=()=>(Math.random()-.5)*.004; done(CENTRO.lat+j(),CENTRO.lng+j(),12,true);}
+}
+
+/* ================= FOTOS ================= */
+function setPhoto(inp,which){
+  const f=inp.files[0]; if(!f)return;
+  const url=URL.createObjectURL(f); curPhotos[which]=url;
+  const box=document.getElementById(which==='main'?'ph-main':'ph-env');
+  box.classList.add('filled');
+  box.innerHTML=`<img src="${url}"><span class="redo">trocar</span>`+box.querySelector('input').outerHTML;
+  box.querySelector('input').onchange=function(){setPhoto(this,which)};
+}
+
+/* ================= FICHAS (definição de campos) ================= */
+function fieldHTML(f){
+  const req=f.req?' <span class="req">*</span>':'';
+  const hint=f.hint?`<span class="hint">${f.hint}</span>`:'';
+  if(f.type==='text'||f.type==='number'||f.type==='date')
+    return `<div class="field"><label>${f.label}${req}</label>${hint}<input type="${f.type}" id="${f.k}" ${f.list?`list="dl-${f.k}"`:''} placeholder="${f.ph||''}">${f.list?`<datalist id="dl-${f.k}">${f.list.map(o=>`<option value="${o}">`).join('')}</datalist>`:''}</div>`;
+  if(f.type==='select')
+    return `<div class="field"><label>${f.label}${req}</label>${hint}<select id="${f.k}">${f.opts.map(o=>`<option value="${o}">${o}</option>`).join('')}</select></div>`;
+  if(f.type==='textarea')
+    return `<div class="field"><label>${f.label}${req}</label>${hint}<textarea id="${f.k}"></textarea></div>`;
+  if(f.type==='chips'||f.type==='multi')
+    return `<div class="field"><label>${f.label}${req}</label>${hint}<div class="chips" id="${f.k}" data-multi="${f.type==='multi'}">${f.opts.map(o=>`<button type="button" class="chip" onclick="tapChip(this,'${f.k}',${f.type==='multi'})">${o}</button>`).join('')}</div></div>`;
+  if(f.type==='fournier')
+    return `<div class="field"><label>${f.label}${req}</label>${hint}<div class="fournier" id="${f.k}">${[0,1,2,3,4].map(n=>fhex(n)).join('')}</div></div>`;
+  return '';
+}
+function fhex(n){
+  const pcts=['0%','1–25%','26–50%','51–75%','76–100%'];
+  const fillY=[92,72,52,32,12][n], h=[0,20,40,60,80][n];
+  return `<button type="button" class="fbtn" data-v="${n}" onclick="tapF(this)">
+    <svg viewBox="0 0 90 100"><defs><clipPath id="c${n}"><path d="M45 12 L79 32 L79 72 L45 92 L11 72 L11 32Z"/></clipPath></defs>
+    <g clip-path="url(#c${n})"><rect x="0" y="${fillY}" width="90" height="${h}" fill="#d49641"/></g>
+    <path d="M45 12 L79 32 L79 72 L45 92 L11 72 L11 32Z" fill="none" stroke="#a56d18" stroke-width="6"/></svg>
+    <div class="n">${n}</div><div class="p">${pcts[n]}</div></button>`;
+}
+function tapChip(el,k,multi){
+  if(!multi) el.parentNode.querySelectorAll('.chip').forEach(c=>c!==el&&c.classList.remove('on'));
+  el.classList.toggle('on');
+}
+function tapF(el){el.parentNode.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');}
+function chipVal(k){return [...document.querySelectorAll('#'+k+' .chip.on')].map(c=>c.textContent).join(', ');}
+function fVal(k){const s=document.querySelector('#'+k+' .fbtn.on');return s?s.dataset.v:'';}
+
+/* campos da ficha FLORA (cadastro + observação juntos no MVP) */
+const FIELDS_FLORA = [
+  {k:'especie',label:'Espécie',type:'text',req:1,list:FLORA,ph:'filtrar pelo catálogo…',hint:'Sistema sugere pelo catálogo (IA sobre a foto — futuro).'},
+  {k:'nome_popular',label:'Nome popular / apelido',type:'text'},
+  {k:'data',label:'Data de plantio ou registro',type:'date',req:1,hint:'Se for árvore encontrada, use a data de hoje (registro).'},
+  {k:'origem',label:'Origem da muda',type:'select',opts:['—','própria','doada','viveiro','regeneração natural']},
+  {k:'altura',label:'Altura estimada (m)',type:'number'},
+  {k:'dap',label:'DAP — diâmetro (cm)',type:'number'},
+  {k:'fenofase',label:'Fenofase',type:'multi',req:1,opts:['botão','flor','fruto verde','fruto maduro','dispersão','vegetativo']},
+  {k:'fournier',label:'Intensidade da floração (Fournier)',type:'fournier',req:1,hint:'Quanto da copa está na fase.'},
+  {k:'recurso',label:'Recurso ofertado',type:'multi',opts:['néctar','pólen','resina/própolis']},
+  {k:'visita',label:'Abelhas visitando?',type:'chips',req:1,opts:['sim','não']},
+  {k:'especies_abelha',label:'Espécie(s) de abelha vista(s)',type:'text',list:ABELHAS,ph:'catálogo de abelhas…'},
+  {k:'estado',label:'Estado da planta',type:'select',opts:['saudável','estressada','doente','danificada']},
+];
+/* campos da ficha ENXAME */
+const FIELDS_ENXAME = [
+  {k:'especie',label:'Espécie do meliponíneo',type:'text',req:1,list:ABELHAS,ph:'catálogo de abelhas…',hint:'Sistema sugere pelo catálogo (IA — futuro).'},
+  {k:'substrato',label:'Substrato / hospedeira',type:'select',req:1,opts:['oco de árvore','raiz','cupinzeiro','barranco','muro/construção','chão','outro']},
+  {k:'hospedeira',label:'Árvore hospedeira (se houver)',type:'text',list:FLORA},
+  {k:'altura_ninho',label:'Altura do ninho (m)',type:'number'},
+  {k:'entrada',label:'Entrada do ninho (tubo, cor, formato)',type:'text'},
+  {k:'estado_col',label:'Estado da colônia',type:'select',req:1,opts:['ativa forte','ativa fraca','abandonada','morta']},
+  {k:'voo',label:'Atividade de voo',type:'select',opts:['intensa','moderada','baixa','nenhuma']},
+  {k:'ameaca',label:'Ameaça observada',type:'multi',opts:['sinal de saque','desmatamento','forídeo/praga','nenhuma']},
+];
+
+/* ================= ABRIR FORMS ================= */
+function baseOpenForm(cfg){
+  indForm=cfg; curPhotos={main:null,env:null};
+  document.getElementById('f-kicker').textContent=cfg.kicker;
+  document.getElementById('f-title').textContent=cfg.title;
+  document.getElementById('f-sub').innerHTML=cfg.sub;
+  document.getElementById('f-fields').innerHTML=cfg.fields.map(fieldHTML).join('')+cfg.extra;
+  document.getElementById('f-notas').value='';
+  ['ph-main','ph-env'].forEach(id=>{const b=document.getElementById(id);b.classList.remove('filled');
+    b.innerHTML=`<svg><use href="#i-cam"/></svg><div class="cap">Tocar para fotografar</div>`+b.querySelector('input').outerHTML;
+    b.querySelector('input').onchange=function(){setPhoto(this,id==='ph-main'?'main':'env')};});
+  show('s-form'); grabGPS();
+}
+function openFlora(indId){
+  formBack = indId?'s-ficha':'s-newtype';
+  baseOpenForm({type:'flora',indId:indId||null,kicker:'FICHA FLORA',
+    title: indId?'Nova observação':'Nova árvore',
+    sub: indId?('Observação de <b>'+indId+'</b>'):'Cadastro do indivíduo + primeira observação.',
+    fields:FIELDS_FLORA,
+    extra:`<div class="field"><label>Sensibilidade</label>${sensBlock('flora')}</div>`});
+}
+function openEnxame(){
+  formBack='s-newtype';
+  baseOpenForm({type:'enxame',kicker:'FICHA ABELHA',title:'Enxame silvestre',
+    sub:'Ninho encontrado na natureza.',
+    fields:FIELDS_ENXAME,
+    extra:`<div class="field"><label>Sensibilidade</label>
+      <div class="locknote"><svg><use href="#i-lock"/></svg> Enxame nasce <b>restrito</b> — protege a coordenada contra saque. Não pode ser público.</div>
+      ${sensBlock('enxame')}</div>`});
+}
+function sensBlock(kind){
+  const opt=(v,c,t,d,on,dis)=>`<div class="sens-opt ${on?'on':''} ${dis?'disabled':''}" data-v="${v}" onclick="${dis?'':`pickSens(this)`}"><span class="dot" style="background:${c}"></span><span><b>${t}</b><span>${d}</span></span></div>`;
+  if(kind==='enxame')
+    return `<div id="sensbox">${opt('restrito','var(--restrito)','Restrito','coordenada só p/ pesquisador logado',1,0)}${opt('ofuscado','var(--ofuscado)','Ofuscado','ponto deslocado 1–5 km no mapa',0,0)}${opt('publico','var(--publico)','Público','bloqueado para enxame',0,1)}</div>`;
+  return `<div id="sensbox">${opt('publico','var(--publico)','Público','aparece no mapa do santuário',1,0)}${opt('ofuscado','var(--ofuscado)','Ofuscado','ponto deslocado 1–5 km',0,0)}${opt('restrito','var(--restrito)','Restrito','só pesquisador logado',0,0)}</div>`;
+}
+function pickSens(el){el.parentNode.querySelectorAll('.sens-opt').forEach(o=>o.classList.remove('on'));el.classList.add('on');}
+function sensVal(){const s=document.querySelector('#sensbox .sens-opt.on');return s?s.dataset.v:'publico';}
+
+/* ================= SALVAR ================= */
+function saveForm(e){
+  e.preventDefault();
+  // validações mínimas
+  const especie=(document.getElementById('especie').value||'').trim();
+  if(!especie){toast('Informe a espécie');return false;}
+  if(!curPhotos.main){toast('Foto principal é obrigatória');return false;}
+  if(!curPhotos.env){toast('Foto do entorno é obrigatória');return false;}
+  const now=new Date();
+  const rec={
+    tipo: indForm.type, especie,
+    lat: curGPS?curGPS.lat:null, lng: curGPS?curGPS.lng:null, acc: curGPS?curGPS.acc:null,
+    sens: sensVal(), foto_main:curPhotos.main, foto_env:curPhotos.env,
+    notas: document.getElementById('f-notas').value.trim(),
+    por: USUARIO, quando: now, sync:'pendente', dados:{}
+  };
+  const fs = indForm.type==='flora'?FIELDS_FLORA:FIELDS_ENXAME;
+  fs.forEach(f=>{
+    if(f.type==='multi'||f.type==='chips') rec.dados[f.k]=chipVal(f.k);
+    else if(f.type==='fournier') rec.dados[f.k]=fVal(f.k);
+    else {const el=document.getElementById(f.k); rec.dados[f.k]=el?el.value:'';}
+  });
+  if(indForm.type==='flora'){
+    if(!rec.dados.fenofase){toast('Escolha a fenofase');return false;}
+    if(rec.dados.fournier===''){toast('Marque a intensidade (Fournier)');return false;}
+    rec.tekid = indForm.indId || ('TEK-'+String(1000+registros.filter(r=>r.tipo==='flora'&&r.tekid&&!r.indId).length+DEMO_IND.length+1).slice(1));
+    rec.indId = indForm.indId||null;
+  }
+  registros.unshift(rec);
+  updateStats();
+  toast('Registro salvo · aguardando sync');
+  show('s-recs');
+  return false;
+}
+
+/* ================= LISTAS / RENDER ================= */
+function updateStats(){
+  document.getElementById('st-total').textContent=registros.length;
+  document.getElementById('st-pend').textContent=registros.filter(r=>r.sync==='pendente').length;
+}
+function sensBadge(s){return {publico:['b-pub','público'],ofuscado:['b-ofu','ofuscado'],restrito:['b-res','restrito']}[s];}
+function fmtTime(d){return d.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});}
+function renderRecs(){
+  const el=document.getElementById('rec-list');
+  if(!registros.length){el.innerHTML=`<div class="empty"><svg><use href="#i-list"/></svg><p>Nenhum registro ainda.<br>Use as portas de entrada no Início.</p></div>`;return;}
+  el.innerHTML=registros.map(r=>{
+    const isF=r.tipo==='flora'; const sb=sensBadge(r.sens);
+    return `<div class="rec"><span class="ic ${isF?'flora':'abelha'}"><svg><use href="#${isF?'i-tree':'i-bee'}"/></svg></span>
+      <div style="flex:1"><h4>${r.especie}</h4>
+      <div class="meta">${isF?(r.tekid||'árvore'):'enxame'} · ${r.lat?r.lat.toFixed(4)+', '+r.lng.toFixed(4):'sem GPS'} · ${fmtTime(r.quando)}</div>
+      <span class="badge b-pend">⏳ pendente</span><span class="badge ${sb[0]}">${sb[1]}</span></div></div>`;
+  }).join('');
+}
+function renderMap(){
+  const pins=document.getElementById('map-pins');
+  const pub=[...DEMO_IND.map(i=>({lat:i.lat,lng:i.lng,sens:'publico'})),
+    ...registros.filter(r=>r.sens!=='restrito'&&r.lat).map(r=>({lat:r.lat,lng:r.lng,sens:r.sens}))];
+  const restr=registros.filter(r=>r.sens==='restrito').length;
+  // projeta lat/lng num viewBox 300x210 em torno do centro
+  const sx=v=>150+(v-CENTRO.lng)/.01*140, sy=v=>105-(v-CENTRO.lat)/.01*90;
+  pins.innerHTML=pub.map(p=>{
+    const x=Math.max(12,Math.min(288,sx(p.lng))), y=Math.max(12,Math.min(198,sy(p.lat)));
+    if(p.sens==='ofuscado') return `<circle cx="${x}" cy="${y}" r="26" fill="var(--ofuscado)" opacity=".18"/><circle cx="${x}" cy="${y}" r="4" fill="var(--ofuscado)"/>`;
+    return `<circle cx="${x}" cy="${y}" r="5" fill="var(--publico)" stroke="#fff" stroke-width="1.5"/>`;
+  }).join('');
+  document.getElementById('map-hidden').textContent=`${restr} ninho${restr===1?'':'s'} protegido${restr===1?'':'s'}`;
+}
+
+/* ================= PORTAS QR / PROXIMIDADE ================= */
+function goScan(){
+  // MODO_DEMO: simula leitura de uma plaquinha aleatória
+  const ind=DEMO_IND[Math.floor(Math.random()*DEMO_IND.length)];
+  toast('QR lido: '+ind.id+' (demo)');
+  setTimeout(()=>openFicha(ind.id),500);
+}
+function haversine(a,b){const R=6371e3,t=x=>x*Math.PI/180;
+  const dLat=t(b.lat-a.lat),dLng=t(b.lng-a.lng);
+  const h=Math.sin(dLat/2)**2+Math.cos(t(a.lat))*Math.cos(t(b.lat))*Math.sin(dLng/2)**2;
+  return 2*R*Math.asin(Math.sqrt(h));}
+function goNear(){
+  show('s-near');
+  const list=document.getElementById('near-list');
+  list.innerHTML=`<div class="empty"><svg><use href="#i-gps"/></svg><p>localizando…</p></div>`;
+  const render=(me)=>{
+    const arr=DEMO_IND.map(i=>({...i,d:haversine(me,i)})).sort((a,b)=>a.d-b.d);
+    list.innerHTML=arr.map(i=>`<button class="rec" style="width:100%;text-align:left" onclick="openFicha('${i.id}')">
+      <span class="ic flora"><svg><use href="#i-tree"/></svg></span>
+      <div style="flex:1"><h4>${i.nome}</h4><div class="meta">${i.id} · ${i.especie}</div>
+      <span class="badge b-pub">${i.d<1?'aqui':'~'+Math.round(i.d)+' m'}</span></div><span class="arw" style="color:var(--gold)">→</span></button>`).join('');
+  };
+  if(navigator.geolocation) navigator.geolocation.getCurrentPosition(
+    p=>render({lat:p.coords.latitude,lng:p.coords.longitude}),
+    ()=>render(CENTRO),{timeout:6000}); else render(CENTRO);
+}
+function openFicha(id){
+  const ind=DEMO_IND.find(i=>i.id===id); if(!ind)return;
+  const obs=registros.filter(r=>r.indId===id);
+  document.getElementById('fichaback').onclick=()=>show('s-home');
+  document.getElementById('ficha-body').innerHTML=`
+    <div class="label">${ind.id}</div>
+    <div class="h1">${ind.nome}</div>
+    <div class="sub">${ind.especie}</div>
+    <div class="gps" style="margin-bottom:1rem"><svg><use href="#i-gps"/></svg><span>${ind.lat.toFixed(5)}, ${ind.lng.toFixed(5)}</span></div>
+    <button class="btn btn-primary" onclick="openFlora('${ind.id}')"><svg style="width:20px;height:20px"><use href="#i-plus"/></svg> Nova observação</button>
+    <div class="label" style="margin:1.5rem 0 .6rem">Observações (${obs.length})</div>
+    ${obs.length?obs.map(r=>`<div class="rec"><span class="ic flora"><svg><use href="#i-tree"/></svg></span>
+      <div><h4>${r.dados.fenofase||'observação'} · Fournier ${r.dados.fournier}</h4>
+      <div class="meta">${r.dados.visita==='sim'?'abelhas: '+(r.dados.especies_abelha||'sim'):'sem abelhas'} · ${fmtTime(r.quando)}</div></div></div>`).join('')
+      :`<div class="empty" style="padding:1.5rem"><p>Sem observações ainda.</p></div>`}`;
+  show('s-ficha');
+}
+
+/* ================= TOAST ================= */
+let toastT;
+function toast(msg){const t=document.getElementById('toast');document.getElementById('toasttxt').textContent=msg;
+  t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2600);}
+
+/* ================= SERVICE WORKER (PWA offline shell) ================= */
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  navigator.serviceWorker.register('sw-campo.js').catch(()=>{});
+}
+updateStats();
+</script>
+</body>
+</html>

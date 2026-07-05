@@ -1,0 +1,15 @@
+{
+  "name": "Coleta de Campo · Instituto Tekoha",
+  "short_name": "Tekoha Campo",
+  "description": "Registro de campo de árvores melíferas e enxames de abelhas nativas do santuário Tekoha.",
+  "start_url": "coletar.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fdfaf1",
+  "theme_color": "#2a1d10",
+  "icons": [
+    { "src": "favicon-instituto.png", "sizes": "256x256", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

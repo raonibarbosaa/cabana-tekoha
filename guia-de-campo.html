@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Guia de Campo do Instituto Tekoha — como registrar árvores melíferas e enxames de abelhas nativas com padrão científico. Metodologia, escala de floração e referências." />
+  <meta name="robots" content="noindex" />
+  <title>Guia de Campo · Instituto Tekoha</title>
+
+  <link rel="icon" type="image/png" href="favicon-instituto.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      /* Marca Instituto Tekoha — dourado/mel + marrom sobre creme */
+      --cream: #fdfaf1; --cream-soft: #f8f1e0; --bone: #f2e8d2; --bone-deep: #e9dcbf;
+      --brown: #2a1d10; --brown-soft: #4a361f; --brown-mid: #6b5334; --brown-faint: #8a7455;
+      --gold: #d49641; --gold-bright: #ecb84a; --gold-deep: #a56d18; --amber: #b8791f;
+      --honey-bg: #fbf3df;
+      --restrito: #a53a1f; --ofuscado: #b8791f; --publico: #6f8a3f;
+      --font-display: "Fraunces", "Times New Roman", serif;
+      --font-body: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, monospace;
+      --max: 1180px; --pad-x: clamp(1.25rem, 4vw, 3.5rem);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--brown); font-family: var(--font-body); font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: 0.28; mix-blend-mode: multiply; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.65 0 0 0 0 0.5 0 0 0 0 0.2 0 0 0 0.10 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>"); }
+    a { color: inherit; text-decoration: none; } img { display: block; max-width: 100%; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding-inline: var(--pad-x); }
+    .label { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-deep); display: inline-flex; align-items: center; gap: 0.55rem; }
+    .num { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em; color: var(--amber); }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 50; background: var(--brown); color: var(--cream); border-bottom: 1px solid var(--gold-deep); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding-block: 0.85rem; gap: 2rem; }
+    .nav-brand { display: inline-flex; align-items: center; gap: 0.7rem; }
+    .nav-brand .hex { width: 26px; height: 26px; color: var(--gold-bright); flex-shrink: 0; }
+    .nav-brand b { font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: 1.15rem; letter-spacing: 0.01em; }
+    .nav-brand small { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-bright); display: block; margin-top: -2px; }
+    .nav-links { display: flex; gap: 1.7rem; font-size: 0.85rem; }
+    .nav-links a { position: relative; color: color-mix(in srgb, var(--cream) 82%, transparent); transition: color 200ms; }
+    .nav-links a:hover { color: var(--gold-bright); }
+    @media (max-width: 860px) { .nav-links { display: none; } }
+
+    /* HERO */
+    .hero { text-align: center; padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2rem, 5vw, 3.5rem); position: relative; }
+    .hero-logo { max-width: min(560px, 88vw); margin: 0 auto clamp(1.5rem, 4vw, 2.5rem); }
+    .hero-meta { display: inline-flex; gap: 1rem; align-items: center; flex-wrap: wrap; justify-content: center; margin-bottom: 1.6rem; }
+    .hero-title { font-family: var(--font-display); font-weight: 300; font-style: italic; font-variation-settings: "SOFT" 60, "opsz" 144; font-size: clamp(3rem, 10vw, 6.5rem); line-height: 0.9; letter-spacing: -0.03em; color: var(--brown); }
+    .hero-lede { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.15rem, 2.2vw, 1.5rem); line-height: 1.4; max-width: 46ch; margin: 1.5rem auto 0; color: var(--brown-mid); }
+    .hero-lede em { color: var(--gold-deep); font-style: italic; }
+
+    .divider { padding-block: clamp(1.5rem, 4vw, 2.5rem); display: flex; align-items: center; gap: 1rem; max-width: 300px; margin: 0 auto; color: var(--gold-deep); }
+    .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: color-mix(in srgb, var(--gold-deep) 40%, transparent); }
+    .divider .hex { width: 20px; height: 20px; opacity: 0.8; }
+
+    section { padding-block: clamp(2.5rem, 6vw, 4.5rem); position: relative; }
+    .section-head { padding-bottom: 1.6rem; border-bottom: 1px solid color-mix(in srgb, var(--brown) 14%, transparent); margin-bottom: 2.5rem; }
+    .section-head .label { margin-bottom: 0.8rem; }
+    .section-title { font-family: var(--font-display); font-weight: 400; font-style: italic; font-size: clamp(1.9rem, 4.5vw, 3.2rem); line-height: 1; letter-spacing: -0.02em; color: var(--brown); }
+    .section-intro { margin-top: 1.1rem; max-width: 62ch; color: var(--brown-mid); font-size: 1.03rem; }
+
+    /* CARDS DE PRINCÍPIO */
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .card { background: var(--honey-bg); border: 1px solid var(--bone-deep); border-radius: 12px; padding: 1.6rem 1.5rem; position: relative; }
+    .card .k { width: 34px; height: 34px; color: var(--gold-deep); margin-bottom: 1rem; }
+    .card h3 { font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: 1.35rem; color: var(--brown); margin-bottom: 0.5rem; }
+    .card p { font-size: 0.96rem; color: var(--brown-mid); line-height: 1.55; }
+    .card .flag { display: inline-block; margin-top: 0.9rem; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.28rem 0.6rem; border-radius: 999px; background: var(--gold); color: var(--brown); font-weight: 600; }
+    @media (max-width: 780px) { .cards { grid-template-columns: 1fr; } }
+
+    /* TABELA DE FICHA */
+    .ficha { border: 1px solid var(--bone-deep); border-radius: 12px; overflow: hidden; background: #fff; }
+    .ficha-title { background: var(--brown); color: var(--cream); padding: 1rem 1.4rem; display: flex; align-items: center; gap: 0.8rem; }
+    .ficha-title .k { width: 26px; height: 26px; color: var(--gold-bright); }
+    .ficha-title b { font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: 1.3rem; }
+    .ficha-title span { margin-left: auto; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-bright); }
+    table.grid { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    table.grid th { text-align: left; font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brown-faint); padding: 0.8rem 1.4rem; background: var(--cream-soft); border-bottom: 1px solid var(--bone-deep); }
+    table.grid td { padding: 0.85rem 1.4rem; border-bottom: 1px solid color-mix(in srgb, var(--bone-deep) 60%, transparent); vertical-align: top; color: var(--brown-soft); }
+    table.grid tr:last-child td { border-bottom: none; }
+    table.grid td.campo { font-weight: 600; color: var(--brown); white-space: nowrap; }
+    table.grid td.val { font-family: var(--font-mono); font-size: 0.82rem; color: var(--gold-deep); }
+    .req { color: var(--restrito); font-weight: 700; }
+    .tag-obr { display: inline-block; font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; padding: 0.15rem 0.45rem; border-radius: 4px; background: color-mix(in srgb, var(--restrito) 12%, transparent); color: var(--restrito); text-transform: uppercase; }
+    .scroll-x { overflow-x: auto; }
+
+    /* FOURNIER */
+    .fournier { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.8rem; margin-top: 0.5rem; }
+    .f-cell { text-align: center; background: var(--honey-bg); border: 1px solid var(--bone-deep); border-radius: 12px; padding: 1.2rem 0.6rem 1rem; }
+    .f-cell svg { width: 74px; height: 82px; margin: 0 auto 0.6rem; display: block; }
+    .f-cell .n { font-family: var(--font-mono); font-size: 1.5rem; color: var(--gold-deep); font-weight: 400; }
+    .f-cell .pct { font-family: var(--font-mono); font-size: 0.7rem; color: var(--brown-faint); letter-spacing: 0.05em; }
+    .f-cell .desc { font-size: 0.86rem; color: var(--brown-mid); margin-top: 0.4rem; line-height: 1.35; }
+    @media (max-width: 720px) { .fournier { grid-template-columns: repeat(2, 1fr); } }
+
+    /* SENSIBILIDADE */
+    .sens { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .sens-item { border: 1px solid var(--bone-deep); border-radius: 12px; padding: 1.5rem; background: #fff; border-top: 4px solid var(--c); }
+    .sens-item h4 { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c); margin-bottom: 0.7rem; }
+    .sens-item p { font-size: 0.95rem; color: var(--brown-mid); }
+    @media (max-width: 780px) { .sens { grid-template-columns: 1fr; } }
+
+    /* ESPÉCIES */
+    .esp-note { background: var(--honey-bg); border: 1px solid var(--bone-deep); border-radius: 12px; padding: 1.4rem 1.6rem; margin-bottom: 1.8rem; font-size: 0.98rem; color: var(--brown-mid); }
+    .esp-grid { columns: 3 200px; column-gap: 2rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--brown-soft); }
+    .esp-grid span { display: block; padding-block: 0.28rem; break-inside: avoid; }
+    .esp-grid i { color: var(--brown); font-style: italic; }
+
+    /* REFERÊNCIAS */
+    .refs { display: grid; gap: 1rem; }
+    .ref { background: #fff; border: 1px solid var(--bone-deep); border-left: 4px solid var(--gold); border-radius: 8px; padding: 1.3rem 1.5rem; }
+    .ref .use { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-deep); display: block; margin-bottom: 0.5rem; }
+    .ref .cite { font-size: 0.98rem; color: var(--brown-soft); line-height: 1.5; }
+    .ref .cite b { color: var(--brown); }
+    .ref a { color: var(--amber); text-decoration: underline; text-underline-offset: 3px; word-break: break-word; }
+    .ref a:hover { color: var(--gold-deep); }
+    .credit-box { margin-top: 2rem; background: var(--brown); color: var(--cream); border-radius: 12px; padding: 1.8rem 2rem; }
+    .credit-box h3 { font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: 1.4rem; color: var(--gold-bright); margin-bottom: 0.8rem; }
+    .credit-box p { font-size: 0.95rem; color: color-mix(in srgb, var(--cream) 85%, transparent); line-height: 1.6; }
+
+    footer { background: var(--brown); color: var(--cream); padding-block: 3rem 2rem; margin-top: 2rem; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-inner .brand { font-family: var(--font-display); font-style: italic; font-size: 1.2rem; }
+    .footer-inner .brand small { display: block; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-bright); }
+    .footer-inner span { font-family: var(--font-mono); font-size: 0.72rem; color: color-mix(in srgb, var(--cream) 60%, transparent); }
+
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 800ms ease, transform 800ms cubic-bezier(0.2,0.7,0.2,1); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ===== IMPRESSÃO / PDF ===== */
+    @media print {
+      @page { size: A4; margin: 14mm 12mm; }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      body { font-size: 12px; background: var(--cream); }
+      body::before { display: none; }
+      nav { display: none !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+      .hero { padding-block: 0 1rem; }
+      .hero-logo { max-width: 340px; }
+      .hero-title { font-size: 3rem; }
+      section { padding-block: 0.8rem; break-inside: avoid; }
+      .section-head { margin-bottom: 1.2rem; padding-bottom: 0.8rem; }
+      .section-title { font-size: 1.8rem; }
+      .card, .ficha, .f-cell, .sens-item, .ref, .esp-note, .credit-box { break-inside: avoid; }
+      .fournier { break-inside: avoid; }
+      #flora, #fournier, #abelha, #sigilo, #especies, #referencias { break-before: auto; }
+      #abelha, #referencias { break-before: page; }
+      footer { break-inside: avoid; }
+      a { color: var(--amber) !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ícone de favo reutilizável -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="hex" viewBox="0 0 100 100">
+      <path d="M50 4 L88 27 L88 73 L50 96 L12 73 L12 27 Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="camera" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M3 8h3l1.5-2h9L18 8h3v11H3z"/><circle cx="12" cy="13" r="3.4" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="tree" viewBox="0 0 24 24"><path d="M12 3c3 2 4 5 4 7a4 4 0 1 1-8 0c0-2 1-5 4-7Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 14v7" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="bee" viewBox="0 0 24 24"><ellipse cx="12" cy="14" rx="5" ry="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M7.5 12h9M7.5 16h9" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5c-2-3-6-3.5-7-2 .7 2 3 3 5 2.7M12 7.5c2-3 6-3.5 7-2-.7 2-3 3-5 2.7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <nav>
+    <div class="wrap nav-inner">
+      <a class="nav-brand" href="index.html">
+        <svg class="hex"><use href="#hex"/></svg>
+        <span><b>Instituto Tekoha</b><small>Pesquisa · Sergipe</small></span>
+      </a>
+      <div class="nav-links">
+        <a href="#principios">Princípios</a>
+        <a href="#flora">Ficha Flora</a>
+        <a href="#fournier">Floração</a>
+        <a href="#abelha">Ficha Abelha</a>
+        <a href="#sigilo">Sigilo</a>
+        <a href="#especies">Espécies</a>
+        <a href="#referencias">Referências</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero wrap">
+    <img class="hero-logo" src="logo-instituto-tekoha.png" alt="Instituto Tekoha — Conservação e Pesquisa de Abelhas Nativas Brasileiras" />
+    <div class="hero-meta">
+      <span class="label"><svg class="hex" style="width:14px;height:14px"><use href="#hex"/></svg> Guia de Campo</span>
+      <span class="num">v1 · 2026</span>
+    </div>
+    <h1 class="hero-title">Guia de Campo</h1>
+    <p class="hero-lede">Como registrar <em>árvores melíferas</em> e <em>enxames de abelhas nativas</em> do santuário com padrão científico — para que cada observação vire dado comparável com a pesquisa brasileira.</p>
+  </header>
+
+  <div class="wrap"><div class="divider"><svg class="hex"><use href="#hex"/></svg></div></div>
+
+  <!-- PRINCÍPIOS -->
+  <section id="principios" class="wrap reveal">
+    <div class="section-head">
+      <span class="label">01 — Antes de tudo</span>
+      <h2 class="section-title">Três princípios de coleta</h2>
+      <p class="section-intro">Valem para qualquer registro em campo, seja de planta ou de abelha. São eles que separam uma anotação particular de um dado de pesquisa.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <svg class="k"><use href="#camera"/></svg>
+        <h3>Foto do entorno</h3>
+        <p>Toda ficha exige uma <b>foto do alvo no contexto</b> (vizinhas, trilha, pedra, terreno). O GPS erra 3–10 m no mato fechado; a foto do entorno é o que fecha a reidentificação depois.</p>
+        <span class="flag">Obrigatória</span>
+      </div>
+      <div class="card">
+        <svg class="k"><use href="#lock"/></svg>
+        <h3>Sigilo da coordenada</h3>
+        <p>Coordenada de <b>enxame silvestre é informação sensível</b> — meliponíneo nativo sofre saque para venda ilegal de colônia. Todo registro carrega um nível de sigilo. Ver a seção <a href="#sigilo" style="color:var(--gold-deep);text-decoration:underline">Sigilo</a>.</p>
+        <span class="flag">Inegociável</span>
+      </div>
+      <div class="card">
+        <svg class="k"><use href="#flask"/></svg>
+        <h3>Padrão científico</h3>
+        <p>Usamos as mesmas réguas de Embrapa e universidades — escala de <b>Fournier</b> para floração, recurso floral (néctar/pólen/resina) e as espécies do catálogo nacional. Dado padronizado é dado publicável.</p>
+        <span class="flag">Comparável</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FICHA FLORA -->
+  <section id="flora" class="wrap reveal">
+    <div class="section-head">
+      <span class="label">02 — Planta</span>
+      <h2 class="section-title">Ficha Flora <span style="font-style:normal;font-size:0.5em;color:var(--brown-faint)">(árvore melífera)</span></h2>
+      <p class="section-intro">A árvore tem dois momentos: o <b>cadastro</b> (uma vez, quando planta ou encontra o indivíduo) e a <b>observação</b> (cada visita, para acompanhar floração e visita de abelhas). O cruzamento floração × abelha é o coração da pesquisa.</p>
+    </div>
+
+    <div class="ficha" style="margin-bottom:1.5rem">
+      <div class="ficha-title"><svg class="k"><use href="#tree"/></svg><b>A) Cadastro do indivíduo</b><span>uma vez</span></div>
+      <div class="scroll-x"><table class="grid">
+        <tr><th>Campo</th><th>Como preencher</th><th></th></tr>
+        <tr><td class="campo">Espécie</td><td class="val">autocompletar filtrando pelo catálogo — sistema poderá sugerir por referência + IA <span style="color:var(--brown-faint)">(a definir)</span></td><td><span class="tag-obr">obrig.</span></td></tr>
+        <tr><td class="campo">Nome popular</td><td class="val">texto</td><td></td></tr>
+        <tr><td class="campo">Data de plantio<br><span style="font-weight:400;color:var(--brown-faint);font-size:0.85em">ou de registro</span></td><td class="val">data — se for árvore já existente encontrada, usar a data do registro</td><td><span class="tag-obr">obrig.</span></td></tr>
+        <tr><td class="campo">Origem da muda</td><td class="val">própria / doada / viveiro / regeneração natural</td><td></td></tr>
+        <tr><td class="campo">Foto inicial + entorno</td><td class="val">2 fotos</td><td><span class="tag-obr">obrig.</span></td></tr>
+        <tr><td class="campo">Status</td><td class="val">vivo / morto</td><td><span class="tag-obr">obrig.</span></td></tr>
+      </table></div>
+    </div>
+
+    <div class="ficha">
+      <div class="ficha-title"><svg class="k"><use href="#tree"/></svg><b>B) Observação</b><span>cada visita</span></div>
+      <div class="scroll-x"><table class="grid">
+        <tr><th>Campo</th><th>Valores</th><th></th></tr>
+        <tr><td class="campo">Altura est. / DAP</td><td class="val">número (m) / diâmetro (cm)</td><td></td></tr>
+        <tr><td class="campo">Fenofase</td><td class="val">botão · <b style="color:var(--gold-deep)">flor</b> · fruto verde · fruto maduro · dispersão · vegetativo</td><td><span class="tag-obr">obrig.</span></td></tr>
+        <tr><td class="campo">Intensidade</td><td class="val">escala de Fournier 0–4 &nbsp;(ver seção 03)</td><td><span class="tag-obr">obrig.</span></td></tr>
+        <tr><td class="campo">Recurso ofertado</td><td class="val">néctar · pólen · resina/própolis</td><td></td></tr>
+        <tr><td class="campo">Abelhas visitando?</td><td class="val">sim / não</td><td><span class="tag-obr">obrig.</span></td></tr>
+        <tr><td class="campo">Espécie(s) de abelha</td><td class="val">catálogo de espécies (seção 06) — texto livre no MVP</td><td></td></tr>
+        <tr><td class="campo">Hora da observação</td><td class="val">automática — pico de visita costuma ser 8h–12h</td><td></td></tr>
+        <tr><td class="campo">Estado da planta</td><td class="val">saudável / estressada / doente / danificada</td><td></td></tr>
+      </table></div>
+    </div>
+  </section>
+
+  <!-- FOURNIER -->
+  <section id="fournier" class="wrap reveal">
+    <div class="section-head">
+      <span class="label">03 — A régua da floração</span>
+      <h2 class="section-title">Escala de Fournier</h2>
+      <p class="section-intro">Ao registrar a floração (ou frutificação), o pesquisador olha a copa e escolhe <b>quanto por cento</b> dela está naquela fase. É a régua-padrão da fenologia brasileira (Fournier, 1974). No app, é só um toque de 0 a 4.</p>
+    </div>
+    <div class="fournier">
+      <div class="f-cell"><svg viewBox="0 0 90 100"><defs><clipPath id="h0"><path d="M45 12 L79 32 L79 72 L45 92 L11 72 L11 32 Z"/></clipPath></defs><g clip-path="url(#h0)"><rect x="0" y="92" width="90" height="0" fill="#d49641"/></g><path d="M45 12 L79 32 L79 72 L45 92 L11 72 L11 32 Z" fill="none" stroke="#a56d18" stroke-width="5" stroke-linejoin="round"/></svg><div class="n">0</div><div class="pct">0%</div><div class="desc">Nada — sem flor</div></div>
+      <div class="f-cell"><svg viewBox="0 0 90 100"><defs><clipPath id="h1"><path d="M45 12 L79 32 L79 72 L45 92 L11 72 L11 32 Z"/></clipPath></defs><g clip-path="url(#h1)"><rect x="0" y="72" width="90" height="20" fill="#d49641"/></g><path d="M45 12 L79 32 L79 72 L45 92 L11 72 L11 32 Z" fill="none" stroke="#a56d18" stroke-width="5" stroke-linejoin="round"/></svg><div class="n">1</div><div class="pct">1–25%</div><div class="desc">Pouco — até ¼ da copa</div></div>
+      <div class="f-cell"><svg viewBox="0 0 90 100"><defs><clipPath id="h2"><path d="M45 12 L79 32 L79 72 L45 92 L11 72 L11 32 Z"/></clipPath></defs><g clip-path="url(#h2)"><rect x="0" y="52" width="90" height="40" fill="#d49641"/></g><path d="M45 12 L79 32 L79 72 L45 92 L11 72 L11 32 Z" fill="none" stroke="#a56d18" stroke-width="5" stroke-linejoin="round"/></svg><div class="n">2</div><div class="pct">26–50%</div><div class="desc">Cerca de metade</div></div>
+      <div class="f-cell"><svg viewBox="0 0 90 100"><defs><clipPath id="h3"><path d="M45 12 L79 32 L79 72 L45 92 L11 72 L11 32 Z"/></clipPath></defs><g clip-path="url(#h3)"><rect x="0" y="32" width="90" height="60" fill="#e0a838"/></g><path d="M45 12 L79 32 L79 72 L45 92 L11 72 L11 32 Z" fill="none" stroke="#a56d18" stroke-width="5" stroke-linejoin="round"/></svg><div class="n">3</div><div class="pct">51–75%</div><div class="desc">Maior parte da copa</div></div>
+      <div class="f-cell"><svg viewBox="0 0 90 100"><defs><clipPath id="h4"><path d="M45 12 L79 32 L79 72 L45 92 L11 72 L11 32 Z"/></clipPath></defs><g clip-path="url(#h4)"><rect x="0" y="12" width="90" height="80" fill="#ecb84a"/></g><path d="M45 12 L79 32 L79 72 L45 92 L11 72 L11 32 Z" fill="none" stroke="#a56d18" stroke-width="5" stroke-linejoin="round"/></svg><div class="n">4</div><div class="pct">76–100%</div><div class="desc">Copa quase toda florida</div></div>
+    </div>
+  </section>
+
+  <!-- FICHA ABELHA -->
+  <section id="abelha" class="wrap reveal">
+    <div class="section-head">
+      <span class="label">04 — Abelha</span>
+      <h2 class="section-title">Ficha Abelha <span style="font-style:normal;font-size:0.5em;color:var(--brown-faint)">(enxame silvestre)</span></h2>
+      <p class="section-intro">Registro de ninho de abelha sem ferrão encontrado na natureza. O vocabulário de estado da colônia segue a ficha de manejo do Prof. Dr. Rogério Alves (INSECTA/UFRB), adaptada do ninho de caixa para o ninho silvestre. <b>Todo enxame já entra marcado como <span style="color:var(--restrito)">restrito</span> automaticamente</b> — a coordenada exata fica visível só para pesquisador logado, sem depender de ninguém lembrar de proteger. Tornar público exige uma ação consciente (ver seção 05).</p>
+    </div>
+    <div class="ficha">
+      <div class="ficha-title"><svg class="k"><use href="#bee"/></svg><b>Enxame silvestre</b><span style="color:var(--gold-bright)">restrito por padrão</span></div>
+      <div class="scroll-x"><table class="grid">
+        <tr><th>Campo</th><th>Valores</th><th></th></tr>
+        <tr><td class="campo">Espécie</td><td class="val">catálogo de espécies (seção 06) — texto livre no MVP</td><td><span class="tag-obr">obrig.</span></td></tr>
+        <tr><td class="campo">Substrato / hospedeira</td><td class="val">oco de árvore · raiz · cupinzeiro · barranco · muro · chão · outro</td><td><span class="tag-obr">obrig.</span></td></tr>
+        <tr><td class="campo">Altura do ninho</td><td class="val">número (m)</td><td></td></tr>
+        <tr><td class="campo">Entrada do ninho</td><td class="val">tubo, cor, formato — texto + foto</td><td></td></tr>
+        <tr><td class="campo">Estado da colônia</td><td class="val">ativa forte · ativa fraca · abandonada · morta</td><td><span class="tag-obr">obrig.</span></td></tr>
+        <tr><td class="campo">Atividade de voo</td><td class="val">intensa · moderada · baixa · nenhuma</td><td></td></tr>
+        <tr><td class="campo">Ameaça observada</td><td class="val">sinal de saque · desmatamento · forídeo/praga · nenhuma</td><td></td></tr>
+        <tr><td class="campo">Sensibilidade</td><td class="val" style="color:var(--restrito)"><b>restrito (padrão) · ofuscado — nunca público</b></td><td><span class="tag-obr">obrig.</span></td></tr>
+      </table></div>
+    </div>
+  </section>
+
+  <!-- SIGILO -->
+  <section id="sigilo" class="wrap reveal">
+    <div class="section-head">
+      <span class="label">05 — Conservação</span>
+      <h2 class="section-title">Sigilo da coordenada</h2>
+      <p class="section-intro">Publicar a localização de um ninho nativo entrega o ninho ao pilhador. Por isso todo registro carrega um nível de sensibilidade que decide como (e se) o ponto aparece no mapa público.</p>
+    </div>
+    <div class="sens">
+      <div class="sens-item" style="--c:var(--publico)">
+        <h4>● Público</h4>
+        <p>Exibição normal no mapa do santuário. É o caso das <b>árvores plantadas</b>, que têm plaquinha e são parte do roteiro de visita.</p>
+      </div>
+      <div class="sens-item" style="--c:var(--ofuscado)">
+        <h4>● Ofuscado</h4>
+        <p>No mapa público o ponto aparece <b>deslocado num raio de 1–5 km</b> — mostra que a espécie existe na região sem entregar o ponto exato. Técnica usada pelo iNaturalist para espécie ameaçada.</p>
+      </div>
+      <div class="sens-item" style="--c:var(--restrito)">
+        <h4>● Restrito</h4>
+        <p>Coordenada exata <b>só para pesquisador logado</b>. Padrão de todo <b>enxame silvestre</b>. Não aparece no mapa público de forma alguma.</p>
+      </div>
+    </div>
+    <div class="esp-note" style="margin-top:1.8rem">
+      <b>O que é o iNaturalist?</b> É a maior rede mundial de registro de biodiversidade, onde milhões de pessoas — cidadãos e cientistas — catalogam plantas e animais com foto e localização. Quando alguém registra uma <b>espécie ameaçada</b>, a plataforma automaticamente <b>embaralha a localização exata</b> (mostra só a região aproximada) para que caçadores e coletores não cheguem ao indivíduo. É exatamente essa lógica que adotamos no nível "ofuscado".
+    </div>
+  </section>
+
+  <!-- ESPÉCIES -->
+  <section id="especies" class="wrap reveal">
+    <div class="section-head">
+      <span class="label">06 — Catálogo de referência</span>
+      <h2 class="section-title">60 abelhas sem ferrão</h2>
+      <p class="section-intro">Lista de espécies do catálogo nacional relevantes para a meliponicultura, base para identificação em campo e para o campo "espécie" das fichas. O acervo com foto de entrada de ninho de cada espécie está arquivado em <span style="font-family:var(--font-mono);font-size:0.85em;color:var(--gold-deep)">Referencias/Fichas-Abelhas/</span>. No app, o preenchimento da espécie será <b>assistido</b>: o sistema sugere candidatos a partir deste catálogo e, futuramente, por <b>IA sobre a foto</b> do registro.</p>
+    </div>
+    <div class="esp-note">Material das fichas: <b>A.B.E.L.H.A. — Associação Brasileira de Estudo das Abelhas</b>, em parceria com o <b>ICMBio</b>, com base no Catálogo Nacional das Espécies de Abelhas Sem Ferrão (Portaria ICMBio nº 665/2021). Crédito completo na seção de referências.</div>
+    <div class="esp-grid">
+      <span><i>Cephalotrigona capitata</i></span><span><i>Duckeola ghilianii</i></span><span><i>Friesella schrottkyi</i></span><span><i>Frieseomelitta doederleini</i></span><span><i>Frieseomelitta flavicornis</i></span><span><i>Frieseomelitta languida</i></span><span><i>Frieseomelitta longipes</i></span><span><i>Frieseomelitta varia</i></span><span><i>Geotrigona mombuca</i></span><span><i>Lestrimelitta limao</i></span><span><i>Leurotrigona muelleri</i></span><span><i>Melipona asilvai</i></span><span><i>Melipona bicolor</i></span><span><i>Melipona capixaba</i></span><span><i>Melipona crinita</i></span><span><i>Melipona eburnea</i></span><span><i>Melipona fasciculata</i></span><span><i>Melipona flavolineata</i></span><span><i>Melipona fuliginosa</i></span><span><i>Melipona fulva</i></span><span><i>Melipona interrupta</i></span><span><i>Melipona lateralis</i></span><span><i>Melipona mandacaia</i></span><span><i>Melipona marginata</i></span><span><i>Melipona melanoventer</i></span><span><i>Melipona mondury</i></span><span><i>Melipona orbignyi</i></span><span><i>Melipona paraensis</i></span><span><i>Melipona quadrifasciata</i></span><span><i>Melipona quinquefasciata</i></span><span><i>Melipona rufiventris</i></span><span><i>Melipona scutellaris</i></span><span><i>Melipona seminigra</i></span><span><i>Melipona subnitida</i></span><span><i>Melipona torrida</i></span><span><i>Nannotrigona punctata</i></span><span><i>Nannotrigona testaceicornis</i></span><span><i>Oxytrigona tataira</i></span><span><i>Paratrigona lineata</i></span><span><i>Partamona helleri</i></span><span><i>Plebeia droryana</i></span><span><i>Plebeia emerina</i></span><span><i>Plebeia flavocincta</i></span><span><i>Plebeia julianii</i></span><span><i>Plebeia lucii</i></span><span><i>Plebeia minima</i></span><span><i>Plebeia remota</i></span><span><i>Plebeia saiqui</i></span><span><i>Scaptotrigona bipunctata</i></span><span><i>Scaptotrigona depilis</i></span><span><i>Scaptotrigona polysticta</i></span><span><i>Scaptotrigona postica</i></span><span><i>Scaptotrigona tubiba</i></span><span><i>Scaptotrigona xanthotricha</i></span><span><i>Schwarziana quadripunctata</i></span><span><i>Tetragona clavipes</i></span><span><i>Tetragonisca angustula</i></span><span><i>Tetragonisca weyrauchi</i></span><span><i>Trigona pallens</i></span><span><i>Trigona spinipes</i></span>
+    </div>
+  </section>
+
+  <!-- REFERÊNCIAS -->
+  <section id="referencias" class="wrap reveal">
+    <div class="section-head">
+      <span class="label">07 — Fontes e crédito</span>
+      <h2 class="section-title">Referências</h2>
+      <p class="section-intro">Toda a metodologia deste guia é apoiada em material de pesquisa público. Registramos aqui a fonte de cada peça, com o devido crédito a quem a produziu.</p>
+    </div>
+    <div class="refs">
+      <div class="ref">
+        <span class="use">Catálogo de espécies · fichas de abelha</span>
+        <p class="cite"><b>A.B.E.L.H.A. — Associação Brasileira de Estudo das Abelhas</b>, em parceria com o <b>ICMBio</b>. <i>Fichas catalográficas das espécies de abelhas sem ferrão relevantes para a meliponicultura.</i> Coordenação geral: Cristiano Menezes. Informações técnico-científicas: Denise de Araújo Alves. Colaboração da Embrapa Meio Ambiente e da USP. Base: Catálogo Nacional das Espécies de Abelhas Sem Ferrão (Portaria ICMBio nº 665/2021). Disponível em: <a href="https://abelha.org.br/fichas-catalograficas-das-especies-relevantes-para-a-meliponicultura-2/" target="_blank" rel="noopener">abelha.org.br</a></p>
+      </div>
+      <div class="ref">
+        <span class="use">Ficha de manejo · estado de colônia</span>
+        <p class="cite">ALVES, R. M. O.; CARVALHO, C. A. L.; SOUZA, B. A.; JUSTINA, G. D. <b>Sistema de produção para abelhas sem ferrão: uma proposta para o Estado da Bahia.</b> Cruz das Almas: UFBA / SEAGRI-BA, 2005. (Série Meliponicultura, n. 3). Grupo INSECTA — Núcleo de Estudo dos Insetos. Disponível em: <a href="https://www2.ufrb.edu.br/insecta/images/publicacoes/meliponicultura/Serie_Meliponicultura_n3.pdf" target="_blank" rel="noopener">www2.ufrb.edu.br/insecta</a></p>
+      </div>
+      <div class="ref">
+        <span class="use">Escala de intensidade de floração</span>
+        <p class="cite">FOURNIER, L. A. <b>Un método cuantitativo para la medición de características fenológicas en árboles.</b> Turrialba, v. 24, n. 4, p. 422–423, 1974.</p>
+      </div>
+      <div class="ref">
+        <span class="use">Flora melífera · recursos florais · calendário de floração</span>
+        <p class="cite"><b>EMBRAPA Meio-Norte.</b> <i>Flora Apícola.</i> <a href="https://www.embrapa.br/web/meio-norte/flora-apicola" target="_blank" rel="noopener">embrapa.br/meio-norte/flora-apicola</a> · <b>Rede Sem Abelha, Sem Alimento.</b> <i>Guia de plantas visitadas por abelhas na Caatinga.</i> · <b>IFMG — Campus Bambuí.</b> <i>Calendário Apícola.</i></p>
+      </div>
+    </div>
+
+    <div class="credit-box">
+      <h3>Sobre este guia</h3>
+      <p>Documento interno de campo do <b>Instituto Tekoha — Conservação e Pesquisa de Abelhas Nativas Brasileiras</b>, para o santuário em Sergipe. Este guia organiza e adapta o material das fontes acima; os créditos de cada peça pertencem aos respectivos autores e instituições. As fichas catalográficas de abelhas são distribuídas gratuitamente pela A.B.E.L.H.A./ICMBio para fins de educação e conservação.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span class="brand">Instituto Tekoha<small>Pesquisa · Sergipe</small></span>
+      <span>Guia de Campo v1 · 2026 · uso interno</span>
+    </div>
+  </footer>
+
+  <script>
+    const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }), { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
