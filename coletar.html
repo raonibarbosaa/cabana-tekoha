@@ -666,7 +666,14 @@ function toast(msg){const t=document.getElementById('toast');document.getElement
 
 /* ================= SERVICE WORKER (PWA offline shell) ================= */
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
-  navigator.serviceWorker.register('sw-campo.js').catch(()=>{});
+  navigator.serviceWorker.register('sw-campo.js').then(reg=>{
+    reg.update();
+    // só recarrega quando um SW ANTIGO é substituído (não na 1ª visita)
+    if(navigator.serviceWorker.controller){
+      let recarregou=false;
+      navigator.serviceWorker.addEventListener('controllerchange',()=>{ if(!recarregou){recarregou=true;location.reload();} });
+    }
+  }).catch(()=>{});
 }
 updateStats();
 </script>
