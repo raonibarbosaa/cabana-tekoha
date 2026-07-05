@@ -118,6 +118,10 @@
     .gps{display:flex;align-items:center;gap:.6rem;background:var(--honey-bg);border:1px solid var(--bone-deep);border-radius:12px;padding:.7rem .85rem;font-family:var(--fm);font-size:.78rem;color:var(--brown-soft)}
     .gps svg{width:20px;height:20px;color:var(--gold-deep);flex-shrink:0}
     .gps.wait{color:var(--brown-faint)}
+    .geocopy{margin-left:.5rem;font-family:var(--fm);font-size:.62rem;letter-spacing:.03em;border:1px solid var(--bone-deep);background:#fff;color:var(--gold-deep);border-radius:999px;padding:.2rem .55rem;cursor:pointer;display:inline-flex;align-items:center;gap:.25rem;white-space:nowrap}
+    .geocopy:active{background:var(--honey-bg)}
+    .geocopy svg{width:12px;height:12px}
+    .gps .geocopy{margin-left:auto}
 
     /* sensibilidade */
     .sens-opt{display:flex;align-items:center;gap:.65rem;border:1px solid var(--bone-deep);border-radius:11px;padding:.7rem .8rem;margin-bottom:.5rem;background:#fff}
@@ -259,7 +263,7 @@
 
       <div class="field">
         <label>Localização (GPS)</label>
-        <div class="gps wait" id="gpsbox"><svg><use href="#i-gps"/></svg><span id="gpstxt">obtendo posição…</span></div>
+        <div class="gps wait" id="gpsbox"><svg><use href="#i-gps"/></svg><span id="gpstxt">obtendo posição…</span><button type="button" id="gpscopy" class="geocopy" style="display:none" onclick="copyGeo(curGPS&&curGPS.lat, curGPS&&curGPS.lng)"><svg><use href="#i-copy"/></svg>copiar</button></div>
       </div>
 
       <div class="field">
@@ -330,6 +334,7 @@
   <symbol id="i-bee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><ellipse cx="12" cy="14" rx="5" ry="6.3"/><path d="M7.5 12h9M7.5 16h9"/><path d="M12 7.6c-2-2.8-6-3.3-7-1.9.7 1.9 3 2.9 5 2.6M12 7.6c2-2.8 6-3.3 7-1.9-.7 1.9-3 2.9-5 2.6"/></symbol>
   <symbol id="i-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 8h3l1.5-2h9L18 8h3v11H3z"/><circle cx="12" cy="13" r="3.4"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
   <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></symbol>
   <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></symbol>
@@ -375,14 +380,30 @@ function grabGPS(){
   curGPS=null;
   const box=document.getElementById('gpsbox'), txt=document.getElementById('gpstxt');
   box.classList.add('wait'); txt.textContent='obtendo posição…';
+  const gc=document.getElementById('gpscopy'); if(gc) gc.style.display='none';
   const done=(lat,lng,acc,demo)=>{curGPS={lat,lng,acc};box.classList.remove('wait');
-    txt.textContent=`${lat.toFixed(5)}, ${lng.toFixed(5)}  ·  ±${Math.round(acc)}m${demo?' (demo)':''}`;};
+    txt.textContent=`${lat.toFixed(5)}, ${lng.toFixed(5)}  ·  ±${Math.round(acc)}m${demo?' (demo)':''}`;
+    if(gc) gc.style.display='';};
   if(navigator.geolocation){
     navigator.geolocation.getCurrentPosition(
       p=>done(p.coords.latitude,p.coords.longitude,p.coords.accuracy||8,false),
       ()=>{const j=()=>(Math.random()-.5)*.004; done(CENTRO.lat+j(),CENTRO.lng+j(),12,true);},
       {enableHighAccuracy:true,timeout:8000});
   } else {const j=()=>(Math.random()-.5)*.004; done(CENTRO.lat+j(),CENTRO.lng+j(),12,true);}
+}
+function copyGeo(lat,lng){
+  if(lat==null||lng==null||isNaN(lat)){toast('Sem coordenada ainda');return;}
+  const txt=Number(lat).toFixed(6)+', '+Number(lng).toFixed(6);
+  const ok=()=>toast('Coordenada copiada: '+txt);
+  if(navigator.clipboard&&navigator.clipboard.writeText)
+    navigator.clipboard.writeText(txt).then(ok).catch(()=>fallbackCopy(txt,ok));
+  else fallbackCopy(txt,ok);
+}
+function fallbackCopy(txt,cb){
+  const ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.focus();ta.select();
+  try{document.execCommand('copy');cb&&cb();}catch(e){toast('Não foi possível copiar');}
+  document.body.removeChild(ta);
 }
 
 /* ================= FOTOS (até 5, com permissão p/ excluir) ================= */
@@ -447,7 +468,7 @@ function fVal(k){const s=document.querySelector('#'+k+' .fbtn.on');return s?s.da
 
 /* campos da ficha FLORA (cadastro + observação juntos no MVP) */
 const FIELDS_FLORA = [
-  {k:'especie',label:'Espécie',type:'text',req:1,list:FLORA,ph:'filtrar pelo catálogo…',hint:'Sistema sugere pelo catálogo (IA sobre a foto — futuro).'},
+  {k:'especie',label:'Espécie',type:'text',list:FLORA,ph:'filtrar pelo catálogo… (opcional)',hint:'Opcional — sistema sugere pelo catálogo (IA sobre a foto — futuro).'},
   {k:'nome_popular',label:'Nome popular / apelido',type:'text'},
   {k:'data',label:'Data de plantio ou registro',type:'date',req:1,hint:'Se for árvore encontrada, use a data de hoje (registro).'},
   {k:'origem',label:'Origem da muda',type:'select',opts:['—','própria','doada','viveiro','regeneração natural']},
@@ -518,10 +539,9 @@ function saveForm(e){
   e.preventDefault();
   // validações mínimas
   let especie=(document.getElementById('especie').value||'').trim();
-  if(indForm.type==='flora' && !especie){toast('Informe a espécie');return false;}
   if(!curPhotos.main.length){toast('Adicione ao menos 1 foto principal');return false;}
   if(!curPhotos.env.length){toast('Foto do entorno é obrigatória (ao menos 1)');return false;}
-  if(!especie) especie = 'Enxame não identificado';
+  if(!especie) especie = indForm.type==='flora' ? 'Árvore não identificada' : 'Enxame não identificado';
   const now=new Date();
   const rec={
     tipo: indForm.type, especie,
@@ -564,7 +584,7 @@ function renderRecs(){
     return `<div class="rec"><span class="ic ${isF?'flora':'abelha'}"><svg><use href="#${isF?'i-tree':'i-bee'}"/></svg></span>
       <div style="flex:1"><h4>${r.especie}</h4>
       <div class="meta">${isF?(r.tekid||'árvore'):'enxame'} · ${r.lat?r.lat.toFixed(4)+', '+r.lng.toFixed(4):'sem GPS'} · ${fmtTime(r.quando)}</div>
-      <span class="badge b-pend">⏳ pendente</span><span class="badge ${sb[0]}">${sb[1]}</span></div></div>`;
+      <span class="badge b-pend">⏳ pendente</span><span class="badge ${sb[0]}">${sb[1]}</span>${r.lat?`<button type="button" class="geocopy" style="margin-top:.35rem" onclick="copyGeo(${r.lat},${r.lng})"><svg><use href="#i-copy"/></svg>copiar geo</button>`:''}</div></div>`;
   }).join('');
 }
 function renderMap(){
@@ -629,7 +649,7 @@ function openFicha(id){
     <div class="label">${ind.id}</div>
     <div class="h1">${ind.nome}</div>
     <div class="sub">${ind.especie}</div>
-    <div class="gps" style="margin-bottom:1rem"><svg><use href="#i-gps"/></svg><span>${ind.lat.toFixed(5)}, ${ind.lng.toFixed(5)}</span></div>
+    <div class="gps" style="margin-bottom:1rem"><svg><use href="#i-gps"/></svg><span>${ind.lat.toFixed(5)}, ${ind.lng.toFixed(5)}</span><button type="button" class="geocopy" onclick="copyGeo(${ind.lat},${ind.lng})"><svg><use href="#i-copy"/></svg>copiar</button></div>
     <button class="btn btn-primary" onclick="openFlora('${ind.id}')"><svg style="width:20px;height:20px"><use href="#i-plus"/></svg> Nova observação</button>
     <div class="label" style="margin:1.5rem 0 .6rem">Observações (${obs.length})</div>
     ${obs.length?obs.map(r=>`<div class="rec"><span class="ic flora"><svg><use href="#i-tree"/></svg></span>
