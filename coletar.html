@@ -122,6 +122,13 @@
     .geocopy:active{background:var(--honey-bg)}
     .geocopy svg{width:12px;height:12px}
     .gps .geocopy{margin-left:auto}
+    /* cartão de consulta (dados fixos do indivíduo na observação) */
+    .consulta{background:var(--honey-bg);border:1px solid var(--bone-deep);border-radius:14px;padding:1rem 1.1rem;margin-bottom:1.3rem}
+    .consulta .c-head{display:flex;align-items:center;gap:.5rem;margin-bottom:.15rem}
+    .consulta .c-code{font-family:var(--fm);font-size:.82rem;color:var(--gold-deep);font-weight:500}
+    .consulta .c-esp{font-family:var(--fd);font-style:italic;font-size:1.15rem;color:var(--brown);line-height:1.15}
+    .consulta .c-nome{font-size:.85rem;color:var(--brown-mid);margin-top:.1rem}
+    .consulta .badge{margin-top:0}
 
     /* sensibilidade */
     .sens-opt{display:flex;align-items:center;gap:.65rem;border:1px solid var(--bone-deep);border-radius:11px;padding:.7rem .8rem;margin-bottom:.5rem;background:#fff}
@@ -216,7 +223,7 @@
     <div class="h1">Novo registro</div>
     <div class="sub">Escolha o que encontrou.</div>
     <div class="type-grid">
-      <button class="type-card flora" onclick="openFlora()">
+      <button class="type-card flora" onclick="openFloraCadastro()">
         <span class="ic"><svg><use href="#i-tree"/></svg></span>
         <h3>Árvore melífera</h3><p>Cadastro do indivíduo</p>
       </button>
@@ -248,6 +255,7 @@
     <div class="h1" id="f-title">Ficha</div>
     <div class="sub" id="f-sub"></div>
     <form id="theform" onsubmit="return saveForm(event)">
+      <div id="f-consulta"></div>
       <div id="f-fields"></div>
 
       <div class="field">
@@ -364,6 +372,8 @@ const DEMO_IND = [
   {id:"TEKOHA0002", especie:"Handroanthus impetiginosus (Ipê-roxo)", nome:"Ipê do mirante", lat:-10.7517, lng:-37.3382, obs:[]},
   {id:"TEKOHA0003", especie:"Anacardium occidentale (Cajueiro)", nome:"Cajueiro da entrada", lat:-10.7525, lng:-37.3371, obs:[]},
 ];
+/* lista viva de indivíduos (demo + cadastrados na sessão) */
+let individuos = DEMO_IND.map(i=>({...i, sens:'publico', foto_ref:''}));
 
 /* ================= NAVEGAÇÃO ================= */
 function show(id){
@@ -466,12 +476,15 @@ function tapF(el){el.parentNode.querySelectorAll('.fbtn').forEach(b=>b.classList
 function chipVal(k){return [...document.querySelectorAll('#'+k+' .chip.on')].map(c=>c.textContent).join(', ');}
 function fVal(k){const s=document.querySelector('#'+k+' .fbtn.on');return s?s.dataset.v:'';}
 
-/* campos da ficha FLORA (cadastro + observação juntos no MVP) */
-const FIELDS_FLORA = [
+/* FLORA — dados FIXOS do indivíduo (preenchidos 1x no cadastro) */
+const FIELDS_CADASTRO = [
   {k:'especie',label:'Espécie',type:'text',list:FLORA,ph:'filtrar pelo catálogo… (opcional)',hint:'Opcional — sistema sugere pelo catálogo (IA sobre a foto — futuro).'},
   {k:'nome_popular',label:'Nome popular / apelido',type:'text'},
-  {k:'data',label:'Data de plantio ou registro',type:'date',req:1,hint:'Se for árvore encontrada, use a data de hoje (registro).'},
+  {k:'data',label:'Data de plantio ou registro',type:'date',hint:'Se for árvore encontrada, use a data de hoje (registro).'},
   {k:'origem',label:'Origem da muda',type:'select',opts:['—','própria','doada','viveiro','regeneração natural']},
+];
+/* FLORA — campos de cada OBSERVAÇÃO (mudam a cada visita) */
+const FIELDS_OBS = [
   {k:'altura',label:'Altura estimada (m)',type:'number'},
   {k:'dap',label:'DAP — diâmetro (cm)',type:'number'},
   {k:'fenofase',label:'Fenofase',type:'multi',req:1,opts:['botão','flor','fruto verde','fruto maduro','dispersão','vegetativo']},
@@ -494,23 +507,50 @@ const FIELDS_ENXAME = [
 ];
 
 /* ================= ABRIR FORMS ================= */
+function todayISO(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function consultaCard(ind){
+  const sb=sensBadge(ind.sens||'publico');
+  return `<div class="consulta">
+    <div class="label" style="margin-bottom:.5rem">Árvore · dados fixos</div>
+    <div class="c-head"><span class="c-code">${ind.id}</span><span class="badge ${sb[0]}">${sb[1]}</span></div>
+    <div class="c-esp">${ind.especie||'espécie não identificada'}</div>
+    ${ind.nome?`<div class="c-nome">${ind.nome}</div>`:''}
+    <div class="gps" style="margin-top:.6rem"><svg><use href="#i-gps"/></svg><span>${ind.lat.toFixed(5)}, ${ind.lng.toFixed(5)}</span><button type="button" class="geocopy" onclick="copyGeo(${ind.lat},${ind.lng})"><svg><use href="#i-copy"/></svg>copiar</button></div>
+  </div>`;
+}
 function baseOpenForm(cfg){
   indForm=cfg; curPhotos={main:[],env:[]};
   document.getElementById('f-kicker').textContent=cfg.kicker;
   document.getElementById('f-title').textContent=cfg.title;
   document.getElementById('f-sub').innerHTML=cfg.sub;
-  document.getElementById('f-fields').innerHTML=cfg.fields.map(fieldHTML).join('')+cfg.extra;
+  document.getElementById('f-consulta').innerHTML=cfg.consulta?consultaCard(cfg.consulta):'';
+  document.getElementById('f-fields').innerHTML=cfg.fields.map(fieldHTML).join('')+(cfg.extra||'');
+  const dt=document.getElementById('data'); if(dt && !dt.value) dt.value=todayISO();
   document.getElementById('f-notas').value='';
   renderPhotos('main'); renderPhotos('env');
-  show('s-form'); grabGPS();
+  show('s-form');
+  if(cfg.gps===false && cfg.consulta){
+    curGPS={lat:cfg.consulta.lat,lng:cfg.consulta.lng,acc:null};
+    const box=document.getElementById('gpsbox'),txt=document.getElementById('gpstxt'),gc=document.getElementById('gpscopy');
+    box.classList.remove('wait'); txt.textContent=`${cfg.consulta.lat.toFixed(5)}, ${cfg.consulta.lng.toFixed(5)} · herdado da árvore`; if(gc) gc.style.display='';
+  } else { grabGPS(); }
 }
-function openFlora(indId){
-  formBack = indId?'s-ficha':'s-newtype';
-  baseOpenForm({type:'flora',indId:indId||null,kicker:'FICHA FLORA',
-    title: indId?'Nova observação':'Nova árvore',
-    sub: indId?('Observação de <b>'+indId+'</b>'):'Cadastro do indivíduo + primeira observação.',
-    fields:FIELDS_FLORA,
+function openFloraCadastro(){
+  formBack='s-newtype';
+  baseOpenForm({type:'flora',mode:'cadastro',indId:null,kicker:'FICHA FLORA',
+    title:'Nova árvore',
+    sub:'Cadastro do indivíduo + primeira observação.',
+    fields:FIELDS_CADASTRO.concat(FIELDS_OBS),
     extra:`<div class="field"><label>Sensibilidade</label>${sensBlock('flora')}</div>`});
+}
+function openObs(indId){
+  const ind=individuos.find(i=>i.id===indId); if(!ind)return;
+  formBack='s-ficha';
+  baseOpenForm({type:'flora',mode:'obs',indId:indId,kicker:'NOVA OBSERVAÇÃO',
+    title:ind.nome||ind.id,
+    sub:'Registro desta visita.',
+    consulta:ind, gps:false,
+    fields:FIELDS_OBS, extra:''});
 }
 function openEnxame(){
   formBack='s-newtype';
@@ -531,41 +571,55 @@ function pickSens(el){el.parentNode.querySelectorAll('.sens-opt').forEach(o=>o.c
 function sensVal(){const s=document.querySelector('#sensbox .sens-opt.on');return s?s.dataset.v:'publico';}
 
 /* ================= SALVAR ================= */
-function nextTekId(){
-  const criados = registros.filter(r=>r.tipo==='flora' && !r.indId).length;
-  return 'TEKOHA'+String(DEMO_IND.length + criados + 1).padStart(4,'0');
-}
+function nextTekId(){ return 'TEKOHA'+String(individuos.length+1).padStart(4,'0'); }
 function saveForm(e){
   e.preventDefault();
-  // validações mínimas
-  let especie=(document.getElementById('especie').value||'').trim();
+  const type=indForm.type, mode=indForm.mode;
   if(!curPhotos.main.length){toast('Adicione ao menos 1 foto principal');return false;}
   if(!curPhotos.env.length){toast('Foto do entorno é obrigatória (ao menos 1)');return false;}
-  if(!especie) especie = indForm.type==='flora' ? 'Árvore não identificada' : 'Enxame não identificado';
-  const now=new Date();
-  const rec={
-    tipo: indForm.type, especie,
-    lat: curGPS?curGPS.lat:null, lng: curGPS?curGPS.lng:null, acc: curGPS?curGPS.acc:null,
-    sens: sensVal(), fotos_main:curPhotos.main.slice(), fotos_env:curPhotos.env.slice(),
-    notas: document.getElementById('f-notas').value.trim(),
-    por: USUARIO, quando: now, sync:'pendente', dados:{}
-  };
-  const fs = indForm.type==='flora'?FIELDS_FLORA:FIELDS_ENXAME;
+  // conjunto de campos conforme o fluxo
+  const fs = type==='enxame' ? FIELDS_ENXAME
+    : mode==='cadastro' ? FIELDS_CADASTRO.concat(FIELDS_OBS)
+    : FIELDS_OBS;
+  const dados={};
   fs.forEach(f=>{
-    if(f.type==='multi'||f.type==='chips') rec.dados[f.k]=chipVal(f.k);
-    else if(f.type==='fournier') rec.dados[f.k]=fVal(f.k);
-    else {const el=document.getElementById(f.k); rec.dados[f.k]=el?el.value:'';}
+    if(f.type==='multi'||f.type==='chips') dados[f.k]=chipVal(f.k);
+    else if(f.type==='fournier') dados[f.k]=fVal(f.k);
+    else {const el=document.getElementById(f.k); if(el) dados[f.k]=el.value;}
   });
-  if(indForm.type==='flora'){
-    if(!rec.dados.fenofase){toast('Escolha a fenofase');return false;}
-    if(rec.dados.fournier===''){toast('Marque a intensidade (Fournier)');return false;}
-    rec.indId = indForm.indId||null;
-    rec.tekid = indForm.indId || nextTekId();
+  if(type==='flora'){
+    if(!dados.fenofase){toast('Escolha a fenofase');return false;}
+    if(dados.fournier===''||dados.fournier==null){toast('Marque a intensidade (Fournier)');return false;}
+  }
+  const now=new Date();
+  const ind = indForm.indId ? individuos.find(i=>i.id===indForm.indId) : null;
+  // espécie: cadastro/enxame vêm do form; observação herda do indivíduo
+  let especie;
+  if(type==='enxame') especie=(dados.especie||'').trim()||'Enxame não identificado';
+  else if(mode==='obs') especie = ind ? ind.especie : '';
+  else especie=(dados.especie||'').trim()||'Árvore não identificada';
+  // GPS: observação herda do indivíduo
+  let lat,lng,acc;
+  if(type==='flora' && mode==='obs' && ind){ lat=ind.lat; lng=ind.lng; acc=null; }
+  else { lat=curGPS?curGPS.lat:null; lng=curGPS?curGPS.lng:null; acc=curGPS?curGPS.acc:null; }
+  // sensibilidade: observação herda do indivíduo
+  const sens = (type==='flora'&&mode==='obs'&&ind) ? (ind.sens||'publico') : sensVal();
+  const rec={ tipo:type, especie, lat,lng,acc, sens,
+    fotos_main:curPhotos.main.slice(), fotos_env:curPhotos.env.slice(),
+    notas:document.getElementById('f-notas').value.trim(), por:USUARIO, quando:now, sync:'pendente', dados };
+  if(type==='flora'){
+    if(mode==='cadastro'){
+      const id=nextTekId();
+      individuos.push({id, especie, nome:dados.nome_popular||'', lat,lng, sens,
+        origem:dados.origem||'', data:dados.data||'', foto_ref:(curPhotos.main[0]||{}).url||'',
+        status:'vivo', por:USUARIO, criado:now});
+      rec.tekid=id; rec.indId=id;
+    } else { rec.tekid=indForm.indId; rec.indId=indForm.indId; }
   }
   registros.unshift(rec);
   updateStats();
-  toast('Registro salvo · aguardando sync');
-  show('s-recs');
+  if(mode==='obs'){ toast('Observação salva · aguardando sync'); openFicha(indForm.indId); }
+  else { toast(mode==='cadastro'?'Árvore cadastrada + observação salva':'Registro salvo · aguardando sync'); show('s-recs'); }
   return false;
 }
 
@@ -589,8 +643,8 @@ function renderRecs(){
 }
 function renderMap(){
   const pins=document.getElementById('map-pins');
-  const pub=[...DEMO_IND.map(i=>({lat:i.lat,lng:i.lng,sens:'publico'})),
-    ...registros.filter(r=>r.sens!=='restrito'&&r.lat).map(r=>({lat:r.lat,lng:r.lng,sens:r.sens}))];
+  const pub=[...individuos.filter(i=>i.sens!=='restrito').map(i=>({lat:i.lat,lng:i.lng,sens:i.sens||'publico'})),
+    ...registros.filter(r=>r.tipo==='enxame'&&r.sens!=='restrito'&&r.lat).map(r=>({lat:r.lat,lng:r.lng,sens:r.sens}))];
   const restr=registros.filter(r=>r.sens==='restrito').length;
   // projeta lat/lng num viewBox 300x210 em torno do centro
   const sx=v=>150+(v-CENTRO.lng)/.01*140, sy=v=>105-(v-CENTRO.lat)/.01*90;
@@ -612,12 +666,12 @@ function normCode(v){
 }
 function goCode(){
   const code=normCode(document.getElementById('codeinput').value);
-  const ind=DEMO_IND.find(i=>i.id===code);
+  const ind=individuos.find(i=>i.id===code);
   if(ind) openFicha(ind.id);
   else toast('Código não encontrado: '+(code||'—'));
 }
 function renderCodeDemos(){
-  document.getElementById('code-demos').innerHTML=DEMO_IND.map(i=>
+  document.getElementById('code-demos').innerHTML=individuos.map(i=>
     `<button class="rec" style="width:100%;text-align:left" onclick="openFicha('${i.id}')">
       <span class="ic flora"><svg><use href="#i-tree"/></svg></span>
       <div><h4>${i.id}</h4><div class="meta">${i.nome} · ${i.especie}</div></div></button>`).join('');
@@ -631,7 +685,7 @@ function goNear(){
   const list=document.getElementById('near-list');
   list.innerHTML=`<div class="empty"><svg><use href="#i-gps"/></svg><p>localizando…</p></div>`;
   const render=(me)=>{
-    const arr=DEMO_IND.map(i=>({...i,d:haversine(me,i)})).sort((a,b)=>a.d-b.d);
+    const arr=individuos.map(i=>({...i,d:haversine(me,i)})).sort((a,b)=>a.d-b.d);
     list.innerHTML=arr.map(i=>`<button class="rec" style="width:100%;text-align:left" onclick="openFicha('${i.id}')">
       <span class="ic flora"><svg><use href="#i-tree"/></svg></span>
       <div style="flex:1"><h4>${i.nome}</h4><div class="meta">${i.id} · ${i.especie}</div>
@@ -642,15 +696,17 @@ function goNear(){
     ()=>render(CENTRO),{timeout:6000}); else render(CENTRO);
 }
 function openFicha(id){
-  const ind=DEMO_IND.find(i=>i.id===id); if(!ind)return;
+  const ind=individuos.find(i=>i.id===id); if(!ind)return;
   const obs=registros.filter(r=>r.indId===id);
+  const sb=sensBadge(ind.sens||'publico');
   document.getElementById('fichaback').onclick=()=>show('s-home');
   document.getElementById('ficha-body').innerHTML=`
-    <div class="label">${ind.id}</div>
-    <div class="h1">${ind.nome}</div>
-    <div class="sub">${ind.especie}</div>
+    <div class="label">${ind.id} · <span class="badge ${sb[0]}" style="margin:0">${sb[1]}</span></div>
+    <div class="h1">${ind.nome||ind.especie||'Árvore'}</div>
+    <div class="sub">${ind.especie||'espécie não identificada'}</div>
+    ${ind.foto_ref?`<img src="${ind.foto_ref}" alt="" style="width:100%;height:170px;object-fit:cover;border-radius:14px;margin-bottom:1rem">`:''}
     <div class="gps" style="margin-bottom:1rem"><svg><use href="#i-gps"/></svg><span>${ind.lat.toFixed(5)}, ${ind.lng.toFixed(5)}</span><button type="button" class="geocopy" onclick="copyGeo(${ind.lat},${ind.lng})"><svg><use href="#i-copy"/></svg>copiar</button></div>
-    <button class="btn btn-primary" onclick="openFlora('${ind.id}')"><svg style="width:20px;height:20px"><use href="#i-plus"/></svg> Nova observação</button>
+    <button class="btn btn-primary" onclick="openObs('${ind.id}')"><svg style="width:20px;height:20px"><use href="#i-plus"/></svg> Nova observação</button>
     <div class="label" style="margin:1.5rem 0 .6rem">Observações (${obs.length})</div>
     ${obs.length?obs.map(r=>`<div class="rec"><span class="ic flora"><svg><use href="#i-tree"/></svg></span>
       <div><h4>${r.dados.fenofase||'observação'} · Fournier ${r.dados.fournier}</h4>
