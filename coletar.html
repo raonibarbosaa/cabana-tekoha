@@ -103,6 +103,16 @@
     .photo .redo{position:absolute;right:.5rem;bottom:.5rem;background:rgba(0,0,0,.55);color:#fff;font-size:.7rem;padding:.3rem .6rem;border-radius:999px}
     .photo input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
     .two{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+    /* grade de fotos (até 5) */
+    .cnt{font-family:var(--fm);font-size:.62rem;color:var(--brown-faint);font-weight:400;margin-left:.3rem}
+    .photo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem}
+    .pslot{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--bone)}
+    .pslot img{width:100%;height:100%;object-fit:cover}
+    .pdel{position:absolute;top:3px;right:3px;width:20px;height:20px;border:none;border-radius:50%;background:rgba(0,0,0,.62);color:#fff;font-size:13px;line-height:1;display:grid;place-items:center;padding:0}
+    .padd{position:relative;aspect-ratio:1;border:1.5px dashed var(--bone-deep);border-radius:10px;background:var(--cream-soft);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--gold-deep);gap:2px}
+    .padd svg{width:20px;height:20px}
+    .padd span{font-size:.56rem;color:var(--brown-faint);letter-spacing:.02em}
+    .padd input{position:absolute;inset:0;opacity:0;cursor:pointer}
 
     /* GPS */
     .gps{display:flex;align-items:center;gap:.6rem;background:var(--honey-bg);border:1px solid var(--bone-deep);border-radius:12px;padding:.7rem .85rem;font-family:var(--fm);font-size:.78rem;color:var(--brown-soft)}
@@ -174,9 +184,9 @@
     <div class="h1">Olá, pesquisador</div>
     <div class="sub">O que você vai registrar agora?</div>
 
-    <button class="door" onclick="goScan()">
-      <span class="ic"><svg><use href="#i-qr"/></svg></span>
-      <span><h3>Escanear QR</h3><p>Abre a ficha da árvore pela plaquinha</p></span>
+    <button class="door" onclick="show('s-code')">
+      <span class="ic"><svg><use href="#i-hash"/></svg></span>
+      <span><h3>Código da plaquinha</h3><p>Digite o número TEKOHA da árvore</p></span>
       <span class="arw">→</span>
     </button>
     <button class="door" onclick="goNear()">
@@ -213,6 +223,20 @@
     </div>
   </section>
 
+  <!-- ============ CÓDIGO DIGITADO ============ -->
+  <section id="s-code" class="screen">
+    <button class="backlink" onclick="show('s-home')">← Início</button>
+    <div class="h1">Código da plaquinha</div>
+    <div class="sub">Digite o número gravado na plaquinha de alumínio.</div>
+    <div class="field">
+      <label>Número TEKOHA</label>
+      <input type="text" id="codeinput" inputmode="text" autocapitalize="characters" autocomplete="off" placeholder="TEKOHA0001" oninput="this.value=this.value.toUpperCase()">
+    </div>
+    <button class="btn btn-primary" onclick="goCode()"><svg style="width:20px;height:20px"><use href="#i-check"/></svg> Abrir ficha</button>
+    <div class="label" style="margin:1.6rem 0 .6rem">Plaquinhas de demonstração</div>
+    <div id="code-demos"></div>
+  </section>
+
   <!-- ============ FORM (dinâmico) ============ -->
   <section id="s-form" class="screen">
     <button class="backlink" onclick="show(formBack)">← Voltar</button>
@@ -223,13 +247,14 @@
       <div id="f-fields"></div>
 
       <div class="field">
-        <label>Foto principal <span class="req">*</span></label>
-        <div class="photo" id="ph-main"><svg><use href="#i-cam"/></svg><div class="cap">Tocar para fotografar o alvo</div><input type="file" accept="image/*" capture="environment" onchange="setPhoto(this,'main')"></div>
+        <label>Fotos principais <span class="req">*</span><span class="cnt" id="cnt-main"></span></label>
+        <span class="hint">O alvo em foco. Até 5 fotos.</span>
+        <div class="photo-grid" id="ph-main"></div>
       </div>
       <div class="field">
-        <label>Foto do entorno <span class="req">*</span></label>
-        <span class="hint">O alvo no contexto (vizinhas, trilha, terreno) — é o que permite reencontrar depois.</span>
-        <div class="photo" id="ph-env"><svg><use href="#i-cam"/></svg><div class="cap">Tocar para fotografar o entorno</div><input type="file" accept="image/*" capture="environment" onchange="setPhoto(this,'env')"></div>
+        <label>Fotos do entorno <span class="req">*</span><span class="cnt" id="cnt-env"></span></label>
+        <span class="hint">O alvo no contexto (vizinhas, trilha, terreno) — permite reencontrar depois. Até 5 fotos.</span>
+        <div class="photo-grid" id="ph-env"></div>
       </div>
 
       <div class="field">
@@ -298,6 +323,7 @@
 <!-- ícones -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-qr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M20 14v.01M14 20h.01M20 17v4M17 20h4" stroke-linecap="round"/></symbol>
+  <symbol id="i-hash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M9 4 7 20M17 4l-2 16M5 9h15M4 15h15"/></symbol>
   <symbol id="i-gps" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3c3 2 4 5 4 7a4 4 0 1 1-8 0c0-2 1-5 4-7Z"/><path d="M12 14v7"/></symbol>
@@ -313,12 +339,14 @@
 <script>
 /* ================= ESTADO ================= */
 const MODO_DEMO = true;
-const USUARIO = "Raoni B.";
+const USUARIO = "Raoni B.";     // usuário logado (autor dos registros/fotos)
+const IS_ADMIN = false;         // super admin? (pode excluir foto de qualquer autor)
 const CENTRO = {lat:-10.7519, lng:-37.3378}; // aprox. Serra de Itabaiana/SE
+const MAX_FOTOS = 5;
 let registros = [];        // ocorrências + indivíduos criados na sessão
 let indForm = null;        // config do form atual
 let formBack = 's-newtype';
-let curPhotos = {main:null, env:null};
+let curPhotos = {main:[], env:[]};  // cada item: {url, por, ts}
 let curGPS = null;
 
 /* espécies para autocomplete */
@@ -327,9 +355,9 @@ const FLORA = ["Mimosa tenuiflora (Jurema-preta)","Mimosa caesalpiniifolia (Sabi
 
 /* indivíduos demo (árvores já plaqueadas) para QR/proximidade */
 const DEMO_IND = [
-  {id:"TEK-0001", especie:"Mimosa caesalpiniifolia (Sabiá)", nome:"Sabiá da trilha", lat:-10.7521, lng:-37.3375, obs:[]},
-  {id:"TEK-0002", especie:"Handroanthus impetiginosus (Ipê-roxo)", nome:"Ipê do mirante", lat:-10.7517, lng:-37.3382, obs:[]},
-  {id:"TEK-0003", especie:"Anacardium occidentale (Cajueiro)", nome:"Cajueiro da entrada", lat:-10.7525, lng:-37.3371, obs:[]},
+  {id:"TEKOHA0001", especie:"Mimosa caesalpiniifolia (Sabiá)", nome:"Sabiá da trilha", lat:-10.7521, lng:-37.3375, obs:[]},
+  {id:"TEKOHA0002", especie:"Handroanthus impetiginosus (Ipê-roxo)", nome:"Ipê do mirante", lat:-10.7517, lng:-37.3382, obs:[]},
+  {id:"TEKOHA0003", especie:"Anacardium occidentale (Cajueiro)", nome:"Cajueiro da entrada", lat:-10.7525, lng:-37.3371, obs:[]},
 ];
 
 /* ================= NAVEGAÇÃO ================= */
@@ -339,6 +367,7 @@ function show(id){
   window.scrollTo(0,0);
   if(id==='s-recs') renderRecs();
   if(id==='s-map') renderMap();
+  if(id==='s-code') renderCodeDemos();
 }
 
 /* ================= GPS ================= */
@@ -356,14 +385,31 @@ function grabGPS(){
   } else {const j=()=>(Math.random()-.5)*.004; done(CENTRO.lat+j(),CENTRO.lng+j(),12,true);}
 }
 
-/* ================= FOTOS ================= */
-function setPhoto(inp,which){
-  const f=inp.files[0]; if(!f)return;
-  const url=URL.createObjectURL(f); curPhotos[which]=url;
+/* ================= FOTOS (até 5, com permissão p/ excluir) ================= */
+function podeExcluir(p){ return p.por===USUARIO || IS_ADMIN; }
+function renderPhotos(which){
   const box=document.getElementById(which==='main'?'ph-main':'ph-env');
-  box.classList.add('filled');
-  box.innerHTML=`<img src="${url}"><span class="redo">trocar</span>`+box.querySelector('input').outerHTML;
-  box.querySelector('input').onchange=function(){setPhoto(this,which)};
+  const arr=curPhotos[which];
+  let html=arr.map((p,i)=>{
+    const del=podeExcluir(p)?`<button type="button" class="pdel" title="excluir" onclick="delPhoto('${which}',${i})">×</button>`:'';
+    return `<div class="pslot"><img src="${p.url}" alt="">${del}</div>`;
+  }).join('');
+  if(arr.length<MAX_FOTOS)
+    html+=`<label class="padd"><svg><use href="#i-cam"/></svg><span>${arr.length?'+ foto':'foto'}</span><input type="file" accept="image/*" capture="environment" multiple onchange="addPhotos(this,'${which}')"></label>`;
+  box.innerHTML=html;
+  const cnt=document.getElementById(which==='main'?'cnt-main':'cnt-env'); if(cnt) cnt.textContent=arr.length?`${arr.length}/${MAX_FOTOS}`:'';
+}
+function addPhotos(inp,which){
+  for(const f of [...inp.files]){
+    if(curPhotos[which].length>=MAX_FOTOS){toast('Máximo de '+MAX_FOTOS+' fotos');break;}
+    curPhotos[which].push({url:URL.createObjectURL(f), por:USUARIO, ts:new Date()});
+  }
+  inp.value=''; renderPhotos(which);
+}
+function delPhoto(which,idx){
+  const p=curPhotos[which][idx]; if(!p)return;
+  if(!podeExcluir(p)){toast('Só o autor da foto ou um admin pode excluir');return;}
+  curPhotos[which].splice(idx,1); renderPhotos(which);
 }
 
 /* ================= FICHAS (definição de campos) ================= */
@@ -416,7 +462,7 @@ const FIELDS_FLORA = [
 ];
 /* campos da ficha ENXAME */
 const FIELDS_ENXAME = [
-  {k:'especie',label:'Espécie do meliponíneo',type:'text',req:1,list:ABELHAS,ph:'catálogo de abelhas…',hint:'Sistema sugere pelo catálogo (IA — futuro).'},
+  {k:'especie',label:'Espécie do meliponíneo',type:'text',list:ABELHAS,ph:'catálogo de abelhas… (opcional)',hint:'Opcional — se não souber, deixe em branco e identificamos depois pela foto.'},
   {k:'substrato',label:'Substrato / hospedeira',type:'select',req:1,opts:['oco de árvore','raiz','cupinzeiro','barranco','muro/construção','chão','outro']},
   {k:'hospedeira',label:'Árvore hospedeira (se houver)',type:'text',list:FLORA},
   {k:'altura_ninho',label:'Altura do ninho (m)',type:'number'},
@@ -428,15 +474,13 @@ const FIELDS_ENXAME = [
 
 /* ================= ABRIR FORMS ================= */
 function baseOpenForm(cfg){
-  indForm=cfg; curPhotos={main:null,env:null};
+  indForm=cfg; curPhotos={main:[],env:[]};
   document.getElementById('f-kicker').textContent=cfg.kicker;
   document.getElementById('f-title').textContent=cfg.title;
   document.getElementById('f-sub').innerHTML=cfg.sub;
   document.getElementById('f-fields').innerHTML=cfg.fields.map(fieldHTML).join('')+cfg.extra;
   document.getElementById('f-notas').value='';
-  ['ph-main','ph-env'].forEach(id=>{const b=document.getElementById(id);b.classList.remove('filled');
-    b.innerHTML=`<svg><use href="#i-cam"/></svg><div class="cap">Tocar para fotografar</div>`+b.querySelector('input').outerHTML;
-    b.querySelector('input').onchange=function(){setPhoto(this,id==='ph-main'?'main':'env')};});
+  renderPhotos('main'); renderPhotos('env');
   show('s-form'); grabGPS();
 }
 function openFlora(indId){
@@ -466,18 +510,23 @@ function pickSens(el){el.parentNode.querySelectorAll('.sens-opt').forEach(o=>o.c
 function sensVal(){const s=document.querySelector('#sensbox .sens-opt.on');return s?s.dataset.v:'publico';}
 
 /* ================= SALVAR ================= */
+function nextTekId(){
+  const criados = registros.filter(r=>r.tipo==='flora' && !r.indId).length;
+  return 'TEKOHA'+String(DEMO_IND.length + criados + 1).padStart(4,'0');
+}
 function saveForm(e){
   e.preventDefault();
   // validações mínimas
-  const especie=(document.getElementById('especie').value||'').trim();
-  if(!especie){toast('Informe a espécie');return false;}
-  if(!curPhotos.main){toast('Foto principal é obrigatória');return false;}
-  if(!curPhotos.env){toast('Foto do entorno é obrigatória');return false;}
+  let especie=(document.getElementById('especie').value||'').trim();
+  if(indForm.type==='flora' && !especie){toast('Informe a espécie');return false;}
+  if(!curPhotos.main.length){toast('Adicione ao menos 1 foto principal');return false;}
+  if(!curPhotos.env.length){toast('Foto do entorno é obrigatória (ao menos 1)');return false;}
+  if(!especie) especie = 'Enxame não identificado';
   const now=new Date();
   const rec={
     tipo: indForm.type, especie,
     lat: curGPS?curGPS.lat:null, lng: curGPS?curGPS.lng:null, acc: curGPS?curGPS.acc:null,
-    sens: sensVal(), foto_main:curPhotos.main, foto_env:curPhotos.env,
+    sens: sensVal(), fotos_main:curPhotos.main.slice(), fotos_env:curPhotos.env.slice(),
     notas: document.getElementById('f-notas').value.trim(),
     por: USUARIO, quando: now, sync:'pendente', dados:{}
   };
@@ -490,8 +539,8 @@ function saveForm(e){
   if(indForm.type==='flora'){
     if(!rec.dados.fenofase){toast('Escolha a fenofase');return false;}
     if(rec.dados.fournier===''){toast('Marque a intensidade (Fournier)');return false;}
-    rec.tekid = indForm.indId || ('TEK-'+String(1000+registros.filter(r=>r.tipo==='flora'&&r.tekid&&!r.indId).length+DEMO_IND.length+1).slice(1));
     rec.indId = indForm.indId||null;
+    rec.tekid = indForm.indId || nextTekId();
   }
   registros.unshift(rec);
   updateStats();
@@ -533,12 +582,25 @@ function renderMap(){
   document.getElementById('map-hidden').textContent=`${restr} ninho${restr===1?'':'s'} protegido${restr===1?'':'s'}`;
 }
 
-/* ================= PORTAS QR / PROXIMIDADE ================= */
-function goScan(){
-  // MODO_DEMO: simula leitura de uma plaquinha aleatória
-  const ind=DEMO_IND[Math.floor(Math.random()*DEMO_IND.length)];
-  toast('QR lido: '+ind.id+' (demo)');
-  setTimeout(()=>openFicha(ind.id),500);
+/* ================= PORTAS: CÓDIGO / PROXIMIDADE ================= */
+function normCode(v){
+  v=(v||'').trim().toUpperCase().replace(/[\s-]/g,'');
+  if(/^\d+$/.test(v)) v='TEKOHA'+v.padStart(4,'0');
+  else if(/^TEK$/.test(v)) v='';
+  else { const m=v.match(/^TEKOHA?0*(\d+)$/); if(m) v='TEKOHA'+m[1].padStart(4,'0'); }
+  return v;
+}
+function goCode(){
+  const code=normCode(document.getElementById('codeinput').value);
+  const ind=DEMO_IND.find(i=>i.id===code);
+  if(ind) openFicha(ind.id);
+  else toast('Código não encontrado: '+(code||'—'));
+}
+function renderCodeDemos(){
+  document.getElementById('code-demos').innerHTML=DEMO_IND.map(i=>
+    `<button class="rec" style="width:100%;text-align:left" onclick="openFicha('${i.id}')">
+      <span class="ic flora"><svg><use href="#i-tree"/></svg></span>
+      <div><h4>${i.id}</h4><div class="meta">${i.nome} · ${i.especie}</div></div></button>`).join('');
 }
 function haversine(a,b){const R=6371e3,t=x=>x*Math.PI/180;
   const dLat=t(b.lat-a.lat),dLng=t(b.lng-a.lng);
