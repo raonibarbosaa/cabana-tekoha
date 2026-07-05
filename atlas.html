@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Atlas Vivo Tekoha — conheça as abelhas nativas sem ferrão e a flora melífera do santuário Tekoha, em Sergipe. Fichas, mapa e biodiversidade." />
+<meta property="og:title" content="Atlas Vivo Tekoha" />
+<meta property="og:description" content="As abelhas nativas e a flora melífera do santuário, num mapa vivo." />
+<title>Atlas Vivo Tekoha · Biodiversidade do santuário</title>
+<link rel="icon" type="image/png" href="favicon-instituto.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#fdfaf1;--bg:#f4eee1;--bone-deep:#e4dcc9;--ink:#1a1a1a;
+    --brown:#2a1d10;--brown-mid:#6b5334;--brown-faint:#8a7455;
+    --gold:#d49641;--gold-deep:#a56d18;--gold-bright:#ecb84a;
+    --abelha:#d99321;--flora:#5f8a34;--restrito:#a53a1f;--ofuscado:#b8791f;--publico:#6f8a3f;
+    --fd:"Fraunces",serif;--fb:"Instrument Sans",system-ui,sans-serif;--fm:"JetBrains Mono",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--brown);font-family:var(--fb);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 1.3rem}
+
+  nav{background:var(--brown);color:var(--cream);position:sticky;top:0;z-index:20}
+  .nav-in{max-width:1080px;margin:0 auto;padding:.8rem 1.3rem;display:flex;align-items:center;gap:.7rem}
+  nav .hex{width:26px;height:26px;color:var(--gold)}
+  nav b{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1.1rem}
+  nav b small{display:block;font-family:var(--fm);font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-bright);font-style:normal;margin-top:1px}
+
+  .hero{padding:clamp(2.5rem,7vw,5rem) 0 clamp(2rem,5vw,3rem);text-align:center}
+  .hero .kick{font-family:var(--fm);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep)}
+  .hero h1{font-family:var(--fd);font-style:italic;font-weight:400;font-size:clamp(2.6rem,9vw,5rem);line-height:.95;letter-spacing:-.02em;margin:.6rem 0}
+  .hero p{font-family:var(--fd);font-weight:300;font-size:clamp(1.1rem,2.4vw,1.5rem);color:var(--brown-mid);max-width:46ch;margin:0 auto;line-height:1.4}
+  .hero .em{color:var(--gold-deep);font-style:italic}
+
+  .filtro{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:2rem 0 1.5rem}
+  .fchip{font-family:var(--fb);font-size:.9rem;border:1px solid var(--bone-deep);background:var(--cream);color:var(--brown-mid);border-radius:999px;padding:.5rem 1.1rem;cursor:pointer;transition:all .15s}
+  .fchip.on{background:var(--gold);border-color:var(--gold-deep);color:var(--brown);font-weight:600}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.1rem;padding-bottom:3rem}
+  .card{background:var(--cream);border:1px solid var(--bone-deep);border-radius:16px;overflow:hidden;transition:transform .15s,box-shadow .2s;display:block}
+  .card:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.08)}
+  .card .ph{position:relative;aspect-ratio:4/3;display:flex;align-items:flex-end;padding:.7rem .8rem;overflow:hidden}
+  .card .ph .emoji{position:absolute;right:-6px;bottom:-14px;font-size:5.5rem;opacity:.28}
+  .card .ph .sci{position:relative;z-index:2;font-family:var(--fm);font-size:.66rem;color:rgba(255,255,255,.92);background:rgba(0,0,0,.18);padding:.15rem .45rem;border-radius:5px}
+  .card .bd{padding:.9rem 1rem 1.1rem}
+  .card .tp{font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.35rem;color:var(--brown-faint)}
+  .card .tp .mk{width:8px;height:8px;border-radius:50%}
+  .card h3{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1.3rem;line-height:1.05;margin:.25rem 0 .05rem}
+  .card .r{font-size:.86rem;color:var(--brown-mid);margin-top:.4rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .card .go{margin-top:.7rem;font-family:var(--fm);font-size:.72rem;color:var(--gold-deep)}
+
+  /* mapa público */
+  .mapsec{background:var(--cream);border-top:1px solid var(--bone-deep);padding:2.5rem 0}
+  .mapsec h2{font-family:var(--fd);font-style:italic;font-weight:500;font-size:clamp(1.6rem,4vw,2.4rem);text-align:center}
+  .mapsec .sub{text-align:center;color:var(--brown-mid);margin:.4rem auto 1.5rem;max-width:44ch}
+  .stage{position:relative;height:min(60vh,520px);border:1px solid var(--bone-deep);border-radius:16px;overflow:hidden;background:linear-gradient(160deg,#eef3e0,#e6ddc6)}
+  #map{width:100%;height:100%;display:block;cursor:grab}#map:active{cursor:grabbing}
+  .uf{fill:transparent;stroke:var(--ink);stroke-width:.9;vector-effect:non-scaling-stroke;cursor:pointer}
+  .uf:hover{fill:rgba(212,150,65,.10)}
+  .mun{fill:transparent;stroke:var(--ink);stroke-opacity:.25;stroke-width:.5;vector-effect:non-scaling-stroke;pointer-events:none}
+  .dot{cursor:pointer}
+  .dot .core{stroke:var(--cream);stroke-width:1.4;fill:var(--c)}
+  .dot.abelha{--c:var(--abelha)}.dot.flora{--c:var(--flora)}
+  .dot .pr{fill:none;stroke:var(--c);stroke-width:1.4;transform-box:fill-box;transform-origin:center;animation:pr 1.8s ease-out infinite}
+  .dot .pr.d2{animation-delay:.6s}
+  @keyframes pr{0%{r:2;opacity:.85}80%{r:18;opacity:0}100%{r:18;opacity:0}}
+  .ofu{fill:var(--ofuscado);opacity:.14}
+  .mapctrl{position:absolute;left:.8rem;bottom:.8rem;display:flex;flex-direction:column;gap:.35rem}
+  .mapctrl button{width:34px;height:34px;border:1px solid var(--bone-deep);background:var(--cream);border-radius:9px;cursor:pointer;font-size:1rem;color:var(--brown)}
+  .maptip{position:fixed;pointer-events:none;z-index:30;background:var(--brown);color:var(--cream);padding:.5rem .7rem;border-radius:9px;font-size:.8rem;opacity:0;transition:opacity .12s;box-shadow:0 6px 18px rgba(0,0,0,.25);max-width:200px}
+  .maptip.show{opacity:1}
+  .maptip .tt{font-family:var(--fm);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .maptip b{font-family:var(--fd);font-style:italic;display:block;margin-top:.1rem}
+  .maplegend{position:absolute;right:.8rem;top:.8rem;background:var(--cream);border:1px solid var(--bone-deep);border-radius:10px;padding:.6rem .8rem;font-size:.82rem}
+  .maplegend .row{display:flex;align-items:center;gap:.5rem;padding:.2rem 0}
+  .maplegend .mk{width:11px;height:11px;border-radius:50%}
+  .maplegend .note{font-size:.68rem;color:var(--brown-faint);margin-top:.4rem;max-width:150px;line-height:1.3}
+
+  footer{background:var(--brown);color:var(--cream);text-align:center;padding:2.5rem 1rem}
+  footer .fh{font-family:var(--fd);font-style:italic;font-size:1.2rem;color:var(--gold-bright)}
+  footer p{font-family:var(--fm);font-size:.68rem;color:color-mix(in srgb,var(--cream) 70%,transparent);margin-top:.5rem}
+</style>
+</head>
+<body>
+<nav><div class="nav-in">
+  <svg class="hex" viewBox="0 0 100 100"><path d="M50 4 L88 27 L88 73 L50 96 L12 73 L12 27 Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/></svg>
+  <b>Atlas Vivo Tekoha<small>Biodiversidade do santuário</small></b>
+</div></nav>
+
+<header class="hero wrap">
+  <div class="kick">Instituto Tekoha · Sergipe</div>
+  <h1>Atlas Vivo</h1>
+  <p>As <span class="em">abelhas nativas sem ferrão</span> e a <span class="em">flora melífera</span> que mantêm o santuário vivo — espécie por espécie, no mapa.</p>
+</header>
+
+<div class="wrap">
+  <div class="filtro">
+    <button class="fchip on" data-f="todos" onclick="filtrar('todos',this)">Todos</button>
+    <button class="fchip" data-f="abelha" onclick="filtrar('abelha',this)">🐝 Abelhas</button>
+    <button class="fchip" data-f="flora" onclick="filtrar('flora',this)">🌿 Flora</button>
+  </div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<section class="mapsec">
+  <div class="wrap">
+    <h2>Onde a vida acontece</h2>
+    <p class="sub">Toque num ponto para abrir a ficha da espécie. Ninhos de espécie sensível têm o local protegido.</p>
+    <div class="stage">
+      <svg id="map"></svg>
+      <div class="maplegend">
+        <div class="row"><span class="mk" style="background:var(--abelha)"></span> Abelhas</div>
+        <div class="row"><span class="mk" style="background:var(--flora)"></span> Flora</div>
+        <div class="note">Local sensível aparece só como área aproximada.</div>
+      </div>
+      <div class="mapctrl">
+        <button onclick="zoomBy(1.6)">+</button>
+        <button onclick="zoomBy(.625)">−</button>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="maptip" id="maptip"></div>
+
+<footer>
+  <div class="fh">Instituto Tekoha</div>
+  <p>Conservação e Pesquisa de Abelhas Nativas Brasileiras · Sergipe</p>
+</footer>
+
+<script src="atlas-dados.js"></script>
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js"></script>
+<script>
+  const SP = window.ESPECIES||[];
+  function shade(hex,p){const n=parseInt(hex.slice(1),16);let r=(n>>16)+p,g=((n>>8)&255)+p,b=(n&255)+p;r=Math.max(0,Math.min(255,r));g=Math.max(0,Math.min(255,g));b=Math.max(0,Math.min(255,b));return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);}
+
+  /* ---- catálogo ---- */
+  function card(sp){
+    const emoji=sp.tipo==='abelha'?'🐝':'🌿';
+    return `<a class="card" data-tipo="${sp.tipo}" href="especie.html?sp=${sp.slug}">
+      <div class="ph" style="background:linear-gradient(135deg,${sp.cor},${shade(sp.cor,-25)})">
+        <span class="emoji">${emoji}</span><span class="sci">${sp.nomeCientifico}</span>
+      </div>
+      <div class="bd">
+        <div class="tp"><span class="mk" style="background:var(--${sp.tipo})"></span>${sp.tipo==='abelha'?'Abelha sem ferrão':'Flora melífera'}</div>
+        <h3>${sp.nomePopular}</h3>
+        <div class="r">${sp.resumo}</div>
+        <div class="go">ver ficha →</div>
+      </div></a>`;
+  }
+  document.getElementById('grid').innerHTML = SP.map(card).join('');
+  function filtrar(f,btn){
+    document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on')); btn.classList.add('on');
+    document.querySelectorAll('.card').forEach(c=>{ c.style.display=(f==='todos'||c.dataset.tipo===f)?'':'none'; });
+  }
+
+  /* ---- mapa público ---- */
+  const OCC=[]; let restr=0;
+  SP.forEach(sp=>(sp.ocorrencias||[]).forEach(o=>{
+    if(o.sens==='restrito'){restr++; return;} // ninho protegido não vira ponto
+    OCC.push({lat:o.lat,lng:o.lng,sens:o.sens,slug:sp.slug,tipo:sp.tipo,nome:sp.nomePopular,sci:sp.nomeCientifico});
+  }));
+
+  const svg=d3.select('#map'); let W,H,projection,path,mapG,munG,dotsG,zoom,curT=d3.zoomIdentity,seFeat;
+  function size(){const s=document.querySelector('.stage');W=s.clientWidth;H=s.clientHeight;svg.attr('width',W).attr('height',H);}
+  const NOME2SIGLA={'Sergipe':'SE'};
+  (async function(){
+    size();
+    mapG=svg.append('g'); const landG=mapG.append('g'); const ufG=mapG.append('g'); munG=mapG.append('g'); dotsG=svg.append('g');
+    let uf; try{ uf=await fetch('https://cdn.jsdelivr.net/gh/codeforgermany/click_that_hood@main/public/data/brazil-states.geojson').then(r=>r.json()); }catch(e){ return; }
+    projection=d3.geoMercator().fitSize([W,H],uf); path=d3.geoPath(projection);
+    landG.append('path').attr('d',path({type:'FeatureCollection',features:uf.features})).attr('fill','#f6f1e6');
+    ufG.selectAll('path').data(uf.features).enter().append('path').attr('class','uf').attr('d',path)
+      .on('click',(ev,f)=>{ const b=path.bounds(f); fit(b,.9); });
+    // ofuscados: círculo de área; pontos precisos por cima
+    dotsG.selectAll('circle.ofu').data(OCC.filter(o=>o.sens==='ofuscado')).enter().append('circle').attr('class','ofu').attr('r',26);
+    const g=dotsG.selectAll('g.dot').data(OCC).enter().append('g').attr('class',o=>`dot ${o.tipo}`)
+      .on('click',(ev,o)=>{ location.href='especie.html?sp='+o.slug; })
+      .on('mouseenter',(ev,o)=>tip(ev,o)).on('mousemove',mv).on('mouseleave',()=>document.getElementById('maptip').classList.remove('show'));
+    g.append('circle').attr('class','pr').attr('r',2); g.append('circle').attr('class','pr d2').attr('r',2); g.append('circle').attr('class','core').attr('r',5);
+    zoom=d3.zoom().scaleExtent([1,60]).on('zoom',ev=>{curT=ev.transform;mapG.attr('transform',curT);place();}); svg.call(zoom);
+    try{ const se=await fetch('https://cdn.jsdelivr.net/gh/tbrugz/geodata-br@master/geojson/geojs-28-mun.json').then(r=>r.json());
+      munG.selectAll('path').data(se.features).enter().append('path').attr('class','mun').attr('d',path);}catch(e){}
+    seFeat=uf.features.find(f=>(f.properties.sigla||NOME2SIGLA[f.properties.name])==='SE');
+    if(seFeat) fit(path.bounds(seFeat),.92);
+    window.addEventListener('resize',()=>{size();projection.fitSize([W,H],uf);path=d3.geoPath(projection);
+      landG.select('path').attr('d',path({type:'FeatureCollection',features:uf.features}));ufG.selectAll('path').attr('d',path);munG.selectAll('path').attr('d',path);place();});
+  })();
+  function place(){ if(!projection)return;
+    dotsG.selectAll('g.dot').attr('transform',o=>{const p=projection([o.lng,o.lat]);return `translate(${curT.applyX(p[0])},${curT.applyY(p[1])})`;});
+    dotsG.selectAll('circle.ofu').attr('cx',o=>{const p=projection([o.lng,o.lat]);return curT.applyX(p[0]);}).attr('cy',o=>{const p=projection([o.lng,o.lat]);return curT.applyY(p[1]);});
+  }
+  function fit(b,pad){const [[x0,y0],[x1,y1]]=b;const k=Math.min(60,pad*Math.min(W/(x1-x0),H/(y1-y0)));const tx=W/2-k*(x0+x1)/2,ty=H/2-k*(y0+y1)/2;svg.transition().duration(700).call(zoom.transform,d3.zoomIdentity.translate(tx,ty).scale(k));}
+  function zoomBy(f){svg.transition().duration(250).call(zoom.scaleBy,f);}
+  function tip(ev,o){const t=document.getElementById('maptip');t.innerHTML=`<div class="tt">${o.tipo==='abelha'?'Abelha':'Flora'}</div><b>${o.nome}</b><span style="font-size:.72rem;opacity:.8">${o.sci}</span>`;t.classList.add('show');mv(ev);}
+  function mv(ev){const t=document.getElementById('maptip');t.style.left=Math.min(ev.clientX+14,window.innerWidth-210)+'px';t.style.top=(ev.clientY+14)+'px';}
+</script>
+</body>
+</html>

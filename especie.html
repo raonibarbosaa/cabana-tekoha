@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ficha da espécie · Atlas Vivo Tekoha</title>
+<link rel="icon" type="image/png" href="favicon-instituto.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#fdfaf1;--bg:#f4eee1;--bone-deep:#e4dcc9;
+    --brown:#2a1d10;--brown-mid:#6b5334;--brown-faint:#8a7455;
+    --gold:#d49641;--gold-deep:#a56d18;
+    --abelha:#d99321;--flora:#5f8a34;--restrito:#a53a1f;--ofuscado:#b8791f;--publico:#6f8a3f;
+    --fd:"Fraunces",serif;--fb:"Instrument Sans",system-ui,sans-serif;--fm:"JetBrains Mono",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--brown);font-family:var(--fb);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:920px;margin:0 auto;padding:0 1.2rem}
+  nav{background:var(--brown);color:var(--cream);position:sticky;top:0;z-index:10}
+  .nav-in{max-width:920px;margin:0 auto;padding:.8rem 1.2rem;display:flex;align-items:center;gap:.7rem}
+  nav .hex{width:24px;height:24px;color:var(--gold)}
+  nav b{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1rem}
+  nav .back{margin-left:auto;font-size:.85rem;color:color-mix(in srgb,var(--cream) 82%,transparent)}
+  nav .back:hover{color:var(--gold)}
+
+  .hero{position:relative;height:min(42vh,340px);display:flex;align-items:flex-end;overflow:hidden}
+  .hero .ph{position:absolute;inset:0}
+  .hero .ph .emoji{position:absolute;right:-10px;bottom:-30px;font-size:16rem;opacity:.22;filter:saturate(.7)}
+  .hero .ph .sci{position:absolute;left:1.5rem;top:1.3rem;font-family:var(--fm);font-size:.8rem;letter-spacing:.05em;color:rgba(255,255,255,.85)}
+  .hero .cap{position:relative;z-index:2;width:100%;background:linear-gradient(transparent,rgba(0,0,0,.5));padding:2.5rem 1.5rem 1.2rem;color:#fff}
+  .hero .tipo{font-family:var(--fm);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.4rem;margin-bottom:.3rem}
+  .hero .tipo .mk{width:9px;height:9px;border-radius:50%}
+  .hero h1{font-family:var(--fd);font-style:italic;font-weight:500;font-size:clamp(2rem,6vw,3.2rem);line-height:1}
+  .hero .sci2{font-style:italic;opacity:.9;font-size:1.05rem;margin-top:.2rem}
+
+  .selos{display:flex;gap:.5rem;flex-wrap:wrap;margin:1.2rem 0}
+  .selo{font-family:var(--fm);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;background:var(--cream);border:1px solid var(--bone-deep);color:var(--gold-deep);padding:.28rem .6rem;border-radius:999px}
+  .resumo{font-family:var(--fd);font-weight:300;font-size:clamp(1.2rem,2.4vw,1.6rem);line-height:1.35;color:var(--brown);margin:.4rem 0 2rem;max-width:44ch}
+
+  .cols{display:grid;grid-template-columns:1.4fr .9fr;gap:2rem;align-items:start}
+  @media(max-width:720px){.cols{grid-template-columns:1fr;gap:1.4rem}}
+  h2{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1.4rem;margin-bottom:.6rem}
+  .desc p{margin-bottom:1rem;color:var(--brown-mid)}
+  .box{background:var(--cream);border:1px solid var(--bone-deep);border-radius:14px;padding:1.2rem 1.3rem;margin-bottom:1.2rem}
+  .box .lbl{font-family:var(--fm);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:.7rem}
+  .frow{display:flex;justify-content:space-between;gap:1rem;padding:.4rem 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:.9rem}
+  .frow:last-child{border-bottom:none}
+  .frow span:first-child{color:var(--brown-faint)}
+  .frow span:last-child{text-align:right;font-weight:500}
+  .curio{background:#fbf3df;border-left:3px solid var(--gold);border-radius:8px;padding:1rem 1.1rem;font-size:.95rem;color:var(--brown-mid);margin:1.4rem 0}
+  .curio b{color:var(--brown)}
+  .ocor{font-size:.9rem;color:var(--brown-mid)}
+  .ocor .oi{display:flex;align-items:center;gap:.5rem;padding:.35rem 0}
+  .ocor .mk{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+  .badge{font-family:var(--fm);font-size:.58rem;letter-spacing:.05em;padding:.12rem .4rem;border-radius:5px;text-transform:uppercase;margin-left:auto}
+  .b-pub{background:rgba(95,138,52,.16);color:#4f6a24}
+  .b-ofu{background:rgba(184,121,31,.16);color:#8a5a12}
+  .b-res{background:rgba(165,58,31,.14);color:var(--restrito)}
+  section.blk{padding:2.2rem 0;border-top:1px solid var(--bone-deep)}
+  footer{background:var(--brown);color:var(--cream);text-align:center;padding:2rem 1rem;margin-top:2rem;font-family:var(--fm);font-size:.68rem;letter-spacing:.05em;color:color-mix(in srgb,var(--cream) 70%,transparent)}
+  .notfound{padding:5rem 1.5rem;text-align:center;color:var(--brown-faint)}
+</style>
+</head>
+<body>
+<nav><div class="nav-in">
+  <svg class="hex" viewBox="0 0 100 100"><path d="M50 4 L88 27 L88 73 L50 96 L12 73 L12 27 Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/></svg>
+  <b>Atlas Vivo Tekoha</b>
+  <a class="back" href="atlas.html">← todas as espécies</a>
+</div></nav>
+
+<div id="root"></div>
+
+<footer>Atlas Vivo Tekoha · Instituto Tekoha — Conservação e Pesquisa de Abelhas Nativas · Sergipe</footer>
+
+<script src="atlas-dados.js"></script>
+<script>
+  const SENS={publico:['b-pub','Registro público'],ofuscado:['b-ofu','Local aproximado'],restrito:['b-res','Local protegido']};
+  const slug=new URLSearchParams(location.search).get('sp');
+  const sp=(window.ESPECIES||[]).find(e=>e.slug===slug);
+  const root=document.getElementById('root');
+  if(!sp){
+    root.innerHTML='<div class="notfound"><h2>Espécie não encontrada</h2><p><a href="atlas.html" style="color:var(--gold-deep)">Voltar ao Atlas →</a></p></div>';
+  } else {
+    document.title=`${sp.nomePopular} · Atlas Vivo Tekoha`;
+    const emoji=sp.tipo==='abelha'?'🐝':'🌿';
+    const cor=sp.cor;
+    const fichas=Object.entries(sp.ficha).map(([k,v])=>`<div class="frow"><span>${k}</span><span>${v}</span></div>`).join('');
+    const selos=sp.selos.map(s=>`<span class="selo">${s}</span>`).join('');
+    const ocor=(sp.ocorrencias||[]).map(o=>{const [c,l]=SENS[o.sens]||SENS.publico;
+      const local = o.sens==='publico'?`${o.municipio} · ${o.uf}` : (o.sens==='ofuscado'?`região de ${o.municipio} · ${o.uf}` : `${o.uf} (ponto protegido)`);
+      return `<div class="oi"><span class="mk" style="background:var(--${o.sens})"></span>${local}<span class="badge ${c}">${l}</span></div>`;}).join('') || '<div class="ocor">Sem registros públicos.</div>';
+    root.innerHTML=`
+      <div class="hero">
+        <div class="ph" style="background:linear-gradient(135deg, ${cor}, ${shade(cor,-25)})">
+          <div class="sci">${sp.nomeCientifico}</div>
+          <div class="emoji">${emoji}</div>
+        </div>
+        <div class="cap"><div class="wrap" style="padding:0">
+          <div class="tipo"><span class="mk" style="background:var(--${sp.tipo})"></span>${sp.tipo==='abelha'?'Abelha nativa sem ferrão':'Flora melífera'}</div>
+          <h1>${sp.nomePopular}</h1>
+          <div class="sci2">${sp.nomeCientifico} · ${sp.familia}</div>
+        </div></div>
+      </div>
+
+      <div class="wrap">
+        <div class="selos">${selos}</div>
+        <p class="resumo">${sp.resumo}</p>
+
+        <div class="cols">
+          <div class="desc">
+            <h2>Sobre</h2>
+            ${sp.descricao.split('\n').map(p=>`<p>${p}</p>`).join('')}
+            <div class="curio">💡 <b>Curiosidade.</b> ${sp.curiosidade}</div>
+            <h2>Por que importa no santuário</h2>
+            <p style="color:var(--brown-mid)">${sp.importancia}</p>
+          </div>
+          <div>
+            <div class="box"><div class="lbl">Ficha técnica</div>${fichas}</div>
+            <div class="box"><div class="lbl">Onde ocorre</div><div class="ocor">${ocor}</div>
+              <div style="font-size:.72rem;color:var(--brown-faint);margin-top:.6rem;line-height:1.4">Localização de ninhos de espécie sensível é protegida para evitar captura ilegal.</div>
+            </div>
+          </div>
+        </div>
+
+        <section class="blk" style="text-align:center">
+          <a href="atlas.html" style="color:var(--gold-deep);font-weight:600">← Ver todas as espécies do Atlas</a>
+        </section>
+      </div>`;
+  }
+  function shade(hex,p){const n=parseInt(hex.slice(1),16);let r=(n>>16)+p,g=((n>>8)&255)+p,b=(n&255)+p;
+    r=Math.max(0,Math.min(255,r));g=Math.max(0,Math.min(255,g));b=Math.max(0,Math.min(255,b));
+    return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);}
+</script>
+</body>
+</html>

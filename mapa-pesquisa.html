@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Mapa da Pesquisa · Instituto Tekoha</title>
+<link rel="icon" type="image/png" href="favicon-instituto.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#f1ede4; --cream:#fdfaf1; --bone-deep:#e4dcc9;
+    --ink:#1a1a1a; --brown:#2a1d10; --brown-mid:#6b5334; --brown-faint:#8a7455;
+    --gold:#d49641; --gold-deep:#a56d18;
+    --abelha:#d99321; --flora:#5f8a34;
+    --restrito:#a53a1f;
+    --fd:"Fraunces",serif; --fb:"Instrument Sans",system-ui,sans-serif; --fm:"JetBrains Mono",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--brown);font-family:var(--fb);overflow:hidden}
+  .app{display:flex;flex-direction:column;height:100vh}
+
+  /* topo */
+  header{display:flex;align-items:center;gap:.8rem;padding:.7rem 1.1rem;border-bottom:1px solid var(--bone-deep);background:var(--cream);z-index:5}
+  header .hex{width:26px;height:26px;color:var(--gold-deep);flex-shrink:0}
+  header .t{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1.05rem;line-height:1}
+  header .t small{display:block;font-family:var(--fm);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep);font-style:normal;margin-top:2px}
+  header .stats{margin-left:auto;display:flex;gap:1.3rem}
+  header .stat{text-align:right}
+  header .stat b{font-family:var(--fm);font-size:1.1rem;color:var(--brown);display:block;line-height:1}
+  header .stat span{font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--brown-faint)}
+  @media(max-width:640px){header .stats{gap:.9rem}header .stat:nth-child(4){display:none}}
+
+  /* mapa */
+  .stage{position:relative;flex:1;overflow:hidden}
+  #map{width:100%;height:100%;display:block;cursor:grab}
+  #map:active{cursor:grabbing}
+  .land-br{fill:#f6f1e6;stroke:none}
+  .uf{fill:transparent;stroke:var(--ink);stroke-width:0.9;stroke-linejoin:round;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill .2s}
+  .uf:hover{fill:rgba(212,150,65,.10)}
+  .uf.active{fill:rgba(212,150,65,.06)}
+  .mun{fill:transparent;stroke:var(--ink);stroke-opacity:.28;stroke-width:0.5;vector-effect:non-scaling-stroke;pointer-events:none}
+  .mun-label{font-family:var(--fm);font-size:9px;fill:var(--brown-faint);pointer-events:none;text-anchor:middle}
+
+  /* pontos pulsantes */
+  .dot{cursor:pointer}
+  .dot .core{stroke:var(--cream);stroke-width:1.4;}
+  .dot.abelha{--c:var(--abelha)}
+  .dot.flora{--c:var(--flora)}
+  .dot .core{fill:var(--c)}
+  .dot .pring{fill:none;stroke:var(--c);stroke-width:1.4;transform-box:fill-box;transform-origin:center;animation:pring 1.8s ease-out infinite}
+  .dot .pring.d2{animation-delay:.6s}
+  .dot.restrito .core{stroke:var(--restrito);stroke-width:2;stroke-dasharray:2 2}
+  @keyframes pring{0%{r:2;opacity:.85}80%{r:20;opacity:0}100%{r:20;opacity:0}}
+  .dot.dim{opacity:.18;filter:grayscale(.5)}
+
+  /* controles */
+  .ctrls{position:absolute;left:1rem;bottom:1rem;display:flex;flex-direction:column;gap:.4rem;z-index:4}
+  .ctrls button{width:38px;height:38px;border:1px solid var(--bone-deep);background:var(--cream);color:var(--brown);border-radius:10px;font-size:1.1rem;cursor:pointer;display:grid;place-items:center;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  .ctrls button:hover{border-color:var(--gold-deep);color:var(--gold-deep)}
+  .ctrls .wide{width:auto;padding:0 .7rem;font-size:.72rem;font-family:var(--fm);letter-spacing:.04em;height:34px}
+
+  /* legenda + filtros */
+  .legend{position:absolute;right:1rem;top:1rem;background:var(--cream);border:1px solid var(--bone-deep);border-radius:12px;padding:.8rem .9rem;z-index:4;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:150px}
+  .legend h4{font-family:var(--fm);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brown-faint);margin-bottom:.6rem}
+  .legend .row{display:flex;align-items:center;gap:.55rem;font-size:.85rem;padding:.28rem 0;cursor:pointer;user-select:none}
+  .legend .row .mk{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+  .legend .row.off{opacity:.4}
+  .legend .row .n{margin-left:auto;font-family:var(--fm);font-size:.72rem;color:var(--brown-faint)}
+  .legend .hint{margin-top:.6rem;font-size:.68rem;color:var(--brown-faint);line-height:1.35}
+
+  /* painel de detalhe */
+  .panel{position:absolute;right:1rem;bottom:1rem;width:300px;max-width:calc(100vw - 2rem);background:var(--cream);border:1px solid var(--bone-deep);border-radius:14px;padding:1.1rem 1.2rem;z-index:6;box-shadow:0 8px 30px rgba(0,0,0,.14);transform:translateY(140%);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+  .panel.open{transform:none}
+  .panel .close{position:absolute;top:.7rem;right:.8rem;border:none;background:none;font-size:1.2rem;color:var(--brown-faint);cursor:pointer}
+  .panel .ptype{font-family:var(--fm);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.4rem}
+  .panel .ptype .mk{width:9px;height:9px;border-radius:50%}
+  .panel h3{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1.3rem;margin:.35rem 0 .1rem;line-height:1.1}
+  .panel .prow{display:flex;justify-content:space-between;gap:1rem;font-size:.85rem;padding:.35rem 0;border-bottom:1px solid rgba(0,0,0,.06)}
+  .panel .prow span:first-child{color:var(--brown-faint)}
+  .panel .prow:last-child{border-bottom:none}
+  .badge{font-family:var(--fm);font-size:.6rem;letter-spacing:.05em;padding:.15rem .45rem;border-radius:5px;text-transform:uppercase}
+  .b-pub{background:rgba(95,138,52,.16);color:#4f6a24}
+  .b-ofu{background:rgba(184,121,31,.16);color:#8a5a12}
+  .b-res{background:rgba(165,58,31,.14);color:var(--restrito)}
+  .panel .geocopy{margin-top:.6rem;font-family:var(--fm);font-size:.66rem;border:1px solid var(--bone-deep);background:#fff;color:var(--gold-deep);border-radius:999px;padding:.3rem .6rem;cursor:pointer}
+
+  .loading{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--fm);font-size:.8rem;color:var(--brown-faint);background:var(--bg);z-index:10}
+  .loading.hide{display:none}
+
+  /* tooltip (hover) */
+  .tip{position:fixed;pointer-events:none;z-index:30;background:var(--brown);color:var(--cream);padding:.55rem .7rem;border-radius:10px;font-size:.8rem;max-width:210px;opacity:0;transition:opacity .12s;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+  .tip.show{opacity:1}
+  .tip .tt{display:flex;align-items:center;gap:.4rem;font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .tip .tt .mk{width:8px;height:8px;border-radius:50%}
+  .tip b{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1rem;display:block;margin:.15rem 0 .1rem;line-height:1.15}
+  .tip small{color:rgba(253,250,241,.72);font-size:.72rem}
+  .tip .hintclick{display:block;margin-top:.35rem;font-size:.64rem;color:var(--gold);opacity:.9}
+
+  /* ficha modal (clique) */
+  .overlay{position:fixed;inset:0;background:rgba(26,20,10,.45);z-index:40;display:none;align-items:center;justify-content:center;padding:1rem}
+  .overlay.open{display:flex}
+  .ficha-modal{background:var(--cream);border-radius:16px;max-width:420px;width:100%;padding:1.6rem 1.7rem;box-shadow:0 20px 60px rgba(0,0,0,.3);position:relative;max-height:90vh;overflow:auto;animation:popin .2s ease}
+  @keyframes popin{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+  .ficha-modal .close{position:absolute;top:.8rem;right:1rem;border:none;background:none;font-size:1.4rem;color:var(--brown-faint);cursor:pointer}
+  .ficha-modal .ptype{font-family:var(--fm);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.4rem;color:var(--brown-mid)}
+  .ficha-modal .ptype .mk{width:9px;height:9px;border-radius:50%}
+  .ficha-modal h3{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1.5rem;margin:.4rem 0 .8rem;line-height:1.1}
+  .ficha-modal .prow{display:flex;justify-content:space-between;gap:1rem;font-size:.9rem;padding:.5rem 0;border-bottom:1px solid rgba(0,0,0,.06)}
+  .ficha-modal .prow span:first-child{color:var(--brown-faint)}
+  .ficha-modal .prow:last-child{border-bottom:none}
+  .ficha-modal .geocopy{margin-top:.7rem;font-family:var(--fm);font-size:.72rem;border:1px solid var(--bone-deep);background:#fff;color:var(--gold-deep);border-radius:999px;padding:.35rem .7rem;cursor:pointer}
+  .ficha-modal .applink{display:block;margin-top:1rem;font-size:.9rem;color:var(--gold-deep);font-weight:600}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <svg class="hex" viewBox="0 0 100 100"><path d="M50 4 L88 27 L88 73 L50 96 L12 73 L12 27 Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/></svg>
+    <div class="t">Mapa da Pesquisa<small>Instituto Tekoha</small></div>
+    <div class="stats">
+      <div class="stat"><b id="st-abelha" style="color:var(--abelha)">0</b><span>abelhas</span></div>
+      <div class="stat"><b id="st-flora" style="color:var(--flora)">0</b><span>flora</span></div>
+      <div class="stat"><b id="st-mun">0</b><span>municípios</span></div>
+      <div class="stat"><b id="st-uf">0</b><span>estados</span></div>
+    </div>
+  </header>
+
+  <div class="stage">
+    <svg id="map"></svg>
+
+    <div class="legend">
+      <h4>Ocorrências</h4>
+      <div class="row" id="lg-abelha" onclick="toggleTipo('abelha')"><span class="mk" style="background:var(--abelha)"></span> Abelhas <span class="n" id="n-abelha">0</span></div>
+      <div class="row" id="lg-flora" onclick="toggleTipo('flora')"><span class="mk" style="background:var(--flora)"></span> Flora <span class="n" id="n-flora">0</span></div>
+      <div class="hint">Clique num ponto para detalhes. Clique num estado para ver os municípios.</div>
+    </div>
+
+    <div class="ctrls">
+      <button class="wide" onclick="verBrasil()">Brasil</button>
+      <button class="wide" onclick="focarSergipe()">Sergipe</button>
+      <button onclick="zoomBy(1.6)">+</button>
+      <button onclick="zoomBy(0.625)">−</button>
+    </div>
+
+    <div class="tip" id="tip"></div>
+
+    <div class="overlay" id="overlay" onclick="if(event.target===this)closeFicha()">
+      <div class="ficha-modal">
+        <button class="close" onclick="closeFicha()">×</button>
+        <div class="ptype" id="p-type"></div>
+        <h3 id="p-title"></h3>
+        <div id="p-body"></div>
+      </div>
+    </div>
+
+    <div class="loading" id="loading">carregando mapa do Brasil…</div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js"></script>
+<script>
+/* ================= DADOS (demo — substituir pela base real na Fase 2) ================= */
+const DADOS = [
+  {tipo:'flora',  id:'TEKOHA0001', especie:'Mimosa caesalpiniifolia (Sabiá)', municipio:'Areia Branca',   uf:'SE', lat:-10.7521, lng:-37.3375, sens:'publico',  data:'2026-03-12'},
+  {tipo:'flora',  id:'TEKOHA0002', especie:'Handroanthus impetiginosus (Ipê-roxo)', municipio:'Areia Branca', uf:'SE', lat:-10.7517, lng:-37.3382, sens:'publico', data:'2026-03-12'},
+  {tipo:'flora',  id:'TEKOHA0003', especie:'Anacardium occidentale (Cajueiro)', municipio:'Itabaiana',    uf:'SE', lat:-10.7529, lng:-37.3352, sens:'publico',  data:'2026-04-02'},
+  {tipo:'flora',  id:'TEKOHA0004', especie:'Ziziphus joazeiro (Juazeiro)', municipio:'Campo do Brito',    uf:'SE', lat:-10.7398, lng:-37.4930, sens:'publico',  data:'2026-05-20'},
+  {tipo:'abelha', especie:'Melipona scutellaris (uruçu)',     municipio:'Itabaiana',   uf:'SE', lat:-10.7488, lng:-37.3421, sens:'restrito', data:'2026-03-30'},
+  {tipo:'abelha', especie:'Tetragonisca angustula (jataí)',   municipio:'Areia Branca',uf:'SE', lat:-10.7556, lng:-37.3308, sens:'publico',  data:'2026-04-10'},
+  {tipo:'abelha', especie:'Scaptotrigona postica (mandaguari)',municipio:'Areia Branca',uf:'SE', lat:-10.7602, lng:-37.3402, sens:'ofuscado', data:'2026-04-18'},
+  {tipo:'abelha', especie:'Melipona subnitida (jandaíra)',    municipio:'Malhador',    uf:'SE', lat:-10.6640, lng:-37.3050, sens:'restrito', data:'2026-05-05'},
+  {tipo:'abelha', especie:'Frieseomelitta doederleini',       municipio:'São Domingos',uf:'SE', lat:-10.7920, lng:-37.5680, sens:'restrito', data:'2026-06-01'},
+];
+
+const UF_COD = {AC:'12',AL:'27',AP:'16',AM:'13',BA:'29',CE:'23',DF:'53',ES:'32',GO:'52',MA:'21',MT:'51',MS:'50',MG:'31',PA:'15',PB:'25',PR:'41',PE:'26',PI:'22',RJ:'33',RN:'24',RS:'43',RO:'11',RR:'14',SC:'42',SP:'35',SE:'28',TO:'17'};
+const NOME2SIGLA = {'Acre':'AC','Alagoas':'AL','Amapá':'AP','Amazonas':'AM','Bahia':'BA','Ceará':'CE','Distrito Federal':'DF','Espírito Santo':'ES','Goiás':'GO','Maranhão':'MA','Mato Grosso':'MT','Mato Grosso do Sul':'MS','Minas Gerais':'MG','Pará':'PA','Paraíba':'PB','Paraná':'PR','Pernambuco':'PE','Piauí':'PI','Rio de Janeiro':'RJ','Rio Grande do Norte':'RN','Rio Grande do Sul':'RS','Rondônia':'RO','Roraima':'RR','Santa Catarina':'SC','São Paulo':'SP','Sergipe':'SE','Tocantins':'TO'};
+
+const SENS = {publico:['b-pub','Público'],ofuscado:['b-ofu','Ofuscado'],restrito:['b-res','Restrito']};
+
+const svg = d3.select('#map');
+let W=0,H=0, projection, path, mapG, ufG, munG, dotsG, zoom, curT=d3.zoomIdentity, seFeat=null;
+const ativos = {abelha:true, flora:true};
+const munCarregados = {};
+
+function size(){ const s=document.querySelector('.stage'); W=s.clientWidth; H=s.clientHeight; svg.attr('width',W).attr('height',H); }
+
+(async function init(){
+  size();
+  // camadas
+  mapG = svg.append('g');
+  const landG = mapG.append('g');
+  ufG  = mapG.append('g');
+  munG = mapG.append('g');
+  dotsG = svg.append('g'); // pontos em espaço de tela (tamanho constante)
+
+  // carrega estados do Brasil
+  let uf;
+  try{
+    uf = await fetch('https://cdn.jsdelivr.net/gh/codeforgermany/click_that_hood@main/public/data/brazil-states.geojson').then(r=>{if(!r.ok)throw 0;return r.json();});
+  }catch(e){ document.getElementById('loading').textContent='falha ao carregar o mapa (sem internet?)'; return; }
+
+  projection = d3.geoMercator().fitSize([W,H], uf);
+  path = d3.geoPath(projection);
+
+  landG.append('path').attr('class','land-br').attr('d', path({type:'FeatureCollection',features:uf.features}));
+  ufG.selectAll('path').data(uf.features).enter().append('path')
+    .attr('class','uf').attr('d', path)
+    .attr('data-sigla', f=>siglaOf(f))
+    .on('click', (ev,f)=>onUF(ev,f));
+
+  document.getElementById('loading').classList.add('hide');
+
+  // estatísticas
+  const nAb = DADOS.filter(d=>d.tipo==='abelha').length, nFl = DADOS.filter(d=>d.tipo==='flora').length;
+  const muns = new Set(DADOS.map(d=>d.municipio)), ufs = new Set(DADOS.map(d=>d.uf));
+  document.getElementById('st-abelha').textContent=nAb;
+  document.getElementById('st-flora').textContent=nFl;
+  document.getElementById('st-mun').textContent=muns.size;
+  document.getElementById('st-uf').textContent=ufs.size;
+  document.getElementById('n-abelha').textContent=nAb;
+  document.getElementById('n-flora').textContent=nFl;
+
+  drawDots();
+
+  // zoom/pan
+  zoom = d3.zoom().scaleExtent([1,60]).on('zoom', ev=>{ curT=ev.transform; mapG.attr('transform',curT); placeDots(); });
+  svg.call(zoom);
+
+  // carrega municípios de SE e foca nos dados
+  await loadMun('SE');
+  seFeat = uf.features.find(f=>siglaOf(f)==='SE');
+  if(seFeat){ munG.selectAll('path').attr('d',path); zoomToBounds(path.bounds(seFeat), 0.92); }
+  else verDados(false);
+
+  window.addEventListener('resize', ()=>{ size(); projection.fitSize([W,H],uf); path=d3.geoPath(projection);
+    landG.select('path').attr('d', path({type:'FeatureCollection',features:uf.features}));
+    ufG.selectAll('path').attr('d',path); munG.selectAll('path').attr('d',path); placeDots(); });
+})();
+
+function siglaOf(f){ const p=f.properties||{}; return p.sigla || NOME2SIGLA[p.name] || NOME2SIGLA[p.NAME] || ''; }
+
+/* ---- pontos ---- */
+function drawDots(){
+  const sel = dotsG.selectAll('g.dot').data(DADOS, (d,i)=>i);
+  const g = sel.enter().append('g')
+    .attr('class', d=>`dot ${d.tipo} ${d.sens==='restrito'?'restrito':''}`)
+    .on('click', (ev,d)=>{ ev.stopPropagation(); openFicha(d); })
+    .on('mouseenter', (ev,d)=>showTip(ev,d))
+    .on('mousemove', (ev)=>moveTip(ev))
+    .on('mouseleave', hideTip);
+  g.append('circle').attr('class','pring').attr('r',2);
+  g.append('circle').attr('class','pring d2').attr('r',2);
+  g.append('circle').attr('class','core').attr('r',5);
+  placeDots(); applyFilter();
+}
+function placeDots(){
+  if(!projection) return;
+  dotsG.selectAll('g.dot').attr('transform', d=>{
+    const p=projection([d.lng,d.lat]); if(!p) return 'translate(-9999,-9999)';
+    return `translate(${curT.applyX(p[0])},${curT.applyY(p[1])})`;
+  });
+}
+function applyFilter(){
+  dotsG.selectAll('g.dot').classed('dim', d=>!ativos[d.tipo]).style('pointer-events', d=>ativos[d.tipo]?'':'none');
+}
+function toggleTipo(t){ ativos[t]=!ativos[t]; document.getElementById('lg-'+t).classList.toggle('off',!ativos[t]); applyFilter(); }
+
+/* ---- municípios sob demanda ---- */
+async function loadMun(sigla){
+  const cod = UF_COD[sigla]; if(!cod || munCarregados[sigla]) return;
+  try{
+    const geo = await fetch(`https://cdn.jsdelivr.net/gh/tbrugz/geodata-br@master/geojson/geojs-${cod}-mun.json`).then(r=>r.json());
+    munG.selectAll(null).data(geo.features).enter().append('path').attr('class','mun').attr('d',path);
+    munCarregados[sigla]=true;
+  }catch(e){ console.warn('municípios não carregados p/', sigla); }
+}
+
+/* ---- navegação ---- */
+function onUF(ev,f){
+  ev.stopPropagation();
+  ufG.selectAll('path').classed('active',false);
+  d3.select(ev.currentTarget).classed('active',true);
+  const sigla = siglaOf(f);
+  loadMun(sigla).then(()=>{ munG.selectAll('path').attr('d',path); });
+  zoomToBounds(path.bounds(f), 0.85);
+}
+function zoomToBounds(b, pad){
+  const [[x0,y0],[x1,y1]]=b;
+  const k=Math.min(60, pad*Math.min(W/(x1-x0), H/(y1-y0)));
+  const tx=W/2-k*(x0+x1)/2, ty=H/2-k*(y0+y1)/2;
+  svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity.translate(tx,ty).scale(k));
+}
+function verBrasil(){ svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity); ufG.selectAll('path').classed('active',false); }
+function focarSergipe(){ if(seFeat) zoomToBounds(path.bounds(seFeat), 0.92); else verDados(); }
+function verDados(anim=true){
+  const pts=DADOS.map(d=>projection([d.lng,d.lat]));
+  const xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]);
+  let x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
+  const m=40; x0-=m;x1+=m;y0-=m;y1+=m;
+  const k=Math.min(60, 0.9*Math.min(W/(x1-x0||1), H/(y1-y0||1)));
+  const tx=W/2-k*(x0+x1)/2, ty=H/2-k*(y0+y1)/2;
+  const t=d3.zoomIdentity.translate(tx,ty).scale(k);
+  if(anim) svg.transition().duration(750).call(zoom.transform, t); else svg.call(zoom.transform, t);
+}
+function zoomBy(f){ svg.transition().duration(300).call(zoom.scaleBy, f); }
+
+/* ---- painel ---- */
+function openFicha(d){
+  const [cls,lbl]=SENS[d.sens]||SENS.publico;
+  document.getElementById('p-type').innerHTML=`<span class="mk" style="background:var(--${d.tipo})"></span>${d.tipo==='abelha'?'Abelha (enxame)':'Árvore (flora)'}`;
+  document.getElementById('p-title').textContent=d.especie;
+  const cv = d.sens!=='restrito';
+  document.getElementById('p-body').innerHTML=`
+    ${d.id?`<div class="prow"><span>Código</span><span>${d.id}</span></div>`:''}
+    <div class="prow"><span>Município</span><span>${d.municipio} · ${d.uf}</span></div>
+    <div class="prow"><span>Data</span><span>${d.data||'—'}</span></div>
+    <div class="prow"><span>Sensibilidade</span><span class="badge ${cls}">${lbl}</span></div>
+    <div class="prow"><span>Coordenada</span><span>${cv? d.lat.toFixed(4)+', '+d.lng.toFixed(4) : '🔒 protegida'}</span></div>
+    ${cv?`<button class="geocopy" onclick="copyGeo(${d.lat},${d.lng})">copiar coordenada</button>`:'<div style="font-size:.72rem;color:var(--brown-faint);margin-top:.5rem">Coordenada exata só para pesquisador logado (proteção contra saque).</div>'}
+    ${d.id?`<a class="applink" href="coletar.html">Abrir no app de coleta →</a>`:''}
+  `;
+  document.getElementById('overlay').classList.add('open');
+  hideTip();
+}
+function closeFicha(){ document.getElementById('overlay').classList.remove('open'); }
+function showTip(ev,d){
+  const t=document.getElementById('tip');
+  t.innerHTML=`<div class="tt"><span class="mk" style="background:var(--${d.tipo})"></span>${d.tipo==='abelha'?'Abelha':'Flora'}</div><b>${d.especie}</b><small>${d.municipio} · ${d.uf}</small><span class="hintclick">clique para abrir a ficha</span>`;
+  t.classList.add('show'); moveTip(ev);
+}
+function moveTip(ev){ const t=document.getElementById('tip'); t.style.left=Math.min(ev.clientX+14, window.innerWidth-224)+'px'; t.style.top=(ev.clientY+14)+'px'; }
+function hideTip(){ document.getElementById('tip').classList.remove('show'); }
+function copyGeo(lat,lng){
+  const t=lat.toFixed(6)+', '+lng.toFixed(6);
+  (navigator.clipboard?.writeText(t)||Promise.reject()).then(()=>flash('Copiado: '+t)).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');flash('Copiado: '+t);}catch(e){}document.body.removeChild(ta);
+  });
+}
+let flashT; function flash(msg){ let el=document.getElementById('flash'); if(!el){el=document.createElement('div');el.id='flash';el.style.cssText='position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--brown);color:var(--cream);padding:.6rem 1rem;border-radius:10px;font-size:.82rem;z-index:20';document.body.appendChild(el);} el.textContent=msg; el.style.opacity='1'; clearTimeout(flashT); flashT=setTimeout(()=>el.style.opacity='0',2000); }
+</script>
+</body>
+</html>
