@@ -39,6 +39,19 @@
   .filtro{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin:2rem 0 1.5rem}
   .fchip{font-family:var(--fb);font-size:.9rem;border:1px solid var(--bone-deep);background:var(--cream);color:var(--brown-mid);border-radius:999px;padding:.5rem 1.1rem;cursor:pointer;transition:all .15s}
   .fchip.on{background:var(--gold);border-color:var(--gold-deep);color:var(--brown);font-weight:600}
+  .filtros{margin:1.8rem 0 1.4rem}
+  .busca-wrap{position:relative;max-width:540px;margin:0 auto}
+  .busca-wrap svg{position:absolute;left:1rem;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--brown-faint)}
+  #busca{width:100%;padding:.85rem 1rem .85rem 2.7rem;border:1px solid var(--bone-deep);border-radius:999px;background:var(--cream);font-size:1rem;color:var(--brown)}
+  #busca:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+  .selects{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:.9rem}
+  .selects select{font-family:var(--fb);font-size:.88rem;padding:.55rem .9rem;border:1px solid var(--bone-deep);border-radius:999px;background:var(--cream);color:var(--brown-mid);cursor:pointer}
+  .selects .limpar{border:none;background:none;color:var(--gold-deep);font-size:.85rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+  .selos-bar{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;margin-top:.9rem;max-width:720px;margin-left:auto;margin-right:auto}
+  .selo-chip{font-family:var(--fm);font-size:.64rem;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--bone-deep);background:var(--cream);color:var(--brown-mid);border-radius:999px;padding:.3rem .7rem;cursor:pointer}
+  .selo-chip.on{background:var(--gold);border-color:var(--gold-deep);color:var(--brown);font-weight:600}
+  .rescount{text-align:center;font-family:var(--fm);font-size:.72rem;color:var(--brown-faint);margin-top:1rem}
+  .empty-res{grid-column:1/-1;text-align:center;color:var(--brown-faint);padding:2.5rem 1rem}
 
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.1rem;padding-bottom:3rem}
   .card{background:var(--cream);border:1px solid var(--bone-deep);border-radius:16px;overflow:hidden;transition:transform .15s,box-shadow .2s;display:block}
@@ -98,10 +111,23 @@
 </header>
 
 <div class="wrap">
-  <div class="filtro">
-    <button class="fchip on" data-f="todos" onclick="filtrar('todos',this)">Todos</button>
-    <button class="fchip" data-f="abelha" onclick="filtrar('abelha',this)">🐝 Abelhas</button>
-    <button class="fchip" data-f="flora" onclick="filtrar('flora',this)">🌿 Flora</button>
+  <div class="filtros">
+    <div class="busca-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4" stroke-linecap="round"/></svg>
+      <input id="busca" type="search" placeholder="Buscar por nome, nome científico ou cidade…" oninput="aplicar()">
+    </div>
+    <div class="selects">
+      <select id="f-tipo" onchange="aplicar()">
+        <option value="todos">Todos os tipos</option>
+        <option value="abelha">🐝 Abelhas</option>
+        <option value="flora">🌿 Flora</option>
+      </select>
+      <select id="f-cidade" onchange="aplicar()"><option value="">Todas as cidades</option></select>
+      <select id="f-genero" onchange="aplicar()"><option value="">Todos os gêneros (abelha)</option></select>
+      <button class="limpar" onclick="limpar()">limpar filtros</button>
+    </div>
+    <div class="selos-bar" id="selos-bar"></div>
+    <div class="rescount" id="rescount"></div>
   </div>
   <div class="grid" id="grid"></div>
 </div>
@@ -138,9 +164,14 @@
   function shade(hex,p){const n=parseInt(hex.slice(1),16);let r=(n>>16)+p,g=((n>>8)&255)+p,b=(n&255)+p;r=Math.max(0,Math.min(255,r));g=Math.max(0,Math.min(255,g));b=Math.max(0,Math.min(255,b));return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);}
 
   /* ---- catálogo ---- */
+  const norm=s=>(s||'').toString().normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+  const genero=sp=>sp.nomeCientifico.split(' ')[0];
+  const cidadesDe=sp=>(sp.ocorrencias||[]).map(o=>o.municipio);
   function card(sp){
     const emoji=sp.tipo==='abelha'?'🐝':'🌿';
-    return `<a class="card" data-tipo="${sp.tipo}" href="especie.html?sp=${sp.slug}">
+    const cds=cidadesDe(sp);
+    const texto=norm([sp.nomePopular,sp.nomeCientifico,sp.familia,genero(sp),cds.join(' '),sp.selos.join(' ')].join(' '));
+    return `<a class="card" data-tipo="${sp.tipo}" data-genero="${genero(sp)}" data-cidades="${norm(cds.join('|'))}" data-selos="${norm(sp.selos.join('|'))}" data-text="${texto}" href="especie.html?sp=${sp.slug}">
       <div class="ph" style="background:linear-gradient(135deg,${sp.cor},${shade(sp.cor,-25)})">
         <span class="emoji">${emoji}</span><span class="sci">${sp.nomeCientifico}</span>
       </div>
@@ -151,11 +182,51 @@
         <div class="go">ver ficha →</div>
       </div></a>`;
   }
-  document.getElementById('grid').innerHTML = SP.map(card).join('');
-  function filtrar(f,btn){
-    document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on')); btn.classList.add('on');
-    document.querySelectorAll('.card').forEach(c=>{ c.style.display=(f==='todos'||c.dataset.tipo===f)?'':'none'; });
+  document.getElementById('grid').innerHTML = SP.map(card).join('') + '<div class="empty-res" id="empty-res" style="display:none">Nada encontrado. Tente outro termo ou limpe os filtros.</div>';
+
+  // popular filtros a partir dos dados
+  (function(){
+    const cds=[...new Set(SP.flatMap(cidadesDe))].sort();
+    document.getElementById('f-cidade').insertAdjacentHTML('beforeend', cds.map(c=>`<option value="${norm(c)}">${c}</option>`).join(''));
+    const gens=[...new Set(SP.filter(s=>s.tipo==='abelha').map(genero))].sort();
+    document.getElementById('f-genero').insertAdjacentHTML('beforeend', gens.map(g=>`<option value="${g}">${g}</option>`).join(''));
+    const selos=[...new Set(SP.flatMap(s=>s.selos))].sort();
+    document.getElementById('selos-bar').innerHTML = selos.map(s=>`<button class="selo-chip" data-selo="${norm(s)}" onclick="toggleSelo(this)">${s}</button>`).join('');
+  })();
+
+  let seloAtivo='';
+  function toggleSelo(btn){
+    const v=btn.dataset.selo;
+    if(seloAtivo===v){ seloAtivo=''; btn.classList.remove('on'); }
+    else { seloAtivo=v; document.querySelectorAll('.selo-chip').forEach(c=>c.classList.toggle('on', c===btn)); }
+    aplicar();
   }
+  function aplicar(){
+    const q=norm(document.getElementById('busca').value);
+    const tp=document.getElementById('f-tipo').value;
+    const cd=document.getElementById('f-cidade').value;
+    const gn=document.getElementById('f-genero').value;
+    let n=0;
+    document.querySelectorAll('.card').forEach(c=>{
+      const ok=(tp==='todos'||c.dataset.tipo===tp)
+        && (!cd || ('|'+c.dataset.cidades+'|').includes('|'+cd+'|'))
+        && (!gn || c.dataset.genero===gn)
+        && (!seloAtivo || ('|'+c.dataset.selos+'|').includes('|'+seloAtivo+'|'))
+        && (!q || c.dataset.text.includes(q));
+      c.style.display=ok?'':'none'; if(ok)n++;
+    });
+    document.getElementById('empty-res').style.display=n?'none':'';
+    document.getElementById('rescount').textContent=n+(n===1?' espécie':' espécies');
+  }
+  function limpar(){
+    document.getElementById('busca').value='';
+    document.getElementById('f-tipo').value='todos';
+    document.getElementById('f-cidade').value='';
+    document.getElementById('f-genero').value='';
+    seloAtivo=''; document.querySelectorAll('.selo-chip').forEach(c=>c.classList.remove('on'));
+    aplicar();
+  }
+  aplicar();
 
   /* ---- mapa público ---- */
   const OCC=[]; let restr=0;
