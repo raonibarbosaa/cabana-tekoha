@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Espécies do Atlas Vivo Tekoha — abelhas nativas sem ferrão e flora melífera do santuário." />
+<title>Espécies · Atlas Vivo Tekoha</title>
+<link rel="icon" type="image/png" href="favicon-instituto.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#fdfaf1;--bg:#f4eee1;--bone-deep:#e4dcc9;
+    --brown:#2a1d10;--brown-mid:#6b5334;--brown-faint:#8a7455;
+    --gold:#d49641;--gold-deep:#a56d18;--gold-bright:#ecb84a;
+    --abelha:#d99321;--flora:#5f8a34;
+    --fd:"Fraunces",serif;--fb:"Instrument Sans",system-ui,sans-serif;--fm:"JetBrains Mono",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--brown);font-family:var(--fb);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 1.3rem}
+
+  nav{background:var(--brown);color:var(--cream);position:sticky;top:0;z-index:20}
+  .nav-in{max-width:1080px;margin:0 auto;padding:.7rem 1.3rem;display:flex;align-items:center;gap:.7rem}
+  nav .brand{display:flex;align-items:center;gap:.6rem}
+  nav .hex{width:26px;height:26px;color:var(--gold)}
+  nav b{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1.1rem}
+  nav b small{display:block;font-family:var(--fm);font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-bright);font-style:normal;margin-top:1px}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:1.1rem}
+  .navlink{font-size:.9rem;color:color-mix(in srgb,var(--cream) 85%,transparent)}
+  .navlink:hover{color:var(--gold-bright)}
+  .acesso{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:600;color:var(--brown);background:var(--gold);padding:.45rem .85rem;border-radius:999px}
+  .acesso:hover{background:var(--gold-bright)}
+  .acesso svg{width:14px;height:14px}
+  @media(max-width:640px){nav b small{display:none}.acesso span{display:none}}
+
+  .head{text-align:center;padding:clamp(2rem,5vw,3rem) 0 .5rem}
+  .head .kick{font-family:var(--fm);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep)}
+  .head h1{font-family:var(--fd);font-style:italic;font-weight:400;font-size:clamp(2.2rem,6vw,3.4rem);line-height:1;margin:.4rem 0}
+  .head p{color:var(--brown-mid);max-width:48ch;margin:0 auto}
+
+  .filtros{margin:1.6rem 0 1.2rem}
+  .busca-wrap{position:relative;max-width:540px;margin:0 auto}
+  .busca-wrap svg{position:absolute;left:1rem;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--brown-faint)}
+  #busca{width:100%;padding:.8rem 1rem .8rem 2.7rem;border:1px solid var(--bone-deep);border-radius:999px;background:var(--cream);font-size:1rem;color:var(--brown)}
+  #busca:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+  .linha{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:.8rem}
+  .tipos{display:inline-flex;gap:.3rem;background:var(--cream);border:1px solid var(--bone-deep);border-radius:999px;padding:.2rem}
+  .tbtn{font-size:.85rem;border:none;background:none;color:var(--brown-mid);border-radius:999px;padding:.4rem .9rem;cursor:pointer}
+  .tbtn.on{background:var(--gold);color:var(--brown);font-weight:600}
+  .linha select{font-family:var(--fb);font-size:.86rem;padding:.5rem .85rem;border:1px solid var(--bone-deep);border-radius:999px;background:var(--cream);color:var(--brown-mid);cursor:pointer}
+  .linha .limpar{border:none;background:none;color:var(--gold-deep);font-size:.84rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+  .selos-bar{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;margin-top:.8rem;max-width:800px;margin-left:auto;margin-right:auto}
+  .selo-chip{font-family:var(--fm);font-size:.62rem;letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--bone-deep);background:var(--cream);color:var(--brown-mid);border-radius:999px;padding:.26rem .62rem;cursor:pointer}
+  .selo-chip.on{background:var(--gold);border-color:var(--gold-deep);color:var(--brown);font-weight:600}
+  .rescount{text-align:center;font-family:var(--fm);font-size:.72rem;color:var(--brown-faint);margin-top:.8rem}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.1rem;padding-bottom:3rem}
+  .card{background:var(--cream);border:1px solid var(--bone-deep);border-radius:16px;overflow:hidden;transition:transform .15s,box-shadow .2s;display:block}
+  .card:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.08)}
+  .card .ph{position:relative;aspect-ratio:4/3;display:flex;align-items:flex-end;padding:.7rem .8rem;overflow:hidden}
+  .card .ph .emoji{position:absolute;right:-6px;bottom:-14px;font-size:5.5rem;opacity:.28}
+  .card .ph .sci{position:relative;z-index:2;font-family:var(--fm);font-size:.66rem;color:rgba(255,255,255,.92);background:rgba(0,0,0,.18);padding:.15rem .45rem;border-radius:5px}
+  .card .bd{padding:.9rem 1rem 1.1rem}
+  .card .tp{font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.35rem;color:var(--brown-faint)}
+  .card .tp .mk{width:8px;height:8px;border-radius:50%}
+  .card h3{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1.3rem;line-height:1.05;margin:.25rem 0 .05rem}
+  .card .r{font-size:.86rem;color:var(--brown-mid);margin-top:.4rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .card .go{margin-top:.7rem;font-family:var(--fm);font-size:.72rem;color:var(--gold-deep)}
+  .empty-res{grid-column:1/-1;text-align:center;color:var(--brown-faint);padding:2.5rem 1rem}
+
+  footer{background:var(--brown);color:var(--cream);text-align:center;padding:2.2rem 1rem}
+  footer .fh{font-family:var(--fd);font-style:italic;font-size:1.15rem;color:var(--gold-bright)}
+  footer p{font-family:var(--fm);font-size:.66rem;color:color-mix(in srgb,var(--cream) 70%,transparent);margin-top:.5rem}
+</style>
+</head>
+<body>
+<nav><div class="nav-in">
+  <a class="brand" href="atlas.html">
+    <svg class="hex" viewBox="0 0 100 100"><path d="M50 4 L88 27 L88 73 L50 96 L12 73 L12 27 Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/></svg>
+    <b>Atlas Vivo Tekoha<small>Biodiversidade do santuário</small></b>
+  </a>
+  <div class="nav-right">
+    <a class="navlink" href="atlas.html">← Mapa</a>
+    <a class="acesso" href="acesso.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Acesso Pesquisadores</span></a>
+  </div>
+</div></nav>
+
+<header class="head wrap">
+  <div class="kick">Catálogo</div>
+  <h1>Espécies</h1>
+  <p>As abelhas nativas sem ferrão e a flora melífera do santuário — ficha por ficha.</p>
+</header>
+
+<div class="wrap">
+  <div class="filtros">
+    <div class="busca-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4" stroke-linecap="round"/></svg>
+      <input id="busca" type="search" placeholder="Buscar por nome, nome científico ou cidade…" oninput="aplicar()">
+    </div>
+    <div class="linha">
+      <div class="tipos">
+        <button class="tbtn on" data-t="todos" onclick="setTipo('todos',this)">Todos</button>
+        <button class="tbtn" data-t="abelha" onclick="setTipo('abelha',this)">🐝 Abelhas</button>
+        <button class="tbtn" data-t="flora" onclick="setTipo('flora',this)">🌿 Flora</button>
+      </div>
+      <select id="f-cidade" onchange="aplicar()"><option value="">Todas as cidades</option></select>
+      <select id="f-genero" onchange="aplicar()"><option value="">Todos os gêneros (abelha)</option></select>
+      <button class="limpar" onclick="limpar()">limpar</button>
+    </div>
+    <div class="selos-bar" id="selos-bar"></div>
+    <div class="rescount" id="rescount"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<footer>
+  <div class="fh">Instituto Tekoha</div>
+  <p>Conservação e Pesquisa de Abelhas Nativas Brasileiras · Sergipe</p>
+</footer>
+
+<script src="atlas-dados.js"></script>
+<script>
+  const SP=window.ESPECIES||[];
+  const norm=s=>(s||'').toString().normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+  const genero=sp=>sp.nomeCientifico.split(' ')[0];
+  const cidadesDe=sp=>(sp.ocorrencias||[]).map(o=>o.municipio);
+  function shade(hex,p){const n=parseInt(hex.slice(1),16);let r=(n>>16)+p,g=((n>>8)&255)+p,b=(n&255)+p;r=Math.max(0,Math.min(255,r));g=Math.max(0,Math.min(255,g));b=Math.max(0,Math.min(255,b));return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);}
+  function card(sp){
+    const emoji=sp.tipo==='abelha'?'🐝':'🌿';
+    const cds=cidadesDe(sp);
+    const texto=norm([sp.nomePopular,sp.nomeCientifico,sp.familia,genero(sp),cds.join(' '),sp.selos.join(' ')].join(' '));
+    return `<a class="card" data-tipo="${sp.tipo}" data-genero="${genero(sp)}" data-cidades="${norm(cds.join('|'))}" data-selos="${norm(sp.selos.join('|'))}" data-text="${texto}" href="especie.html?sp=${sp.slug}">
+      <div class="ph" style="background:linear-gradient(135deg,${sp.cor},${shade(sp.cor,-25)})">
+        <span class="emoji">${emoji}</span><span class="sci">${sp.nomeCientifico}</span>
+      </div>
+      <div class="bd">
+        <div class="tp"><span class="mk" style="background:var(--${sp.tipo})"></span>${sp.tipo==='abelha'?'Abelha sem ferrão':'Flora melífera'}</div>
+        <h3>${sp.nomePopular}</h3>
+        <div class="r">${sp.resumo}</div>
+        <div class="go">ver ficha →</div>
+      </div></a>`;
+  }
+  document.getElementById('grid').innerHTML=SP.map(card).join('')+'<div class="empty-res" id="empty-res" style="display:none">Nada encontrado. Tente outro termo ou limpe os filtros.</div>';
+  (function(){
+    const cds=[...new Set(SP.flatMap(cidadesDe))].sort();
+    document.getElementById('f-cidade').insertAdjacentHTML('beforeend',cds.map(c=>`<option value="${norm(c)}">${c}</option>`).join(''));
+    const gens=[...new Set(SP.filter(s=>s.tipo==='abelha').map(genero))].sort();
+    document.getElementById('f-genero').insertAdjacentHTML('beforeend',gens.map(g=>`<option value="${g}">${g}</option>`).join(''));
+    const selos=[...new Set(SP.flatMap(s=>s.selos))].sort();
+    document.getElementById('selos-bar').innerHTML=selos.map(s=>`<button class="selo-chip" data-selo="${norm(s)}" onclick="toggleSelo(this)">${s}</button>`).join('');
+  })();
+  let tipoF='todos',seloF='';
+  function setTipo(t,btn){tipoF=t;document.querySelectorAll('.tbtn').forEach(b=>b.classList.toggle('on',b===btn));aplicar();}
+  function toggleSelo(btn){const v=btn.dataset.selo;if(seloF===v){seloF='';btn.classList.remove('on');}else{seloF=v;document.querySelectorAll('.selo-chip').forEach(c=>c.classList.toggle('on',c===btn));}aplicar();}
+  function limpar(){document.getElementById('busca').value='';tipoF='todos';document.querySelectorAll('.tbtn').forEach(b=>b.classList.toggle('on',b.dataset.t==='todos'));document.getElementById('f-cidade').value='';document.getElementById('f-genero').value='';seloF='';document.querySelectorAll('.selo-chip').forEach(c=>c.classList.remove('on'));aplicar();}
+  function aplicar(){
+    const q=norm(document.getElementById('busca').value);
+    const cd=document.getElementById('f-cidade').value, gn=document.getElementById('f-genero').value;
+    let n=0;
+    document.querySelectorAll('.card').forEach(c=>{
+      const ok=(tipoF==='todos'||c.dataset.tipo===tipoF)&&(!cd||('|'+c.dataset.cidades+'|').includes('|'+cd+'|'))&&(!gn||c.dataset.genero===gn)&&(!seloF||('|'+c.dataset.selos+'|').includes('|'+seloF+'|'))&&(!q||c.dataset.text.includes(q));
+      c.style.display=ok?'':'none'; if(ok)n++;
+    });
+    document.getElementById('empty-res').style.display=n?'none':'';
+    document.getElementById('rescount').textContent=n+(n===1?' espécie':' espécies');
+  }
+  aplicar();
+</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Acesso Pesquisadores · Instituto Tekoha</title>
+<link rel="icon" type="image/png" href="favicon-instituto.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#fdfaf1;--bg:#f4eee1;--bone-deep:#e4dcc9;
+    --brown:#2a1d10;--brown-mid:#6b5334;--brown-faint:#8a7455;
+    --gold:#d49641;--gold-deep:#a56d18;--gold-bright:#ecb84a;
+    --abelha:#d99321;--restrito:#a53a1f;
+    --fd:"Fraunces",serif;--fb:"Instrument Sans",system-ui,sans-serif;--fm:"JetBrains Mono",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--brown);font-family:var(--fb);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+  a{color:inherit;text-decoration:none}
+  nav{background:var(--brown);color:var(--cream);position:sticky;top:0;z-index:20}
+  .nav-in{max-width:900px;margin:0 auto;padding:.7rem 1.3rem;display:flex;align-items:center;gap:.7rem}
+  nav .brand{display:flex;align-items:center;gap:.6rem}
+  nav .hex{width:26px;height:26px;color:var(--gold)}
+  nav b{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1.1rem}
+  nav b small{display:block;font-family:var(--fm);font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-bright);font-style:normal;margin-top:1px}
+  nav .back{margin-left:auto;font-size:.9rem;color:color-mix(in srgb,var(--cream) 85%,transparent)}
+  nav .back:hover{color:var(--gold-bright)}
+
+  .wrap{max-width:900px;margin:0 auto;padding:0 1.3rem}
+  .head{text-align:center;padding:clamp(2.5rem,6vw,4rem) 0 1rem}
+  .head .lock{width:52px;height:52px;color:var(--gold-deep);margin:0 auto 1rem}
+  .head .kick{font-family:var(--fm);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep)}
+  .head h1{font-family:var(--fd);font-style:italic;font-weight:400;font-size:clamp(2rem,6vw,3rem);line-height:1;margin:.4rem 0}
+  .head p{color:var(--brown-mid);max-width:46ch;margin:0 auto}
+
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:2rem 0}
+  @media(max-width:640px){.cards{grid-template-columns:1fr}}
+  .tool{background:var(--cream);border:1px solid var(--bone-deep);border-radius:16px;padding:1.5rem 1.4rem;transition:transform .15s,box-shadow .2s;display:block}
+  .tool:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.08)}
+  .tool .ic{width:52px;height:52px;border-radius:13px;display:grid;place-items:center;background:#fbf3df;color:var(--gold-deep);margin-bottom:1rem}
+  .tool .ic svg{width:28px;height:28px}
+  .tool h3{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1.4rem}
+  .tool p{font-size:.9rem;color:var(--brown-mid);margin-top:.3rem}
+  .tool .go{margin-top:.9rem;font-family:var(--fm);font-size:.74rem;color:var(--gold-deep)}
+  .tool .restr{display:inline-block;margin-top:.7rem;font-family:var(--fm);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;background:rgba(165,58,31,.12);color:var(--restrito);padding:.2rem .5rem;border-radius:5px}
+
+  .aviso{background:#fbf3df;border:1px solid var(--bone-deep);border-left:3px solid var(--gold);border-radius:10px;padding:1.1rem 1.3rem;font-size:.9rem;color:var(--brown-mid);margin-bottom:2.5rem}
+  .aviso b{color:var(--brown)}
+  footer{text-align:center;padding:2rem 1rem;font-family:var(--fm);font-size:.66rem;color:var(--brown-faint)}
+</style>
+</head>
+<body>
+<nav><div class="nav-in">
+  <a class="brand" href="atlas.html">
+    <svg class="hex" viewBox="0 0 100 100"><path d="M50 4 L88 27 L88 73 L50 96 L12 73 L12 27 Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/></svg>
+    <b>Atlas Vivo Tekoha<small>Biodiversidade do santuário</small></b>
+  </a>
+  <a class="back" href="atlas.html">← voltar ao Atlas</a>
+</div></nav>
+
+<div class="wrap">
+  <header class="head">
+    <svg class="lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M7 10V7a5 5 0 0 1 10 0v3"/></svg>
+    <div class="kick">Área restrita</div>
+    <h1>Acesso Pesquisadores</h1>
+    <p>Ferramentas de campo e dados sensíveis do Instituto Tekoha. Uso restrito à equipe de pesquisa.</p>
+  </header>
+
+  <div class="cards">
+    <a class="tool" href="coletar.html">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 8h3l1.5-2h9L18 8h3v11H3z"/><circle cx="12" cy="13" r="3.4"/></svg></span>
+      <h3>App de Coleta</h3>
+      <p>Registrar árvores e enxames em campo (foto, GPS, fichas).</p>
+      <span class="go">abrir app →</span>
+    </a>
+    <a class="tool" href="mapa-pesquisa.html">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg></span>
+      <h3>Mapa de Pesquisa</h3>
+      <p>Mapa completo com todas as ocorrências, incluindo a coordenada exata dos ninhos.</p>
+      <span class="restr">🔒 dados sensíveis</span>
+      <div class="go">abrir mapa →</div>
+    </a>
+  </div>
+
+  <div class="aviso">
+    🔑 <b>Login em breve.</b> A autenticação por pesquisador (via Cloudflare Access) entra na <b>Fase 2</b>, junto com o backend. Por enquanto, este é o portal de acesso às ferramentas restritas — a coordenada exata de ninho sensível nunca aparece nas páginas públicas.
+  </div>
+</div>
+
+<footer>Instituto Tekoha · Conservação e Pesquisa de Abelhas Nativas Brasileiras · Sergipe</footer>
+</body>
+</html>
