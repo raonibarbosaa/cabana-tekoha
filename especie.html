@@ -67,9 +67,14 @@
 </head>
 <body>
 <nav><div class="nav-in">
-  <svg class="hex" viewBox="0 0 100 100"><path d="M50 4 L88 27 L88 73 L50 96 L12 73 L12 27 Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/></svg>
-  <b>Atlas Vivo Tekoha</b>
-  <a class="back" href="atlas.html">← todas as espécies</a>
+  <a href="atlas.html" title="Início — Atlas" style="display:flex;align-items:center;gap:.6rem">
+    <svg class="hex" viewBox="0 0 100 100"><path d="M50 4 L88 27 L88 73 L50 96 L12 73 L12 27 Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/></svg>
+    <b>Atlas Vivo Tekoha</b>
+  </a>
+  <span class="back" style="margin-left:auto;display:flex;gap:1.3rem">
+    <a href="atlas.html">Início</a>
+    <a href="especies.html">Espécies</a>
+  </span>
 </div></nav>
 
 <div id="root"></div>
@@ -127,7 +132,7 @@
         </div>
 
         <section class="blk" style="text-align:center">
-          <a href="atlas.html" style="color:var(--gold-deep);font-weight:600">← Ver todas as espécies do Atlas</a>
+          <a href="especies.html" style="color:var(--gold-deep);font-weight:600">← Ver todas as espécies</a>
         </section>
       </div>`;
   }

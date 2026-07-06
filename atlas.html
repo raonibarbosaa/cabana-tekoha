@@ -30,12 +30,13 @@
   nav b{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1.1rem}
   nav b small{display:block;font-family:var(--fm);font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-bright);font-style:normal;margin-top:1px}
   .nav-right{margin-left:auto;display:flex;align-items:center;gap:1.1rem}
-  .navlink{font-size:.9rem;color:color-mix(in srgb,var(--cream) 85%,transparent)}
+  .navlink{font-size:.9rem;color:color-mix(in srgb,var(--cream) 85%,transparent);display:inline-flex;align-items:center;gap:.35rem}
   .navlink:hover{color:var(--gold-bright)}
+  .navlink svg{width:15px;height:15px}
   .acesso{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:600;color:var(--brown);background:var(--gold);padding:.45rem .85rem;border-radius:999px}
   .acesso:hover{background:var(--gold-bright)}
   .acesso svg{width:14px;height:14px}
-  @media(max-width:640px){nav b small{display:none}.navlink{display:none}.acesso span{display:none}}
+  @media(max-width:640px){nav b small{display:none}.acesso span{display:none}.navlink .lbl{display:none}}
 
   .hero{padding:clamp(1.4rem,3.5vw,2.2rem) 0 .4rem;text-align:center}
   .hero .kick{font-family:var(--fm);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep)}
@@ -65,39 +66,52 @@
   .uf{fill:transparent;stroke:var(--ink);stroke-width:.9;vector-effect:non-scaling-stroke;cursor:pointer}
   .uf:hover{fill:rgba(212,150,65,.10)}
   .mun{fill:transparent;stroke:var(--ink);stroke-opacity:.25;stroke-width:.5;vector-effect:non-scaling-stroke;pointer-events:none}
+  .dot{cursor:pointer}
   .dot .core{stroke:var(--cream);stroke-width:1.4;fill:var(--c)}
-  .dot.abelha{--c:var(--abelha)}.dot.flora{--c:var(--flora)}
-  .dot .pr{fill:none;stroke:var(--c);stroke-width:1.4;transform-box:fill-box;transform-origin:center;animation:pr 1.8s ease-out infinite}
+  .dot.abelha{--c:var(--abelha)}.dot.flora{--c:var(--flora)}.dot.mix{--c:#b8791f}
+  .dot .pr{fill:none;stroke:var(--c);stroke-width:1.3;transform-box:fill-box;transform-origin:center;animation:pr 1.9s ease-out infinite}
   .dot .pr.d2{animation-delay:.6s}
-  @keyframes pr{0%{r:2;opacity:.85}80%{r:18;opacity:0}100%{r:18;opacity:0}}
-  .ofu{fill:var(--ofuscado);opacity:.14}
-  .cluster .cbg{fill:var(--brown);opacity:.92;stroke:var(--cream);stroke-width:1.6;cursor:pointer}
-  .cluster:hover .cbg{fill:var(--gold-deep)}
-  .cluster .cnum{fill:var(--cream);font-family:var(--fm);font-size:11px;text-anchor:middle;font-weight:500;pointer-events:none}
-  .sline{stroke:var(--brown-faint);stroke-width:1;stroke-dasharray:2 2;opacity:.55}
+  @keyframes pr{0%{r:2;opacity:.8}80%{r:16;opacity:0}100%{r:16;opacity:0}}
+  .dot .clring{fill:none;stroke:var(--c);stroke-width:1.2;opacity:.55}
+  .ofu{fill:var(--ofuscado);opacity:.13}
+  .shit{fill:rgba(0,0,0,.001)}
+  .sline{stroke:var(--brown-faint);stroke-width:1;stroke-dasharray:2 2;opacity:.5}
   .slabel{font-family:var(--fm);font-size:8.5px;fill:var(--brown);text-anchor:middle;paint-order:stroke;stroke:var(--cream);stroke-width:2.4px;stroke-linejoin:round;pointer-events:none}
 
   .mapctrl{position:absolute;left:.8rem;bottom:.8rem;display:flex;flex-direction:column;gap:.35rem;z-index:4}
   .mapctrl button{width:36px;height:36px;border:1px solid var(--bone-deep);background:var(--cream);border-radius:9px;cursor:pointer;font-size:1rem;color:var(--brown)}
   .mapctrl .wide{width:auto;padding:0 .6rem;font-size:.72rem;font-family:var(--fm);height:32px}
-  .maptip{position:fixed;pointer-events:none;z-index:30;background:var(--brown);color:var(--cream);padding:.5rem .7rem;border-radius:9px;font-size:.8rem;opacity:0;transition:opacity .12s;box-shadow:0 6px 18px rgba(0,0,0,.25);max-width:220px}
-  .maptip.show{opacity:1}
-  .maptip .tt{font-family:var(--fm);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
-  .maptip b{font-family:var(--fd);font-style:italic;display:block;margin-top:.1rem}
-  .maptip .hint{display:block;margin-top:.25rem;font-size:.64rem;color:var(--gold);opacity:.9}
   .maplegend{position:absolute;right:.8rem;top:.8rem;background:var(--cream);border:1px solid var(--bone-deep);border-radius:10px;padding:.6rem .8rem;font-size:.82rem;z-index:4}
   .maplegend .row{display:flex;align-items:center;gap:.5rem;padding:.2rem 0}
   .maplegend .mk{width:11px;height:11px;border-radius:50%}
-  .maplegend .note{font-size:.66rem;color:var(--brown-faint);margin-top:.4rem;max-width:160px;line-height:1.3}
+  .maplegend .note{font-size:.66rem;color:var(--brown-faint);margin-top:.4rem;max-width:150px;line-height:1.3}
+
+  /* tooltip hover (transitório) */
+  .maptip{position:fixed;pointer-events:none;z-index:35;background:var(--brown);color:var(--cream);padding:.5rem .7rem;border-radius:9px;font-size:.8rem;opacity:0;transition:opacity .12s;box-shadow:0 6px 18px rgba(0,0,0,.25);max-width:220px}
+  .maptip.show{opacity:1}
+  .maptip .tt{font-family:var(--fm);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .maptip b{font-family:var(--fd);font-style:italic;display:block;margin-top:.1rem}
+  /* card fixo ao clicar */
+  .pcard{position:fixed;z-index:40;background:var(--cream);border:1px solid var(--bone-deep);border-radius:14px;padding:1rem 1.1rem;box-shadow:0 14px 40px rgba(0,0,0,.2);width:250px;max-width:calc(100vw - 2rem);display:none}
+  .pcard.show{display:block}
+  .pcard .pclose{position:absolute;top:.45rem;right:.6rem;border:none;background:none;font-size:1.3rem;line-height:1;color:var(--brown-faint);cursor:pointer}
+  .pcard .pc-t{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.4rem;color:var(--brown-faint)}
+  .pcard .pc-t .mk{width:9px;height:9px;border-radius:50%}
+  .pcard h4{font-family:var(--fd);font-style:italic;font-weight:500;font-size:1.3rem;margin:.25rem 0 .05rem;line-height:1.1}
+  .pcard .pc-sci{font-style:italic;font-size:.82rem;color:var(--brown-mid)}
+  .pcard .pc-link{display:inline-block;margin-top:.9rem;background:var(--gold);color:var(--brown);font-weight:600;font-size:.85rem;padding:.55rem 1rem;border-radius:999px}
+  .pcard .pc-link:hover{background:var(--gold-bright)}
+  @media(max-width:640px){.pcard{left:0!important;right:0;bottom:0;top:auto!important;width:100%;max-width:100%;border-radius:16px 16px 0 0;padding:1.2rem 1.3rem 1.7rem}}
 </style>
 </head>
 <body>
 <nav><div class="nav-in">
-  <a class="brand" href="atlas.html">
+  <a class="brand" href="atlas.html" title="Início — Atlas">
     <svg class="hex" viewBox="0 0 100 100"><path d="M50 4 L88 27 L88 73 L50 96 L12 73 L12 27 Z" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/></svg>
     <b>Atlas Vivo Tekoha<small>Biodiversidade do santuário</small></b>
   </a>
   <div class="nav-right">
+    <a class="navlink" href="atlas.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/></svg><span class="lbl">Início</span></a>
     <a class="navlink" href="especies.html">Espécies</a>
     <a class="acesso" href="acesso.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Acesso Pesquisadores</span></a>
   </div>
@@ -135,7 +149,7 @@
   <div class="maplegend">
     <div class="row"><span class="mk" style="background:var(--abelha)"></span> Abelhas</div>
     <div class="row"><span class="mk" style="background:var(--flora)"></span> Flora</div>
-    <div class="note">Pontos juntos viram um grupo — passe o mouse para abrir em leque. Ninho sensível vira área aproximada.</div>
+    <div class="note">Pontos próximos viram um grupo — passe o mouse (ou toque) para abrir em leque.</div>
   </div>
   <div class="mapctrl">
     <button class="wide" onclick="focarSergipe()">Sergipe</button>
@@ -144,6 +158,7 @@
   </div>
 </div>
 <div class="maptip" id="maptip"></div>
+<div class="pcard" id="pcard"></div>
 
 <script src="atlas-dados.js"></script>
 <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js"></script>
@@ -154,7 +169,7 @@
 
   const OCC=[];
   SP.forEach(sp=>(sp.ocorrencias||[]).forEach(o=>{
-    if(o.sens==='restrito')return; // ninho protegido não vira ponto
+    if(o.sens==='restrito')return;
     OCC.push({lat:o.lat,lng:o.lng,sens:o.sens,slug:sp.slug,tipo:sp.tipo,nome:sp.nomePopular,sci:sp.nomeCientifico,
       genero:genero(sp),cidade:norm(o.municipio),selos:norm(sp.selos.join('|')),
       text:norm([sp.nomePopular,sp.nomeCientifico,sp.familia,genero(sp),o.municipio,sp.selos.join(' ')].join(' '))});
@@ -181,12 +196,12 @@
   function aplicar(){
     const vis=OCC.filter(match);
     document.getElementById('rescount').textContent=vis.length+(vis.length===1?' ocorrência':' ocorrências');
-    collapse(); renderClusters();
+    collapse(); closeCard(); renderClusters();
   }
 
   /* ===== mapa ===== */
   const svg=d3.select('#map'); let W,H,projection,path,mapG,munG,ofuG,dotsG,zoom,curT=d3.zoomIdentity,seFeat;
-  const CLUSTER_PX=32; let expanded=null, colTimer=null;
+  const CLUSTER_PX=30; let expanded=null, colTimer=null, pinned=null;
   function size(){const s=document.querySelector('.stage');W=s.clientWidth;H=s.clientHeight;svg.attr('width',W).attr('height',H);}
   const NOME2SIGLA={'Sergipe':'SE'};
   function sxy(o){const p=projection([o.lng,o.lat]);return [curT.applyX(p[0]),curT.applyY(p[1])];}
@@ -198,10 +213,10 @@
     let uf;try{uf=await fetch('https://cdn.jsdelivr.net/gh/codeforgermany/click_that_hood@main/public/data/brazil-states.geojson').then(r=>r.json());}catch(e){return;}
     projection=d3.geoMercator().fitSize([W,H],uf);path=d3.geoPath(projection);
     landG.append('path').attr('d',path({type:'FeatureCollection',features:uf.features})).attr('fill','#f6f1e6');
-    ufG.selectAll('path').data(uf.features).enter().append('path').attr('class','uf').attr('d',path).on('click',(ev,f)=>{ev.stopPropagation();fit(path.bounds(f),.9);});
-    zoom=d3.zoom().scaleExtent([1,120]).on('zoom',ev=>{curT=ev.transform;mapG.attr('transform',curT);if(expanded)collapse();place();}).on('end',renderClusters);
+    ufG.selectAll('path').data(uf.features).enter().append('path').attr('class','uf').attr('d',path).on('click',(ev,f)=>{ev.stopPropagation();closeCard();fit(path.bounds(f),.9);});
+    zoom=d3.zoom().scaleExtent([1,140]).on('zoom',ev=>{curT=ev.transform;mapG.attr('transform',curT);if(expanded)collapse();place();}).on('end',renderClusters);
     svg.call(zoom);
-    svg.on('click',()=>collapse());
+    svg.on('click',()=>{collapse();closeCard();});
     try{const se=await fetch('https://cdn.jsdelivr.net/gh/tbrugz/geodata-br@master/geojson/geojs-28-mun.json').then(r=>r.json());
       munG.selectAll('path').data(se.features).enter().append('path').attr('class','mun').attr('d',path);}catch(e){}
     seFeat=uf.features.find(f=>(f.properties.sigla||NOME2SIGLA[f.properties.name])==='SE');
@@ -210,6 +225,8 @@
     window.addEventListener('resize',()=>{size();projection.fitSize([W,H],uf);path=d3.geoPath(projection);
       landG.select('path').attr('d',path({type:'FeatureCollection',features:uf.features}));ufG.selectAll('path').attr('d',path);munG.selectAll('path').attr('d',path);renderClusters();});
   })();
+  // fechar card ao clicar fora dele (qualquer lugar)
+  document.addEventListener('click',e=>{ if(pinned && !e.target.closest('#pcard')) closeCard(); });
 
   function clusters(){
     const vis=OCC.filter(match), cs=[];
@@ -222,20 +239,19 @@
   }
   function renderClusters(){
     if(!projection)return;
-    // ofuscado (área) — só visíveis
     const ofu=OCC.filter(o=>o.sens==='ofuscado'&&match(o));
     const os=ofuG.selectAll('circle.ofu').data(ofu); os.exit().remove();
-    os.enter().append('circle').attr('class','ofu').attr('r',24).merge(os).attr('cx',o=>sxy(o)[0]).attr('cy',o=>sxy(o)[1]);
-    // clusters
+    os.enter().append('circle').attr('class','ofu').attr('r',22).merge(os).attr('cx',o=>sxy(o)[0]).attr('cy',o=>sxy(o)[1]);
     dotsG.selectAll('*').remove();
     clusters().forEach(c=>{
-      const g=dotsG.append('g').attr('transform',`translate(${c.x},${c.y})`);
-      g.datum(c);
+      const g=dotsG.append('g').attr('transform',`translate(${c.x},${c.y})`); g.datum(c);
       if(c.items.length===1){ singleDot(g,c.items[0]); }
       else{
-        g.attr('class','cluster');
-        g.append('circle').attr('class','cbg').attr('r',Math.min(20,11+c.items.length));
-        g.append('text').attr('class','cnum').attr('dy','.35em').text(c.items.length);
+        const same=c.items.every(it=>it.tipo===c.items[0].tipo);
+        g.attr('class','dot cl '+(same?c.items[0].tipo:'mix')).style('cursor','pointer');
+        g.append('circle').attr('class','clring').attr('r',9);
+        g.append('circle').attr('class','pr').attr('r',2);
+        g.append('circle').attr('class','core').attr('r',6);
         g.on('mouseenter',()=>spiderfy(c)).on('click',(ev)=>{ev.stopPropagation();spiderfy(c);});
       }
     });
@@ -245,8 +261,8 @@
     g.append('circle').attr('class','pr').attr('r',2);
     g.append('circle').attr('class','pr d2').attr('r',2);
     g.append('circle').attr('class','core').attr('r',5);
-    g.on('mouseenter',(ev)=>tip(ev,o)).on('mousemove',mv).on('mouseleave',hideTip)
-     .on('click',(ev)=>{ev.stopPropagation();location.href='especie.html?sp='+o.slug;});
+    g.on('mouseenter',(ev)=>{clearTimeout(colTimer);showTip(ev,o);}).on('mousemove',mv).on('mouseleave',hideTip)
+     .on('click',(ev)=>{ev.stopPropagation();pinCard(o,ev.clientX,ev.clientY);});
   }
   function place(){
     if(!projection)return;
@@ -258,25 +274,47 @@
   }
   function spiderfy(c){
     if(expanded===c)return; collapse(); expanded=c;
-    const R=Math.min(96,42+c.items.length*9);
+    const R=Math.min(104,46+c.items.length*9);
     const layer=dotsG.append('g').attr('class','spider');
+    // área invisível que mantém o leque aberto enquanto o ponteiro estiver dentro
+    layer.append('circle').attr('class','shit').attr('cx',c.x).attr('cy',c.y).attr('r',R+26).on('click',ev=>ev.stopPropagation());
     c.items.forEach((o,i)=>{
       const a=(i/c.items.length)*2*Math.PI - Math.PI/2;
       const x=c.x+R*Math.cos(a), y=c.y+R*Math.sin(a);
       layer.append('line').attr('class','sline').attr('x1',c.x).attr('y1',c.y).attr('x2',x).attr('y2',y);
       const g=layer.append('g').attr('transform',`translate(${x},${y})`);
       singleDot(g,o);
-      g.append('text').attr('class','slabel').attr('y',-10).text(o.nome);
+      g.append('text').attr('class','slabel').attr('y',-11).text(o.nome);
     });
-    layer.on('mouseenter',()=>clearTimeout(colTimer)).on('mouseleave',()=>{colTimer=setTimeout(collapse,200);});
+    layer.on('mouseenter',()=>clearTimeout(colTimer)).on('mouseleave',()=>{colTimer=setTimeout(collapse,260);});
   }
   function collapse(){ clearTimeout(colTimer); if(expanded){dotsG.selectAll('g.spider').remove();expanded=null;} }
-  function fit(b,pad){const [[x0,y0],[x1,y1]]=b;const k=Math.min(120,pad*Math.min(W/(x1-x0),H/(y1-y0)));const tx=W/2-k*(x0+x1)/2,ty=H/2-k*(y0+y1)/2;svg.transition().duration(700).call(zoom.transform,d3.zoomIdentity.translate(tx,ty).scale(k));}
-  function focarSergipe(){if(seFeat)fit(path.bounds(seFeat),.92);}
-  function zoomBy(f){svg.transition().duration(250).call(zoom.scaleBy,f);}
-  function tip(ev,o){const t=document.getElementById('maptip');t.innerHTML=`<div class="tt">${o.tipo==='abelha'?'Abelha':'Flora'}</div><b>${o.nome}</b><span style="font-size:.72rem;opacity:.8">${o.sci}</span><span class="hint">clique para abrir a ficha</span>`;t.classList.add('show');mv(ev);}
+
+  /* tooltip transitório (hover) */
+  function showTip(ev,o){const t=document.getElementById('maptip');t.innerHTML=`<div class="tt">${o.tipo==='abelha'?'Abelha':'Flora'}</div><b>${o.nome}</b><span style="font-size:.72rem;opacity:.8">${o.sci}</span>`;t.classList.add('show');mv(ev);}
   function mv(ev){const t=document.getElementById('maptip');t.style.left=Math.min(ev.clientX+14,window.innerWidth-230)+'px';t.style.top=(ev.clientY+14)+'px';}
   function hideTip(){document.getElementById('maptip').classList.remove('show');}
+
+  /* card fixo (clique) com link p/ a ficha */
+  function pinCard(o,x,y){
+    hideTip(); pinned=o;
+    const card=document.getElementById('pcard');
+    card.innerHTML=`<button class="pclose" onclick="closeCard(event)" aria-label="fechar">×</button>
+      <div class="pc-t"><span class="mk" style="background:var(--${o.tipo})"></span>${o.tipo==='abelha'?'Abelha nativa':'Flora melífera'}</div>
+      <h4>${o.nome}</h4><div class="pc-sci">${o.sci}</div>
+      <a class="pc-link" href="especie.html?sp=${o.slug}">Ver ficha →</a>`;
+    card.onclick=e=>e.stopPropagation();
+    card.classList.add('show');
+    if(window.innerWidth>640){
+      card.style.left=Math.min(Math.max(10,x+14),window.innerWidth-262)+'px';
+      card.style.top=Math.min(Math.max(10,y+14),window.innerHeight-190)+'px';
+    } else { card.style.left=''; card.style.top=''; }
+  }
+  function closeCard(ev){ if(ev)ev.stopPropagation(); pinned=null; document.getElementById('pcard').classList.remove('show'); }
+
+  function fit(b,pad){const [[x0,y0],[x1,y1]]=b;const k=Math.min(140,pad*Math.min(W/(x1-x0),H/(y1-y0)));const tx=W/2-k*(x0+x1)/2,ty=H/2-k*(y0+y1)/2;svg.transition().duration(700).call(zoom.transform,d3.zoomIdentity.translate(tx,ty).scale(k));}
+  function focarSergipe(){if(seFeat)fit(path.bounds(seFeat),.92);}
+  function zoomBy(f){svg.transition().duration(250).call(zoom.scaleBy,f);}
 </script>
 </body>
 </html>
