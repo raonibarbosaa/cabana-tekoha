@@ -187,7 +187,6 @@
   <div class="appbar">
     <img class="mark" src="favicon-instituto.png" alt="" />
     <div class="t">Coleta de Campo<small>Instituto Tekoha</small></div>
-    <span class="demo-badge">MODO DEMO</span>
   </div>
 
   <!-- ============ INÍCIO ============ -->
@@ -244,7 +243,7 @@
       <input type="text" id="codeinput" inputmode="text" autocapitalize="characters" autocomplete="off" placeholder="TEKOHA0001" oninput="this.value=this.value.toUpperCase()">
     </div>
     <button class="btn btn-primary" onclick="goCode()"><svg style="width:20px;height:20px"><use href="#i-check"/></svg> Abrir ficha</button>
-    <div class="label" style="margin:1.6rem 0 .6rem">Plaquinhas de demonstração</div>
+    <div class="label" style="margin:1.6rem 0 .6rem">Plaquinhas cadastradas</div>
     <div id="code-demos"></div>
   </section>
 
@@ -392,7 +391,7 @@ function grabGPS(){
   box.classList.add('wait'); txt.textContent='obtendo posição…';
   const gc=document.getElementById('gpscopy'); if(gc) gc.style.display='none';
   const done=(lat,lng,acc,demo)=>{curGPS={lat,lng,acc};box.classList.remove('wait');
-    txt.textContent=`${lat.toFixed(5)}, ${lng.toFixed(5)}  ·  ±${Math.round(acc)}m${demo?' (demo)':''}`;
+    txt.textContent=`${lat.toFixed(5)}, ${lng.toFixed(5)}  ·  ±${Math.round(acc)}m`;
     if(gc) gc.style.display='';};
   if(navigator.geolocation){
     navigator.geolocation.getCurrentPosition(
@@ -478,7 +477,7 @@ function fVal(k){const s=document.querySelector('#'+k+' .fbtn.on');return s?s.da
 
 /* FLORA — dados FIXOS do indivíduo (preenchidos 1x no cadastro) */
 const FIELDS_CADASTRO = [
-  {k:'especie',label:'Espécie',type:'text',list:FLORA,ph:'filtrar pelo catálogo… (opcional)',hint:'Opcional — sistema sugere pelo catálogo (IA sobre a foto — futuro).'},
+  {k:'especie',label:'Espécie',type:'text',list:FLORA,ph:'filtrar pelo catálogo… (opcional)',hint:'Opcional — comece a digitar para filtrar pelo catálogo.'},
   {k:'nome_popular',label:'Nome popular / apelido',type:'text'},
   {k:'data',label:'Data de plantio ou registro',type:'date',hint:'Se for árvore encontrada, use a data de hoje (registro).'},
   {k:'origem',label:'Origem da muda',type:'select',opts:['—','própria','doada','viveiro','regeneração natural']},
