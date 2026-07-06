@@ -201,7 +201,7 @@
 
   /* ===== mapa ===== */
   const svg=d3.select('#map'); let W,H,projection,path,mapG,munG,ofuG,dotsG,zoom,curT=d3.zoomIdentity,seFeat;
-  const CLUSTER_PX=30; let expanded=null, colTimer=null, pinned=null;
+  const CLUSTER_PX=12; let expanded=null, colTimer=null, pinned=null;  // agrupa só quando praticamente sobrepostos; zoom separa
   function size(){const s=document.querySelector('.stage');W=s.clientWidth;H=s.clientHeight;svg.attr('width',W).attr('height',H);}
   const NOME2SIGLA={'Sergipe':'SE'};
   function sxy(o){const p=projection([o.lng,o.lat]);return [curT.applyX(p[0]),curT.applyY(p[1])];}
